@@ -191,8 +191,6 @@ Feel free to fork the project and submit a pull request.
 
 **Viola Kambuni**
 
-Computer Science & Mathematics Student
-
 GitHub: https://github.com/VIOLA895
 
 ---
