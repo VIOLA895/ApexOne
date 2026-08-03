@@ -1,0 +1,82 @@
+.race-page {
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: white;
+}
+
+.race-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 100px 20px;
+}
+
+.back-link {
+  color: #e10600;
+  text-decoration: none;
+}
+
+.race-tag {
+  margin-top: 40px;
+  color: #e10600;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+.race-container h1 {
+  font-size: 4rem;
+  margin: 20px 0;
+}
+
+.lesson-meta {
+  display: flex;
+  gap: 30px;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+}
+
+.intro {
+  color: #b5b5b5;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-top: 70px;
+}
+
+.timeline-item {
+  background: #171717;
+  border: 1px solid #262626;
+  border-radius: 18px;
+  padding: 30px;
+}
+
+.timeline-item h3 {
+  color: #e10600;
+  margin-bottom: 15px;
+}
+
+.timeline-item p {
+  margin: 10px 0;
+}
+
+.fact-box {
+  margin-top: 70px;
+  background: #171717;
+  border-left: 5px solid #e10600;
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.fact-box h2 {
+  margin-bottom: 20px;
+}
+
+.fact-box p {
+  color: #b5b5b5;
+  line-height: 1.8;
+}
