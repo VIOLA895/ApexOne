@@ -195,4 +195,8 @@ GitHub: https://github.com/VIOLA895
 
 ---
 
+##License
+
+MIT License
+
 
