@@ -195,8 +195,4 @@ GitHub: https://github.com/VIOLA895
 
 ---
 
-## License
 
-This project is licensed under the MIT License.
-
----
