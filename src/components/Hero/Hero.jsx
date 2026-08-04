@@ -5,7 +5,7 @@ function Hero() {
   return (
     <section className="hero">
       <div className="hero-content">
-        <p className="hero-tag">🏁 THE EASIEST WAY TO UNDERSTAND FORMULA 1</p>
+        <p className="hero-tag">THE EASIEST WAY TO UNDERSTAND FORMULA 1</p>
 
         <h1>
           Formula 1,

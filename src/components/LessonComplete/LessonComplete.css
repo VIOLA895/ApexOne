@@ -1,0 +1,30 @@
+.lesson-complete {
+  margin-top: 50px;
+}
+
+.complete-btn {
+  background: #e10600;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.complete-btn:hover {
+  transform: translateY(-3px);
+}
+
+.completed-message {
+  background: #142d18;
+  border: 1px solid #28c76f;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.completed-message h3 {
+  color: #28c76f;
+  margin-bottom: 10px;
+}

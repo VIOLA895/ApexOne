@@ -1,8 +1,8 @@
 import LessonTemplate from "../../components/LessonTemplate/LessonTemplate";
 import lessons from "../../data/lessons";
 
-function RaceWeekend() {
-  return <LessonTemplate {...lessons.raceWeekend} />;
+function Tyres() {
+  return <LessonTemplate {...lessons.tyres} />;
 }
 
-export default RaceWeekend;
+export default Tyres;

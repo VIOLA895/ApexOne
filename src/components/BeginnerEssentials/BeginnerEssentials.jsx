@@ -14,14 +14,15 @@ const lessons = [
     description:
       "Learn how a Formula 1 weekend works from Practice sessions to the Grand Prix.",
     icon: <Flag size={34} />,
-    link: "/learn/race-weekend",
+    link: "/Learn/race-weekend",
   },
-  {
-    title: "Tyres",
-    description:
-      "Understand the different tyre compounds and how they affect race strategy.",
-    icon: <CircleDashed size={34} />,
-  },
+{
+  title: "Tyres",
+  description:
+    "Understand the different tyre compounds and how they affect race strategy.",
+  icon: <CircleDashed size={34} />,
+  link: "/Learn/tyres",
+},
   {
     title: "DRS",
     description:

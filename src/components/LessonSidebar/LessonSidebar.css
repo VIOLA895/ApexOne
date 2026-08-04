@@ -1,0 +1,49 @@
+.lesson-sidebar {
+  width: 280px;
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 18px;
+  padding: 25px;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.lesson-sidebar h2 {
+  margin-bottom: 25px;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.sidebar-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  color: white;
+  text-decoration: none;
+
+  border-radius: 10px;
+
+  transition: .3s;
+}
+
+.sidebar-link:hover {
+  background: #1b1b1b;
+}
+
+.sidebar-link.active {
+  background: #E10600;
+}
+
+.lesson-status {
+  width: 24px;
+}

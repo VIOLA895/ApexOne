@@ -1,0 +1,155 @@
+.lesson-page {
+  min-height: 100vh;
+  background: #0b0b0b;
+  color: white;
+}
+
+.lesson-container {
+  width: 100%;
+  margin: auto;
+  padding: 90px 20px;
+}
+.lesson-layout {
+  max-width: 1500px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  padding: 40px 20px;
+}
+
+.back-link {
+  color: #e10600;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lesson-tag {
+  margin-top: 40px;
+  color: #e10600;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.lesson-container h1 {
+  font-size: 3.8rem;
+  margin: 20px 0;
+}
+
+.lesson-meta {
+  display: flex;
+  gap: 30px;
+  color: #b4b4b4;
+  margin-bottom: 30px;
+}
+
+.lesson-intro {
+  max-width: 700px;
+  color: #bdbdbd;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.timeline-section {
+  margin-top: 70px;
+}
+
+.timeline-section h2 {
+  margin-bottom: 30px;
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 25px;
+}
+
+.timeline-card {
+  background: #171717;
+  border: 1px solid #2b2b2b;
+  border-radius: 16px;
+  padding: 25px;
+  transition: .3s;
+}
+
+.timeline-card:hover {
+  border-color: #e10600;
+  transform: translateY(-5px);
+}
+
+.timeline-card h3 {
+  color: #e10600;
+  margin-bottom: 15px;
+}
+
+.timeline-card p {
+  margin: 10px 0;
+}
+
+.fact-section {
+  margin-top: 70px;
+  background: #171717;
+  border-left: 5px solid #e10600;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.fact-section h2 {
+  margin-bottom: 15px;
+}
+
+.fact-section p {
+  color: #bdbdbd;
+  line-height: 1.8;
+}
+
+.quiz-section {
+  margin-top: 70px;
+}
+
+.quiz-section h2 {
+  margin-bottom: 20px;
+}
+
+.quiz-section p {
+  margin-bottom: 25px;
+}
+
+.quiz-section button {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #171717;
+  color: white;
+  cursor: pointer;
+  transition: .3s;
+  text-align: left;
+}
+
+.quiz-section button:hover {
+  border-color: #e10600;
+  background: #222;
+}
+
+.lesson-navigation {
+  margin-top: 80px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.next-btn {
+  background: #e10600;
+  color: white;
+  padding: 18px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: .3s;
+}
+
+.next-btn:hover {
+  transform: translateY(-3px);
+}
