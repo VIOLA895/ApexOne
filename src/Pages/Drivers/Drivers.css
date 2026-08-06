@@ -1,0 +1,45 @@
+.drivers-page{
+
+background:#0b0b0b;
+
+min-height:100vh;
+
+color:white;
+
+padding:120px 8% 80px;
+
+}
+
+.drivers-hero{
+
+margin-bottom:60px;
+
+}
+
+.drivers-hero h1{
+
+font-size:3.8rem;
+
+margin-bottom:15px;
+
+}
+
+.drivers-hero p{
+
+color:#bcbcbc;
+
+font-size:1.1rem;
+
+max-width:700px;
+
+}
+
+.drivers-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:30px;
+
+}

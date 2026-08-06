@@ -1,49 +1,110 @@
-.lesson-sidebar {
-  width: 280px;
-  background: #111;
-  border: 1px solid #242424;
-  border-radius: 18px;
-  padding: 25px;
-  position: sticky;
-  top: 100px;
-  height: fit-content;
+.lesson-sidebar{
+    width:300px;
+    position:sticky;
+    top:100px;
+
+    background:#111;
+
+    border:1px solid #242424;
+
+    border-radius:20px;
+
+    padding:28px;
 }
 
-.lesson-sidebar h2 {
-  margin-bottom: 25px;
-  color: white;
-  font-size: 1.4rem;
+.sidebar-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:30px;
 }
 
-.sidebar-lessons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.sidebar-header svg{
+    color:#E10600;
 }
 
-.sidebar-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 14px;
-
-  color: white;
-  text-decoration: none;
-
-  border-radius: 10px;
-
-  transition: .3s;
+.sidebar-header h2{
+    font-size:1.3rem;
+    margin-bottom:4px;
 }
 
-.sidebar-link:hover {
-  background: #1b1b1b;
+.sidebar-header p{
+    color:#888;
+    font-size:.9rem;
 }
 
-.sidebar-link.active {
-  background: #E10600;
+.progress-card{
+    background:#171717;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:30px;
 }
 
-.lesson-status {
-  width: 24px;
+.progress-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+    font-weight:600;
+}
+
+.progress-title svg{
+    color:#E10600;
+}
+
+.progress-bar{
+    height:8px;
+    background:#262626;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#E10600;
+    border-radius:20px;
+}
+
+.progress-card p{
+    margin-top:14px;
+    color:#9a9a9a;
+    font-size:.9rem;
+}
+
+.sidebar-lessons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+.sidebar-link svg{
+    color:#7b7b7b;
+}
+
+.sidebar-link:hover{
+    background:#1c1c1c;
+}
+
+.sidebar-link.active{
+    background:#E10600;
+}
+
+.sidebar-link.active svg{
+    color:white;
 }

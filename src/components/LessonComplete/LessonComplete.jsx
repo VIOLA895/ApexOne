@@ -10,7 +10,7 @@ function LessonComplete({ lessonTitle }) {
       {isCompleted(lessonTitle) ? (
         <div className="completed-message">
 
-          <h3>🎉 Lesson Completed!</h3>
+          <h3>Lesson Completed!</h3>
 
           <p>
             Great job! You're making excellent progress.
