@@ -127,7 +127,7 @@ npm run dev
 Open
 
 ```
-http://localhost:5173
+http://localhost:5174
 ```
 
 ---
@@ -197,6 +197,6 @@ GitHub: https://github.com/VIOLA895
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License
 
----
+
