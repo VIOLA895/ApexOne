@@ -12,14 +12,23 @@ import LessonPage from "./pages/LessonPage/LessonPage";
 function App() {
   return (
     <Routes>
+
       <Route path="/" element={<Home />} />
+
       <Route path="/Learn" element={<Learn />} />
+
+      <Route path="/Learn/:slug" element={<LessonPage />} />
+
       <Route path="/drivers" element={<Drivers />} />
+
       <Route path="/teams" element={<Teams />} />
+
       <Route path="/live" element={<Live />} />
+
       <Route path="/stats" element={<Stats />} />
+
       <Route path="/about" element={<About />} />
-     <Route path="/Learn/:slug" element={<LessonPage />} />
+
     </Routes>
   );
 }

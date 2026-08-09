@@ -3,12 +3,10 @@
   max-width: 1300px;
   margin: 0 auto;
   padding: 2rem;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 4rem;
-
   background: #0b0b0b;
   color: #ffffff;
 }
@@ -47,6 +45,20 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.start-learning-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.live-season-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .primary-btn,

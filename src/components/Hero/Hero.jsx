@@ -1,5 +1,6 @@
 import "./Hero.css";
 import RaceTrack from "../../assets/svg/RaceTrack";
+import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -18,10 +19,23 @@ function Hero() {
           strategies that decide championships.
         </p>
 
-        <div className="hero-buttons">
-          <button className="primary-btn">Start Learning</button>
-          <button className="secondary-btn">Explore Live Season</button>
-        </div>
+       <div className="hero-buttons">
+
+  <Link
+    to="/Learn"
+    className="primary-btn start-learning-btn"
+  >
+    Start Learning
+  </Link>
+
+  <Link
+    to="/live"
+    className="secondary-btn live-season-btn"
+  >
+    Explore Live Season
+  </Link>
+
+</div>
       </div>
 
 <div className="hero-graphic">

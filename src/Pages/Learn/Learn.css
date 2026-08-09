@@ -1,112 +1,1243 @@
-.learn-page{
-    min-height:100vh;
-    background:#0A0A0A;
-    color:white;
+/* =====================================================
+   LEARN PAGE
+===================================================== */
+
+.learn-page {
+  min-height: 100vh;
+  width: 100%;
+
+  background:
+    radial-gradient(
+      circle at 80% 5%,
+      rgba(225, 6, 0, 0.08),
+      transparent 25%
+    ),
+    #090909;
+
+  color: #ffffff;
+
+  padding: 0 6% 100px;
+
+  overflow-x: hidden;
 }
 
-/* HERO */
 
-.learn-hero{
+/* =====================================================
+   HERO + TELEMETRY
+===================================================== */
 
-    max-width:900px;
+.learn-header-area {
+  width: 100%;
+  max-width: 1400px;
 
-    margin:auto;
+  margin: 0 auto;
 
-    text-align:center;
+  display: grid;
 
-    padding:120px 20px 80px;
+  grid-template-columns: minmax(0, 1fr) 330px;
+
+  gap: 55px;
+
+  align-items: start;
 }
 
-.learn-tag{
 
-    color:#E10600;
+/* =====================================================
+   HERO
+===================================================== */
 
-    letter-spacing:3px;
+.learn-hero {
+  position: relative;
 
-    font-weight:700;
+  padding: 55px 0 45px;
 
-    margin-bottom:20px;
+  overflow: hidden;
 }
 
-.learn-hero h1{
+.hero-glow {
+  position: absolute;
 
-    font-size:4rem;
+  width: 420px;
+  height: 420px;
 
-    margin-bottom:25px;
+  background: #e10600;
 
-    font-weight:800;
+  opacity: 0.07;
+
+  filter: blur(120px);
+
+  border-radius: 50%;
+
+  left: 5%;
+  top: -190px;
+
+  pointer-events: none;
 }
 
-.learn-description{
+.hero-tag {
+  position: relative;
 
-    color:#A8A8A8;
+  display: inline-flex;
+  align-items: center;
 
-    line-height:1.8;
+  padding: 8px 16px;
 
-    font-size:1.1rem;
+  border: 1px solid rgba(225, 6, 0, 0.35);
 
-    max-width:700px;
+  border-radius: 50px;
 
-    margin:auto auto 50px;
+  color: #e10600;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 25px;
 }
 
-.learn-search{
+.learn-hero h1 {
+  position: relative;
 
-    display:flex;
+  margin: 0 0 25px;
 
-    justify-content:center;
+  font-size: clamp(3rem, 5vw, 5.4rem);
 
-    gap:15px;
+  line-height: 1;
 
-    flex-wrap:wrap;
+  letter-spacing: -3px;
+
+  font-weight: 800;
 }
 
-.learn-search input{
-
-    width:500px;
-
-    max-width:100%;
-
-    padding:18px;
-
-    background:#171717;
-
-    border:1px solid #2A2A2A;
-
-    border-radius:12px;
-
-    color:white;
-
-    font-size:16px;
+.learn-hero h1 span {
+  color: #e10600;
 }
 
-.learn-search input:focus{
+.learn-hero p {
+  position: relative;
 
-    outline:none;
+  max-width: 720px;
 
-    border-color:#E10600;
+  color: #9d9d9d;
+
+  font-size: 1.05rem;
+
+  line-height: 1.85;
+
+  margin: 0;
 }
 
-.learn-search button{
 
-    padding:18px 32px;
+/* =====================================================
+   TELEMETRY
+===================================================== */
 
-    background:#E10600;
+.telemetry-top-right {
+  width: 100%;
 
-    color:white;
+  padding-top: 45px;
 
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-    transition:.3s;
+  align-self: start;
 }
 
-.learn-search button:hover{
 
-    background:#ff2d25;
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-section {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 10px auto 35px;
+}
+
+.search-box {
+  width: 100%;
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 0 22px;
+
+  background: #131313;
+
+  border: 1px solid #292929;
+
+  border-radius: 12px;
+
+  color: #777;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.search-box:hover {
+  border-color: #3a3a3a;
+}
+
+.search-box:focus-within {
+  border-color: #e10600;
+
+  box-shadow:
+    0 0 0 3px rgba(225, 6, 0, 0.08);
+}
+
+.search-box input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 58px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-family: "Montserrat", sans-serif;
+
+  font-size: 0.95rem;
+}
+
+.search-box input::placeholder {
+  color: #666;
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-card {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto 75px;
+
+  padding: 30px 34px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 45px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #151515,
+      #101010
+    );
+
+  border: 1px solid #292929;
+
+  border-radius: 16px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.progress-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 3px;
+  height: 100%;
+
+  background: #e10600;
+}
+
+.progress-left {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  flex: 1;
+
+  min-width: 0;
+}
+
+.progress-icon {
+  flex-shrink: 0;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(225, 6, 0, 0.1);
+
+  border: 1px solid rgba(225, 6, 0, 0.25);
+
+  border-radius: 12px;
+
+  color: #e10600;
+}
+
+.progress-left > div:last-child {
+  min-width: 0;
+}
+
+.section-label {
+  display: block;
+
+  color: #e10600;
+
+  font-size: 0.68rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 5px;
+}
+
+.progress-left h2 {
+  font-size: 1.3rem;
+
+  margin-bottom: 5px;
+}
+
+.progress-left p {
+  color: #777;
+
+  font-size: 0.85rem;
+}
+
+.progress-right {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.progress-top {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 11px;
+}
+
+.progress-top span {
+  color: #8c8c8c;
+
+  font-size: 0.82rem;
+}
+
+.progress-top strong {
+  color: #e10600;
+
+  font-size: 0.95rem;
+
+  flex-shrink: 0;
+}
+
+.progress-bar {
+  width: 100%;
+
+  height: 9px;
+
+  background: #252525;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #e10600,
+      #ff3b35
+    );
+
+  border-radius: inherit;
+
+  transition: width 0.5s ease;
+}
+
+
+/* =====================================================
+   LESSON CATEGORY
+===================================================== */
+
+.lesson-category {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+}
+
+.category-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 25px;
+
+  margin-bottom: 32px;
+}
+
+.category-heading {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  min-width: 0;
+}
+
+.category-number {
+  color: #3a3a3a;
+
+  font-size: 3rem;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  flex-shrink: 0;
+}
+
+.category-tag {
+  display: block;
+
+  color: #e10600;
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 7px;
+}
+
+.category-header h2 {
+  font-size: 2rem;
+
+  margin-bottom: 8px;
+}
+
+.category-header p {
+  color: #777;
+
+  max-width: 620px;
+
+  line-height: 1.6;
+
+  font-size: 0.9rem;
+}
+
+.category-icon-box {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #e10600;
+
+  background: #151515;
+
+  border: 1px solid #292929;
+
+  border-radius: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   LESSON GRID
+===================================================== */
+
+.lesson-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+/* =====================================================
+   LESSON CARD
+===================================================== */
+
+.lesson-card {
+  min-width: 0;
+  min-height: 275px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  padding: 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #151515,
+      #101010
+    );
+
+  border: 1px solid #292929;
+
+  border-radius: 15px;
+
+  text-decoration: none;
+
+  color: white;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.lesson-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: #e10600;
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: transform 0.3s ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #444;
+
+  background:
+    linear-gradient(
+      145deg,
+      #191919,
+      #111111
+    );
+}
+
+.lesson-card:hover::before {
+  transform: scaleX(1);
+}
+
+
+/* =====================================================
+   CARD TOP
+===================================================== */
+
+.lesson-card-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.lesson-number {
+  color: #444;
+
+  font-size: 0.85rem;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.lesson-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #777;
+
+  font-size: 0.7rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+}
+
+.lesson-status svg {
+  color: #e10600;
+}
+
+
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.lesson-card-content {
+  padding: 30px 0;
+
+  min-width: 0;
+}
+
+.lesson-card-content h3 {
+  font-size: 1.55rem;
+
+  margin-bottom: 12px;
+
+  overflow-wrap: anywhere;
+
+  transition: color 0.3s ease;
+}
+
+.lesson-card:hover
+.lesson-card-content h3 {
+  color: #e10600;
+}
+
+.lesson-card-content p {
+  color: #858585;
+
+  font-size: 0.88rem;
+
+  line-height: 1.7;
+
+  max-width: 520px;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   CARD FOOTER
+===================================================== */
+
+.lesson-card-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #242424;
+}
+
+.lesson-time {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #707070;
+
+  font-size: 0.75rem;
+}
+
+.lesson-arrow {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #333;
+
+  border-radius: 50%;
+
+  color: #aaa;
+
+  flex-shrink: 0;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.lesson-card:hover .lesson-arrow {
+  background: #e10600;
+
+  border-color: #e10600;
+
+  color: white;
+}
+
+
+/* =====================================================
+   NO RESULTS
+===================================================== */
+
+.no-results {
+  min-height: 220px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #121212;
+
+  border: 1px solid #272727;
+
+  border-radius: 15px;
+
+  color: #666;
+
+  padding: 30px;
+}
+
+.no-results svg {
+  color: #e10600;
+
+  margin-bottom: 15px;
+}
+
+.no-results h3 {
+  color: #ddd;
+
+  margin-bottom: 7px;
+}
+
+.no-results p {
+  font-size: 0.85rem;
+}
+
+
+/* =====================================================
+   COMING SOON
+===================================================== */
+
+.coming-soon {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 80px auto 0;
+
+  padding: 35px 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+  background: #101010;
+
+  border: 1px solid #252525;
+
+  border-radius: 15px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.coming-soon-line {
+  width: 4px;
+
+  align-self: stretch;
+
+  background: #e10600;
+
+  border-radius: 5px;
+
+  flex-shrink: 0;
+}
+
+.coming-soon span {
+  color: #e10600;
+
+  font-size: 0.68rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.coming-soon h2 {
+  margin: 7px 0;
+
+  font-size: 1.5rem;
+}
+
+.coming-soon p {
+  max-width: 750px;
+
+  color: #777;
+
+  font-size: 0.85rem;
+
+  line-height: 1.7;
+}
+
+.coming-soon-flag {
+  margin-left: auto;
+
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #e10600;
+
+  border: 1px solid #292929;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   TABLET
+   1000px and below
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .learn-page {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  /*
+    Hero becomes one column.
+    Telemetry remains at the TOP RIGHT
+    instead of covering the page.
+  */
+
+  .learn-header-area {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .learn-hero {
+    padding-bottom: 30px;
+  }
+
+  .telemetry-top-right {
+    width: 330px;
+    max-width: 100%;
+
+    padding-top: 0;
+
+    margin: 0 0 30px auto;
+  }
+
+  /*
+    Progress becomes vertical.
+  */
+
+  .progress-card {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 25px;
+  }
+
+  .progress-left {
+    width: 100%;
+  }
+
+  .progress-right {
+    width: 100%;
+  }
+
+  /*
+    Two lesson columns become one.
+  */
+
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL TABLET
+   768px and below
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .learn-page {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .learn-hero {
+    padding-top: 40px;
+  }
+
+  .learn-hero h1 {
+    font-size: clamp(2.8rem, 8vw, 4rem);
+
+    letter-spacing: -2px;
+  }
+
+  .learn-hero p {
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+  }
+
+  .search-section {
+    margin-top: 5px;
+  }
+
+  .progress-card {
+    padding: 25px;
+
+    margin-bottom: 55px;
+  }
+
+  .category-header {
+    align-items: flex-start;
+  }
+
+  .category-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .category-heading {
+    gap: 14px;
+  }
+
+  .category-number {
+    font-size: 2.4rem;
+  }
+
+  .coming-soon {
+    margin-top: 60px;
+
+    padding: 28px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   600px and below
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .learn-page {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 60px;
+  }
+
+  /* HERO */
+
+  .learn-hero {
+    padding-top: 35px;
+    padding-bottom: 25px;
+  }
+
+  .hero-tag {
+    font-size: 0.62rem;
+
+    padding: 7px 12px;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 20px;
+  }
+
+  .learn-hero h1 {
+    font-size: 2.65rem;
+
+    line-height: 1.05;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 20px;
+  }
+
+  .learn-hero p {
+    font-size: 0.88rem;
+
+    line-height: 1.7;
+  }
+
+
+  /* TELEMETRY */
+
+  .telemetry-top-right {
+    width: 100%;
+
+    max-width: 340px;
+
+    margin: 0 0 25px auto;
+  }
+
+
+  /* SEARCH */
+
+  .search-box {
+    min-height: 54px;
+
+    padding: 0 16px;
+
+    border-radius: 10px;
+  }
+
+  .search-box input {
+    height: 52px;
+
+    font-size: 0.85rem;
+  }
+
+
+  /* PROGRESS */
+
+  .progress-card {
+    padding: 22px 20px;
+
+    border-radius: 12px;
+
+    gap: 22px;
+  }
+
+  .progress-left {
+    align-items: flex-start;
+
+    gap: 13px;
+  }
+
+  .progress-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .progress-left h2 {
+    font-size: 1.05rem;
+  }
+
+  .progress-left p {
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+  }
+
+  .progress-top {
+    align-items: flex-start;
+  }
+
+  .progress-top span {
+    font-size: 0.7rem;
+
+    line-height: 1.4;
+  }
+
+  .progress-top strong {
+    font-size: 0.85rem;
+  }
+
+
+  /* CATEGORY */
+
+  .category-header {
+    margin-bottom: 22px;
+  }
+
+  .category-heading {
+    gap: 0;
+  }
+
+  .category-number {
+    display: none;
+  }
+
+  .category-tag {
+    font-size: 0.62rem;
+  }
+
+  .category-header h2 {
+    font-size: 1.45rem;
+
+    line-height: 1.2;
+  }
+
+  .category-header p {
+    font-size: 0.78rem;
+
+    line-height: 1.6;
+  }
+
+  .category-icon-box {
+    width: 45px;
+    height: 45px;
+  }
+
+
+  /* LESSON CARDS */
+
+  .lesson-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .lesson-card {
+    min-height: 240px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+  }
+
+  .lesson-card-content {
+    padding: 25px 0;
+  }
+
+  .lesson-card-content h3 {
+    font-size: 1.3rem;
+  }
+
+  .lesson-card-content p {
+    font-size: 0.8rem;
+
+    line-height: 1.65;
+  }
+
+  .lesson-status {
+    font-size: 0.6rem;
+
+    letter-spacing: 0.7px;
+  }
+
+
+  /* COMING SOON */
+
+  .coming-soon {
+    margin-top: 50px;
+
+    padding: 23px 20px;
+
+    gap: 15px;
+  }
+
+  .coming-soon h2 {
+    font-size: 1.2rem;
+  }
+
+  .coming-soon p {
+    font-size: 0.75rem;
+
+    line-height: 1.65;
+  }
+
+  .coming-soon-flag {
+    display: none;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+   400px and below
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .learn-page {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .learn-hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .learn-hero p {
+    font-size: 0.82rem;
+  }
+
+  .telemetry-top-right {
+    max-width: 100%;
+  }
+
+  .progress-card {
+    padding: 20px 16px;
+  }
+
+  .lesson-card {
+    padding: 18px;
+  }
+
+  .lesson-card-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .lesson-card-content p {
+    font-size: 0.76rem;
+  }
+
 }

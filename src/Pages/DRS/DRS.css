@@ -1,0 +1,991 @@
+/* =====================================================
+   DRS LESSON
+===================================================== */
+
+.drs-page {
+  background: #090909;
+  color: #f5f5f5;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   SHARED
+===================================================== */
+
+.section-kicker {
+  display: block;
+  color: #e10600;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+
+.drs-page h1,
+.drs-page h2,
+.drs-page h3 {
+  letter-spacing: -1.5px;
+}
+
+.drs-page p {
+  color: #999;
+  line-height: 1.8;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.drs-hero {
+  position: relative;
+  min-height: 720px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 7%;
+  gap: 60px;
+}
+
+.drs-hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.25;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 70px 70px;
+
+  mask-image:
+    linear-gradient(
+      to right,
+      black,
+      transparent
+    );
+}
+
+.drs-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.lesson-number {
+  color: #777;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 35px;
+}
+
+.drs-kicker {
+  color: #e10600;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+
+.drs-hero h1 {
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  line-height: 0.88;
+  margin: 25px 0 35px;
+  font-weight: 800;
+}
+
+.drs-hero h1 span {
+  color: #e10600;
+  margin-left: 10px;
+}
+
+.drs-hero-content > p {
+  max-width: 680px;
+  font-size: 1.1rem;
+}
+
+.drs-hero-stats {
+  display: flex;
+  gap: 45px;
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid #242424;
+}
+
+.drs-hero-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drs-hero-stats span {
+  color: #666;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.drs-hero-stats strong {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   AERODYNAMIC VISUAL
+===================================================== */
+
+.drs-visual {
+  position: relative;
+  width: min(100%, 540px);
+  aspect-ratio: 1;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aero-ring {
+  position: absolute;
+  border: 1px solid #222;
+  border-radius: 50%;
+}
+
+.ring-one {
+  width: 90%;
+  height: 90%;
+}
+
+.ring-two {
+  width: 68%;
+  height: 68%;
+}
+
+.ring-three {
+  width: 45%;
+  height: 45%;
+  border-color: rgba(225, 6, 0, 0.35);
+}
+
+.aero-car {
+  position: relative;
+  width: 280px;
+  height: 100px;
+  transform: rotate(-8deg);
+  z-index: 3;
+}
+
+.car-body {
+  position: absolute;
+  left: 45px;
+  top: 25px;
+  width: 190px;
+  height: 50px;
+  background: #171717;
+  border: 1px solid #444;
+  clip-path: polygon(
+    0 50%,
+    15% 20%,
+    42% 20%,
+    55% 0,
+    72% 0,
+    86% 25%,
+    100% 45%,
+    88% 75%,
+    50% 100%,
+    15% 80%
+  );
+}
+
+.car-front {
+  position: absolute;
+  left: 10px;
+  top: 42px;
+  width: 65px;
+  height: 8px;
+  background: #e10600;
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+
+.car-cockpit {
+  position: absolute;
+  left: 90px;
+  top: 5px;
+  width: 45px;
+  height: 24px;
+  background: #080808;
+  border-radius: 50% 50% 0 0;
+  border: 1px solid #444;
+}
+
+.car-side {
+  position: absolute;
+  left: 55px;
+  bottom: 0;
+  width: 130px;
+  height: 4px;
+  background: #e10600;
+}
+
+.car-rear-wing {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  width: 50px;
+  height: 8px;
+  border: 2px solid #e10600;
+  background: #0b0b0b;
+}
+
+.air-line {
+  position: absolute;
+  height: 1px;
+  width: 140px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #e10600
+  );
+  opacity: 0.7;
+}
+
+.line-one {
+  right: 0;
+  top: 38%;
+}
+
+.line-two {
+  right: 5%;
+  top: 48%;
+}
+
+.line-three {
+  right: 2%;
+  top: 58%;
+}
+
+.visual-label {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #555;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.drs-intro {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 130px 7%;
+  display: grid;
+  grid-template-columns: 80px 1fr 360px;
+  gap: 45px;
+  border-top: 1px solid #1c1c1c;
+}
+
+.section-index {
+  color: #e10600;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.intro-content h2 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1;
+  margin-bottom: 30px;
+}
+
+.intro-content p {
+  max-width: 650px;
+  margin-bottom: 18px;
+}
+
+.drag-equation {
+  align-self: center;
+  background: #111;
+  border: 1px solid #272727;
+  padding: 30px;
+}
+
+.equation-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #777;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.equation-line strong {
+  color: #e10600;
+}
+
+.equation-arrow {
+  text-align: center;
+  color: #e10600;
+  font-size: 2rem;
+  margin: 15px 0;
+}
+
+.equation-result {
+  color: #fff;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.drag-equation small {
+  display: block;
+  margin-top: 20px;
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+}
+
+
+/* =====================================================
+   HOW DRS WORKED
+===================================================== */
+
+.drs-sections {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 7%;
+}
+
+.section-heading {
+  margin-bottom: 50px;
+}
+
+.section-heading h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.drs-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.drs-card {
+  min-height: 390px;
+  padding: 30px;
+  background: #111;
+  border: 1px solid #242424;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease;
+}
+
+.drs-card:hover {
+  border-color: rgba(225, 6, 0, 0.5);
+  transform: translateY(-6px);
+}
+
+.drs-card-top {
+  display: flex;
+  justify-content: space-between;
+  color: #e10600;
+  margin-bottom: 55px;
+}
+
+.card-number {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #555;
+}
+
+.drs-card h3 {
+  font-size: 1.55rem;
+  margin-bottom: 18px;
+}
+
+.drs-card p {
+  font-size: 0.9rem;
+}
+
+.drs-highlight {
+  margin-top: auto;
+  padding-top: 25px;
+  color: #e10600;
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 1.5px;
+}
+
+
+/* =====================================================
+   OVERTAKE FLOW
+===================================================== */
+
+.overtake-section {
+  background: #101010;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  padding: 120px 7%;
+}
+
+.overtake-heading {
+  max-width: 800px;
+  margin: 0 auto 70px;
+  text-align: center;
+}
+
+.overtake-heading h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 20px;
+}
+
+.overtake-heading p {
+  max-width: 600px;
+  margin: auto;
+}
+
+.overtake-flow {
+  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+}
+
+.flow-step {
+  position: relative;
+  min-height: 210px;
+  padding: 28px;
+  border: 1px solid #292929;
+  background: #0b0b0b;
+}
+
+.flow-step.active {
+  border-color: #e10600;
+  box-shadow: 0 0 30px rgba(225, 6, 0, 0.08);
+}
+
+.flow-step.finish {
+  border-color: #3b3b3b;
+}
+
+.flow-step > span {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  color: #555;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.flow-step svg {
+  color: #e10600;
+  margin-bottom: 35px;
+}
+
+.flow-step h3 {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.flow-step p {
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+
+.flow-arrow {
+  color: #444;
+}
+
+
+/* =====================================================
+   2026 SYSTEM
+===================================================== */
+
+.modern-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 130px 7%;
+}
+
+.modern-header {
+  max-width: 760px;
+  margin-bottom: 55px;
+}
+
+.modern-header h2 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.98;
+  margin-bottom: 30px;
+}
+
+.modern-header p {
+  max-width: 650px;
+}
+
+.modern-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.modern-card {
+  position: relative;
+  min-height: 340px;
+  padding: 35px;
+  background: #111;
+  border: 1px solid #292929;
+  overflow: hidden;
+}
+
+.modern-card::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  right: -80px;
+  bottom: -80px;
+  border-radius: 50%;
+  background: rgba(225, 6, 0, 0.08);
+  filter: blur(30px);
+}
+
+.modern-icon {
+  color: #e10600;
+  margin-bottom: 55px;
+}
+
+.modern-number {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  color: #555;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.modern-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 18px;
+}
+
+.modern-card p {
+  max-width: 500px;
+  font-size: 0.9rem;
+}
+
+.modern-tag {
+  position: absolute;
+  bottom: 30px;
+  left: 35px;
+  color: #e10600;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   COMPARISON
+===================================================== */
+
+.comparison-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 80px 7% 130px;
+}
+
+.comparison-table {
+  border: 1px solid #292929;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid #242424;
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-row > * {
+  padding: 22px 25px;
+  border-right: 1px solid #242424;
+  font-size: 0.85rem;
+}
+
+.comparison-row > *:last-child {
+  border-right: none;
+}
+
+.comparison-row.header {
+  background: #111;
+}
+
+.comparison-row.header span {
+  color: #666;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.comparison-row strong {
+  color: #ccc;
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   FACT
+===================================================== */
+
+.drs-fact {
+  text-align: center;
+  padding: 150px 7%;
+  background: #101010;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+.fact-line {
+  width: 45px;
+  height: 2px;
+  background: #e10600;
+  margin: 0 auto 25px;
+}
+
+.drs-fact > span {
+  color: #e10600;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.drs-fact h2 {
+  max-width: 800px;
+  margin: 25px auto;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+}
+
+.drs-fact p {
+  max-width: 600px;
+  margin: auto;
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+.drs-quiz {
+  max-width: 900px;
+  margin: auto;
+  padding: 130px 7%;
+  text-align: center;
+}
+
+.drs-quiz h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 20px;
+}
+
+.drs-quiz > p {
+  max-width: 650px;
+  margin: 0 auto 45px;
+  font-size: 1.05rem;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quiz-options button {
+  min-height: 65px;
+  padding: 15px 20px;
+  background: #111;
+  border: 1px solid #292929;
+  color: #ddd;
+  font-family: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.quiz-options button:hover {
+  border-color: #e10600;
+  color: #fff;
+  background: rgba(225, 6, 0, 0.06);
+}
+
+
+/* =====================================================
+   NEXT LESSON
+===================================================== */
+
+.next-lesson {
+  max-width: 1200px;
+  margin: auto;
+  padding: 70px 7%;
+  border-top: 1px solid #242424;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.next-lesson span {
+  color: #e10600;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.next-lesson h2 {
+  margin: 10px 0;
+  font-size: 2rem;
+}
+
+.next-lesson p {
+  font-size: 0.85rem;
+}
+
+.next-lesson a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 16px 24px;
+
+  background: #e10600;
+  color: #fff;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  border-radius: 8px;
+
+  transition: 0.3s ease;
+}
+
+.next-lesson a:hover {
+  background: #ff2b25;
+  transform: translateX(4px);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1050px) {
+
+  .drs-hero {
+    grid-template-columns: 1fr;
+    padding-top: 70px;
+  }
+
+  .drs-visual {
+    max-width: 500px;
+  }
+
+  .drs-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .overtake-flow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .flow-arrow {
+    display: none;
+  }
+
+  .drs-intro {
+    grid-template-columns: 60px 1fr;
+  }
+
+  .drag-equation {
+    grid-column: 2;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .drs-hero {
+    min-height: auto;
+    padding: 55px 22px 70px;
+    gap: 40px;
+  }
+
+  .drs-hero h1 {
+    font-size: clamp(3.5rem, 17vw, 5rem);
+  }
+
+  .drs-hero-content > p {
+    font-size: 0.95rem;
+  }
+
+  .drs-hero-stats {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .drs-visual {
+    width: 100%;
+  }
+
+  .aero-car {
+    transform: scale(0.75) rotate(-8deg);
+  }
+
+  .drs-intro {
+    display: block;
+    padding: 90px 22px;
+  }
+
+  .section-index {
+    margin-bottom: 30px;
+  }
+
+  .drag-equation {
+    margin-top: 40px;
+  }
+
+  .drs-sections {
+    padding: 90px 22px;
+  }
+
+  .drs-card {
+    min-height: 340px;
+  }
+
+  .overtake-section {
+    padding: 90px 22px;
+  }
+
+  .overtake-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-step {
+    min-height: auto;
+  }
+
+  .modern-section {
+    padding: 90px 22px;
+  }
+
+  .modern-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modern-card {
+    min-height: 320px;
+  }
+
+  .comparison-section {
+    padding: 70px 22px 100px;
+  }
+
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-row.header {
+    display: none;
+  }
+
+  .comparison-row > * {
+    border-right: none;
+    padding: 15px 18px;
+  }
+
+  .comparison-row > span {
+    color: #e10600;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .drs-fact {
+    padding: 100px 22px;
+  }
+
+  .drs-quiz {
+    padding: 90px 22px;
+  }
+
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .next-lesson {
+    padding: 55px 22px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .next-lesson a {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .drs-hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .drs-hero-stats div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .drs-hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .visual-label {
+    font-size: 0.55rem;
+  }
+
+}
