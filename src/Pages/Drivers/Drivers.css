@@ -1,45 +1,1330 @@
-.drivers-page{
+/* =========================================
+   DRIVERS PAGE
+========================================= */
 
-background:#0b0b0b;
+.drivers-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(225, 6, 0, 0.08),
+      transparent 30%
+    ),
+    #080808;
+  color: #ffffff;
+}
 
-min-height:100vh;
 
-color:white;
+/* =========================================
+   HERO
+========================================= */
 
-padding:120px 8% 80px;
+.drivers-hero {
+  position: relative;
+  min-height: 520px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 110px 7% 80px;
+
+  overflow: hidden;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    linear-gradient(
+      115deg,
+      rgba(225, 6, 0, 0.08),
+      transparent 45%
+    );
+}
+
+.drivers-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -180px;
+  top: -220px;
+
+  border: 1px solid rgba(225, 6, 0, 0.2);
+
+  border-radius: 50%;
+}
+
+.drivers-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 700px;
+  height: 1px;
+
+  right: -150px;
+  bottom: 100px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(225, 6, 0, 0.5),
+    transparent
+  );
+
+  transform: rotate(-18deg);
+}
+
+.drivers-hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 720px;
+}
+
+.drivers-kicker {
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  color: #e10600;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+.drivers-hero h1 {
+  margin: 0;
+
+  font-size: clamp(3.2rem, 7vw, 6.5rem);
+
+  line-height: 0.92;
+
+  font-weight: 900;
+
+  letter-spacing: -4px;
+}
+
+.drivers-hero h1 span {
+  color: transparent;
+
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+}
+
+.drivers-hero p {
+  max-width: 620px;
+
+  margin-top: 30px;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   HERO STAT
+========================================= */
+
+.drivers-hero-stat {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 20px 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(10px);
+}
+
+.drivers-hero-stat svg {
+  color: #e10600;
+}
+
+.drivers-hero-stat div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drivers-hero-stat span {
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+  font-weight: 700;
+}
+
+.drivers-hero-stat strong {
+  font-size: 13px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   SEASON OVERVIEW
+========================================= */
+
+.drivers-overview {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  margin: -45px 7% 0;
+
+  position: relative;
+  z-index: 5;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: #101010;
+}
+
+.overview-card {
+  min-height: 110px;
+
+  padding: 25px 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.overview-card:last-child {
+  border-right: none;
+}
+
+.overview-card span {
+  margin-bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.38);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.overview-card strong {
+  font-size: 27px;
+
+  font-weight: 800;
+}
+
+.overview-card:last-child strong {
+  color: #e10600;
+}
+
+
+/* =========================================
+   DRIVER SECTION
+========================================= */
+
+.drivers-section {
+  padding: 110px 7% 120px;
+}
+
+.section-heading {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 30px;
+
+  margin-bottom: 45px;
+}
+
+.section-kicker {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #e10600;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  font-size: clamp(2rem, 4vw, 3.4rem);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -1.5px;
+}
+
+.section-heading p {
+  max-width: 600px;
+
+  margin: 16px 0 0;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   VIEW ALL DRIVERS
+========================================= */
+
+.view-all-drivers {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 13px 18px;
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  transition: 0.3s ease;
+}
+
+.view-all-drivers:hover {
+  border-color: #e10600;
+
+  color: #ffffff;
+
+  background: rgba(225, 6, 0, 0.08);
+}
+
+
+/* =========================================
+   DRIVER GRID
+========================================= */
+
+.drivers-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 22px;
+}
+
+
+/* =========================================
+   DRIVER CARD
+========================================= */
+
+.driver-card {
+  position: relative;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #161616,
+      #0d0d0d
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.driver-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background: #e10600;
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: transform 0.35s ease;
+}
+
+.driver-card:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(225, 6, 0, 0.5);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(225, 6, 0, 0.06);
+}
+
+.driver-card:hover::before {
+  transform: scaleX(1);
+}
+
+
+/* =========================================
+   CARD TOP
+========================================= */
+
+.driver-card-top {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.driver-position {
+  color: #e10600;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.driver-number {
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   DRIVER MAIN
+========================================= */
+
+.driver-card-main {
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 8px;
+
+  min-height: 330px;
+
+  padding: 20px 20px 0;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   DRIVER IMAGE
+========================================= */
+
+.driver-image-wrapper {
+  position: relative;
+
+  width: 55%;
+
+  height: 300px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.driver-image-glow {
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: rgba(225, 6, 0, 0.1);
+
+  filter: blur(35px);
+}
+
+.driver-image {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  object-position: center bottom;
+
+  transition:
+    transform 0.5s ease;
+}
+
+.driver-card:hover .driver-image {
+  transform: scale(1.06) translateY(-5px);
+}
+
+.driver-number-large {
+  position: absolute;
+
+  z-index: 1;
+
+  left: 0;
+  bottom: -8px;
+
+  font-size: 7rem;
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  color: rgba(255, 255, 255, 0.045);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   DRIVER INFO
+========================================= */
+
+.driver-info {
+  position: relative;
+  z-index: 3;
+
+  flex: 1;
+
+  padding-bottom: 30px;
+}
+
+.driver-short-name {
+  display: inline-block;
+
+  margin-bottom: 8px;
+
+  color: #e10600;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.driver-info h3 {
+  margin: 0;
+
+  font-size: 25px;
+
+  line-height: 0.95;
+
+  font-weight: 500;
+}
+
+.driver-info h3 strong {
+  font-weight: 900;
+}
+
+.driver-team {
+  margin: 14px 0 8px;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.driver-nationality {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: rgba(255, 255, 255, 0.38);
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+.driver-nationality svg {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+
+/* =========================================
+   DRIVER STATS
+========================================= */
+
+.driver-stats {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.driver-stat {
+  min-width: 0;
+
+  padding: 16px 10px;
+
+  text-align: center;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.driver-stat:last-child {
+  border-right: none;
+}
+
+.driver-stat span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: rgba(255, 255, 255, 0.32);
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.driver-stat strong {
+  font-size: 21px;
+
+  font-weight: 800;
+}
+
+
+/* =========================================
+   DRIVER DETAILS
+========================================= */
+
+.driver-details {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.driver-details svg {
+  transition: transform 0.3s ease;
+}
+
+.driver-details:hover {
+  color: #ffffff;
+
+  background: rgba(225, 6, 0, 0.08);
+}
+
+.driver-details:hover svg {
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================
+   ALL DRIVERS ACTION
+========================================= */
+
+.all-drivers-action {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  margin-top: 55px;
+
+  padding: 35px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.all-drivers-action p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 13px;
+}
+
+.all-drivers-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 14px 20px;
+
+  background: #e10600;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.all-drivers-button:hover {
+  background: #ff180f;
+
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   FULL DRIVER STANDINGS
+========================================= */
+
+.full-standings {
+  margin-top: 100px;
+}
+
+
+/* =========================================
+   STANDINGS HEADING
+========================================= */
+
+.standings-heading {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 30px;
+}
+
+.standings-heading h2 {
+  margin: 0;
+
+  font-size: clamp(2rem, 4vw, 3.2rem);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -1.5px;
+}
+
+.standings-heading p {
+  max-width: 600px;
+
+  margin: 15px 0 0;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+.standings-count {
+  flex-shrink: 0;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.standings-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: #0d0d0d;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.standings-table {
+  width: 100%;
+
+  min-width: 850px;
+
+  border-collapse: collapse;
+}
+
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.standings-table thead {
+  background: #151515;
+}
+
+.standings-table th {
+  padding: 16px 18px;
+
+  color: rgba(255, 255, 255, 0.32);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================
+   TABLE ROW
+========================================= */
+
+.standings-row {
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.standings-row:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.standings-row td {
+  padding: 17px 18px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 12px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+
+  white-space: nowrap;
+}
+
+.standings-row:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================
+   TOP 3
+========================================= */
+
+.standings-row.top-three {
+  background: rgba(225, 6, 0, 0.025);
+}
+
+.standings-row.top-three:hover {
+  background: rgba(225, 6, 0, 0.06);
+}
+
+
+/* =========================================
+   POSITION
+========================================= */
+
+.standings-position {
+  width: 60px;
+
+  color: rgba(255, 255, 255, 0.35) !important;
+
+  font-size: 11px !important;
+
+  font-weight: 900;
+}
+
+.top-three .standings-position {
+  color: #e10600 !important;
+}
+
+
+/* =========================================
+   DRIVER
+========================================= */
+
+.standings-driver {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 230px;
+}
+
+.standings-driver-image {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background:
+    linear-gradient(
+      145deg,
+      #1c1c1c,
+      #090909
+    );
+}
+
+.standings-driver-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center top;
+}
+
+.standings-driver-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.standings-driver-info strong {
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 800;
+}
+
+.standings-driver-info span {
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   TEAM
+========================================= */
+
+.standings-team {
+  color: rgba(255, 255, 255, 0.45) !important;
+
+  font-size: 11px !important;
+}
+
+
+/* =========================================
+   POINTS
+========================================= */
+
+.standings-points {
+  color: #ffffff !important;
+
+  font-size: 17px !important;
+
+  font-weight: 900;
+}
+
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
+.standings-view {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 8px 11px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  text-decoration: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.standings-view:hover {
+  color: #ffffff;
+
+  border-color: #e10600;
+
+  background: rgba(225, 6, 0, 0.1);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .full-standings {
+    margin-top: 75px;
+  }
+
+  .standings-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .standings-heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .standings-count {
+    align-self: flex-start;
+  }
 
 }
 
-.drivers-hero{
 
-margin-bottom:60px;
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .drivers-hero {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .drivers-overview {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .drivers-section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .drivers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .driver-card:last-child {
+    grid-column: span 2;
+  }
 
 }
 
-.drivers-hero h1{
 
-font-size:3.8rem;
+/* =========================================
+   TABLET / SMALL LAPTOP
+========================================= */
 
-margin-bottom:15px;
+@media (max-width: 850px) {
+
+  .drivers-hero {
+    min-height: auto;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 40px;
+
+    padding-top: 90px;
+  }
+
+  .drivers-hero-stat {
+    align-self: flex-start;
+  }
+
+  .drivers-overview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .overview-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .overview-card:nth-child(1),
+  .overview-card:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
 
 }
 
-.drivers-hero p{
 
-color:#bcbcbc;
+/* =========================================
+   MOBILE
+========================================= */
 
-font-size:1.1rem;
+@media (max-width: 650px) {
 
-max-width:700px;
+  .drivers-hero {
+    padding: 75px 20px 90px;
+  }
+
+  .drivers-hero h1 {
+    font-size: clamp(2.8rem, 15vw, 4.5rem);
+
+    letter-spacing: -2px;
+  }
+
+  .drivers-hero p {
+    font-size: 15px;
+  }
+
+  .drivers-hero-stat {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  .drivers-overview {
+    margin: -35px 20px 0;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .overview-card {
+    min-height: 90px;
+
+    padding: 18px;
+  }
+
+  .overview-card strong {
+    font-size: 22px;
+  }
+
+
+  .drivers-section {
+    padding: 75px 20px 90px;
+  }
+
+  .section-heading h2 {
+    font-size: 2.2rem;
+  }
+
+
+  .drivers-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .driver-card:last-child {
+    grid-column: auto;
+  }
+
+
+  .driver-card-main {
+    min-height: 310px;
+  }
+
+  .driver-image-wrapper {
+    width: 52%;
+
+    height: 280px;
+  }
+
+  .driver-info h3 {
+    font-size: 22px;
+  }
+
+
+  .driver-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .driver-stat:nth-child(2) {
+    border-right: none;
+  }
+
+  .driver-stat:nth-child(1),
+  .driver-stat:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+
+  .all-drivers-action {
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 28px 20px;
+  }
+
+  .all-drivers-button {
+    width: 100%;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+  }
 
 }
 
-.drivers-grid{
 
-display:grid;
+/* =========================================
+   SMALL MOBILE
+========================================= */
 
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+@media (max-width: 420px) {
 
-gap:30px;
+  .drivers-hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .drivers-overview {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .drivers-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .driver-card-main {
+    min-height: 290px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .driver-image-wrapper {
+    width: 50%;
+    height: 250px;
+  }
+
+  .driver-info h3 {
+    font-size: 20px;
+  }
+
+  .driver-number-large {
+    font-size: 5rem;
+  }
 
 }
