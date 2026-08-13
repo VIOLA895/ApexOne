@@ -1,39 +1,38 @@
-import "./Learn.css";
-
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
-import LearningTelemetry from "../../components/LearningTelemetry/LearningTelemetry";
-import lessons from "../../data/lessons";
-import useLessonProgress from "../../hooks/useLessonProgress";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
   Search,
   BookOpen,
-  Trophy,
   ArrowRight,
   Clock3,
   CircleCheck,
-  Flag,
+  Lock,
+  ChevronRight,
 } from "lucide-react";
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
+import LearningTelemetry from "../../components/LearningTelemetry/LearningTelemetry";
+
+import lessons from "../../data/lessons";
+import useLessonProgress from "../../hooks/useLessonProgress";
+
+import "./Learn.css";
 
 function Learn() {
   const [search, setSearch] = useState("");
 
   const { completedLessons } = useLessonProgress();
 
-  /* =========================
-     SEARCH
-  ========================= */
+  // =====================================================
+  // SEARCH
+  // =====================================================
 
   const searchTerm = search.trim().toLowerCase();
 
   const filteredLessons = lessons.filter((lesson) => {
-    if (!searchTerm) {
-      return true;
-    }
+    if (!searchTerm) return true;
 
     return (
       lesson.title?.toLowerCase().includes(searchTerm) ||
@@ -42,19 +41,126 @@ function Learn() {
     );
   });
 
-  /* =========================
-     BEGINNER LESSONS
-  ========================= */
+  // =====================================================
+  // CURRICULUM CATEGORIES
+  // =====================================================
 
-  const beginnerLessons = filteredLessons.filter(
-    (lesson) =>
-      lesson.difficulty?.toLowerCase() === "beginner" ||
-      lesson.category?.toLowerCase() === "beginner"
-  );
+  const categories = [
+    {
+      id: "beginner",
+      number: "01",
+      label: "BEGINNER",
+      title: "Start Your F1 Journey",
+      description:
+        "Learn the essential concepts you need to understand before watching a Formula 1 race.",
+    },
 
-  /* =========================
-     PROGRESS
-  ========================= */
+    {
+      id: "cars",
+      number: "02",
+      label: "CARS & TECHNOLOGY",
+      title: "Understand the Machine",
+      description:
+        "Discover the technology, aerodynamics and engineering that make Formula 1 cars so fast.",
+    },
+
+    {
+      id: "race-strategy",
+      number: "03",
+      label: "RACE STRATEGY",
+      title: "Understand How Races Are Won",
+      description:
+        "Explore overtaking, defending, weather decisions, safety cars and strategic thinking.",
+    },
+
+    {
+      id: "rules",
+      number: "04",
+      label: "RULES & RACE CONTROL",
+      title: "Understand What Is Allowed",
+      description:
+        "Learn the flags, penalties, track limits and rules that control a Grand Prix.",
+    },
+
+        {
+      id: "championship",
+      number: "05",
+      label: "CHAMPIONSHIP & F1 BEYOND THE RACE",
+      title: "Understand the Season",
+      description:
+        "Learn how drivers and constructors collect points and compete for the championship.",
+    },
+
+    {
+      id: "F1 Glossary",
+      number: "06",
+      label: "F1 GLOSSARY",
+      title: "Understand the Language",
+      description:
+        "Learn the essential terms and phrases used in Formula 1 commentary and discussion.",
+    },
+
+
+  ];
+
+  // =====================================================
+  // MAP LESSON CATEGORIES
+  // =====================================================
+
+  function getCategoryLessons(category) {
+    return filteredLessons.filter((lesson) => {
+      const lessonCategory =
+        lesson.category?.toLowerCase() || "";
+
+      if (category.id === "beginner") {
+        return (
+          lessonCategory === "beginner" ||
+          lessonCategory === "basics"
+        );
+      }
+
+      if (category.id === "cars") {
+        return (
+          lessonCategory.includes("cars") ||
+          lessonCategory.includes("technology")
+        );
+      }
+
+      if (category.id === "strategy") {
+        return (
+          lessonCategory.includes("tyre") ||
+          lessonCategory.includes("pit")
+        );
+      }
+
+      if (category.id === "race-strategy") {
+        return lessonCategory.includes("strategy");
+      }
+
+      if (category.id === "rules") {
+        return (
+          lessonCategory.includes("rules") ||
+          lessonCategory.includes("race control")
+        );
+      }
+
+      if (category.id === "F1 Glossary") {
+        return (
+          lessonCategory.includes("glossary")
+        );
+      }
+
+      if (category.id === "championship") {
+        return lessonCategory.includes("championship");
+      }
+
+      return false;
+    });
+  }
+
+  // =====================================================
+  // PROGRESS
+  // =====================================================
 
   const totalLessons = lessons.length;
 
@@ -64,9 +170,15 @@ function Learn() {
     totalLessons > 0
       ? Math.min(
           100,
-          Math.round((completedCount / totalLessons) * 100)
+          Math.round(
+            (completedCount / totalLessons) * 100
+          )
         )
       : 0;
+
+  // =====================================================
+  // RENDER
+  // =====================================================
 
   return (
     <>
@@ -74,52 +186,54 @@ function Learn() {
 
       <main className="learn-page">
 
-        {/* =========================================
-            HERO + TELEMETRY
-        ========================================= */}
+        {/* =================================================
+            HERO
+        ================================================= */}
 
-        <section className="learn-header-area">
+        <section className="learn-hero">
 
-          <div className="learn-hero">
+          <div className="learn-hero-glow"></div>
 
-            <div className="hero-glow"></div>
+          <div className="learn-container learn-hero-grid">
 
-            <span className="hero-tag">
-              FORMULA 1 LEARNING HUB
-            </span>
+            <div className="learn-hero-content">
 
-            <h1>
-              Understand the Sport.
-              <br />
-              <span>Master the Race.</span>
-            </h1>
+              <span className="learn-hero-kicker">
+                FORMULA 1 LEARNING HUB
+              </span>
 
-            <p>
-              Formula 1 can look complicated when you're just
-              starting out. ApexOne breaks the sport down into
-              simple lessons so you can understand what you're
-              watching, why teams make certain decisions and how
-              races are won.
-            </p>
+              <h1>
+                Understand the Sport.
+                <span> Master the Race.</span>
+              </h1>
+
+              <p>
+                Formula 1 can look complicated when
+                you're just starting out. ApexOne breaks
+                the sport down into simple lessons so you
+                can understand what you're watching,
+                why teams make certain decisions and how
+                races are won.
+              </p>
+
+            </div>
+
+            <div className="learn-telemetry">
+              <LearningTelemetry />
+            </div>
 
           </div>
-
-          {/* TOP RIGHT TELEMETRY */}
-
-          <aside className="telemetry-top-right">
-            <LearningTelemetry />
-          </aside>
 
         </section>
 
 
-        {/* =========================================
+        {/* =================================================
             SEARCH
-        ========================================= */}
+        ================================================= */}
 
-        <section className="search-section">
+        <section className="learn-container learn-search-section">
 
-          <div className="search-box">
+          <div className="learn-search">
 
             <Search size={20} />
 
@@ -138,255 +252,315 @@ function Learn() {
         </section>
 
 
-        {/* =========================================
+        {/* =================================================
             PROGRESS
-        ========================================= */}
+        ================================================= */}
 
-        <section className="progress-card">
+        <section className="learn-container">
 
-          <div className="progress-left">
+          <div className="learn-progress">
 
-            <div className="progress-icon">
-              <BookOpen size={25} />
-            </div>
+            <div className="learn-progress-info">
 
-            <div>
-
-              <span className="section-label">
-                YOUR PROGRESS
-              </span>
-
-              <h2>
-                Build Your F1 Knowledge
-              </h2>
-
-              <p>
-                Complete lessons and work your way from
-                beginner to confident F1 fan.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div className="progress-right">
-
-            <div className="progress-top">
-
-              <span>
-                {completedCount} of {totalLessons} lessons completed
-              </span>
-
-              <strong>
-                {progress}%
-              </strong>
-
-            </div>
-
-            <div
-              className="progress-bar"
-              role="progressbar"
-              aria-valuenow={progress}
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-
-              <div
-                className="progress-fill"
-                style={{
-                  width: `${progress}%`,
-                }}
-              />
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =========================================
-            BEGINNER SECTION
-        ========================================= */}
-
-        <section className="lesson-category">
-
-          <div className="category-header">
-
-            <div className="category-heading">
-
-              <span className="category-number">
-                01
-              </span>
+              <div className="learn-progress-icon">
+                <BookOpen size={24} />
+              </div>
 
               <div>
 
-                <span className="category-tag">
-                  BEGINNER
+                <span>
+                  YOUR PROGRESS
                 </span>
 
                 <h2>
-                  Start Your F1 Journey
+                  Build Your F1 Knowledge
                 </h2>
 
                 <p>
-                  Learn the essential concepts you need to
-                  understand before watching a Formula 1 race.
+                  Complete lessons and work your way
+                  from beginner to confident F1 fan.
                 </p>
 
               </div>
 
             </div>
 
-            <div className="category-icon-box">
-              <Trophy size={25} />
+            <div className="learn-progress-stat">
+
+              <div className="learn-progress-top">
+
+                <span>
+                  {completedCount} of {totalLessons} lessons
+                  completed
+                </span>
+
+                <strong>
+                  {progress}%
+                </strong>
+
+              </div>
+
+              <div
+                className="learn-progress-bar"
+                role="progressbar"
+                aria-valuenow={progress}
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+
+                <div
+                  className="learn-progress-fill"
+                  style={{
+                    width: `${progress}%`,
+                  }}
+                />
+
+              </div>
+
             </div>
 
           </div>
-
-
-          {/* =========================================
-              LESSON GRID
-          ========================================= */}
-
-          {beginnerLessons.length > 0 ? (
-
-            <div className="lesson-grid">
-
-              {beginnerLessons.map((lesson, index) => {
-
-                const isCompleted =
-                  completedLessons.includes(lesson.slug);
-
-                return (
-
-                  <Link
-                    to={`/Learn/${lesson.slug}`}
-                    className="lesson-card"
-                    key={lesson.slug}
-                  >
-
-                    {/* CARD TOP */}
-
-                    <div className="lesson-card-top">
-
-                      <div className="lesson-number">
-                        {String(index + 1).padStart(2, "0")}
-                      </div>
-
-                      <div className="lesson-status">
-
-                        {isCompleted ? (
-                          <>
-                            <CircleCheck size={15} />
-                            Completed
-                          </>
-                        ) : (
-                          <>
-                            <Flag size={15} />
-                            Beginner
-                          </>
-                        )}
-
-                      </div>
-
-                    </div>
-
-
-                    {/* CARD CONTENT */}
-
-                    <div className="lesson-card-content">
-
-                      <h3>
-                        {lesson.title}
-                      </h3>
-
-                      <p>
-                        {lesson.subtitle || lesson.intro}
-                      </p>
-
-                    </div>
-
-
-                    {/* CARD FOOTER */}
-
-                    <div className="lesson-card-footer">
-
-                      <div className="lesson-time">
-
-                        <Clock3 size={15} />
-
-                        <span>
-                          {lesson.readTime || "5 min"}
-                        </span>
-
-                      </div>
-
-                      <div className="lesson-arrow">
-
-                        <ArrowRight size={18} />
-
-                      </div>
-
-                    </div>
-
-                  </Link>
-
-                );
-              })}
-
-            </div>
-
-          ) : (
-
-            <div className="no-results">
-
-              <Search size={30} />
-
-              <h3>
-                No lessons found
-              </h3>
-
-              <p>
-                Try searching for another Formula 1 topic.
-              </p>
-
-            </div>
-
-          )}
 
         </section>
 
 
-        {/* =========================================
-            COMING SOON
-        ========================================= */}
+        {/* =================================================
+            CURRICULUM
+        ================================================= */}
 
-        <section className="coming-soon">
+        <section className="learn-container curriculum">
 
-          <div className="coming-soon-line"></div>
-
-          <div>
+          <div className="curriculum-heading">
 
             <span>
-              MORE KNOWLEDGE COMING SOON
+              THE APEXONE CURRICULUM
             </span>
 
             <h2>
-              From the basics to race strategy.
+              Learn Formula 1.
+              <br />
+              <em>One concept at a time.</em>
             </h2>
 
             <p>
-              ApexOne will continue expanding the learning
-              hub with qualifying, DRS, pit stops, flags,
-              race strategy, championship points and more.
+              Follow the learning paths below or jump
+              directly into a topic that interests you.
             </p>
 
           </div>
 
-          <div className="coming-soon-flag">
-            <Flag size={30} />
+
+          {/* =================================================
+              CATEGORY SECTIONS
+          ================================================= */}
+
+          <div className="curriculum-list">
+
+            {categories.map((category) => {
+
+              const categoryLessons =
+                getCategoryLessons(category);
+
+              return (
+                <section
+                  className={`curriculum-section ${
+                    categoryLessons.length === 0
+                      ? "curriculum-empty"
+                      : ""
+                  }`}
+                  key={category.id}
+                >
+
+                  {/* CATEGORY HEADER */}
+
+                  <div className="curriculum-header">
+
+                    <div className="curriculum-title">
+
+                      <span className="curriculum-number">
+                        {category.number}
+                      </span>
+
+                      <div>
+
+                        <span className="curriculum-label">
+                          {category.label}
+                        </span>
+
+                        <h2>
+                          {category.title}
+                        </h2>
+
+                        <p>
+                          {category.description}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <ChevronRight
+                      size={24}
+                      className="curriculum-chevron"
+                    />
+
+                  </div>
+
+
+                  {/* LESSONS */}
+
+                  {categoryLessons.length > 0 ? (
+
+                    <div className="curriculum-grid">
+
+                      {categoryLessons.map(
+                        (lesson, index) => {
+
+                          const isCompleted =
+                            completedLessons.includes(
+                              lesson.slug
+                            );
+
+                          return (
+                            <Link
+                              to={`/Learn/${lesson.slug}`}
+                              className={`curriculum-card ${
+                                isCompleted
+                                  ? "completed"
+                                  : ""
+                              }`}
+                              key={lesson.slug}
+                            >
+
+                              <div className="curriculum-card-top">
+
+                                <span className="curriculum-card-number">
+                                  {String(
+                                    index + 1
+                                  ).padStart(2, "0")}
+                                </span>
+
+                                {isCompleted ? (
+                                  <span className="curriculum-complete">
+                                    <CircleCheck
+                                      size={15}
+                                    />
+                                    Completed
+                                  </span>
+                                ) : (
+                                  <span className="curriculum-level">
+                                    {lesson.difficulty ||
+                                      "Beginner"}
+                                  </span>
+                                )}
+
+                              </div>
+
+
+                              <div className="curriculum-card-content">
+
+                                <h3>
+                                  {lesson.title}
+                                </h3>
+
+                                <p>
+                                  {lesson.subtitle ||
+                                    lesson.intro}
+                                </p>
+
+                              </div>
+
+
+                              <div className="curriculum-card-footer">
+
+                                <span>
+                                  <Clock3 size={15} />
+                                  {lesson.readTime ||
+                                    "5 min"}
+                                </span>
+
+                                <div className="curriculum-arrow">
+                                  <ArrowRight size={18} />
+                                </div>
+
+                              </div>
+
+                            </Link>
+                          );
+                        }
+                      )}
+
+                    </div>
+
+                  ) : (
+
+                    <div className="curriculum-coming-soon">
+
+                      <div className="coming-soon-icon">
+                        <Lock size={20} />
+                      </div>
+
+                      <div>
+
+                        <span>
+                          COMING SOON
+                        </span>
+
+                        <h3>
+                          More lessons are on the way.
+                        </h3>
+
+                        <p>
+                          This part of the ApexOne
+                          curriculum is being developed.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  )}
+
+                </section>
+              );
+            })}
+
+          </div>
+
+        </section>
+
+
+        {/* =================================================
+            FINAL CTA
+        ================================================= */}
+
+        <section className="learn-container">
+
+          <div className="learn-final-cta">
+
+            <div>
+
+              <span>
+                KEEP LEARNING
+              </span>
+
+              <h2>
+                From the basics to race strategy.
+              </h2>
+
+              <p>
+                ApexOne is built to take you from
+                wondering what DRS means to understanding
+                why a team made a strategic decision
+                during the final laps.
+              </p>
+
+            </div>
+
+            <div className="learn-cta-mark">
+              <span>F1</span>
+            </div>
+
           </div>
 
         </section>

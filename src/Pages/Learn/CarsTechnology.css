@@ -1,0 +1,593 @@
+/* =========================================================
+   CARS & TECHNOLOGY PAGE
+   ========================================================= */
+
+.cars-tech-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(225, 6, 0, 0.10),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #090909 0%,
+      #0d0909 45%,
+      #090909 100%
+    );
+
+  color: #ffffff;
+}
+
+
+.cars-tech-container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 3rem 0 6rem;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.cars-tech-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  color: #999;
+  text-decoration: none;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  margin-bottom: 3rem;
+
+  transition: color 0.25s ease;
+}
+
+
+.cars-tech-back:hover {
+  color: #e10600;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.cars-tech-hero {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+
+  gap: 2rem;
+
+  padding: 2rem 0 4rem;
+
+  border-bottom: 1px solid #242424;
+}
+
+
+.cars-tech-hero-number {
+  color: #e10600;
+
+  font-size: 3.8rem;
+  font-weight: 800;
+
+  line-height: 1;
+
+  padding-top: 0.25rem;
+}
+
+
+.cars-tech-tag {
+  display: inline-block;
+
+  color: #e10600;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+
+  margin-bottom: 0.7rem;
+}
+
+
+.cars-tech-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+
+  line-height: 1.05;
+
+  margin: 0 0 1rem;
+
+  letter-spacing: -0.04em;
+}
+
+
+.cars-tech-hero p {
+  max-width: 720px;
+
+  color: #969696;
+
+  font-size: 1.05rem;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.cars-tech-intro {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 1.5rem;
+
+  margin: 4rem 0;
+
+  padding: 2rem;
+
+  background: #111111;
+
+  border: 1px solid #252525;
+
+  border-radius: 18px;
+}
+
+
+.cars-tech-intro-icon {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #e10600;
+
+  background: rgba(225, 6, 0, 0.08);
+
+  border: 1px solid rgba(225, 6, 0, 0.25);
+
+  border-radius: 12px;
+}
+
+
+.section-label {
+  display: block;
+
+  color: #e10600;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+
+  margin-bottom: 0.6rem;
+}
+
+
+.cars-tech-intro h2 {
+  margin: 0 0 0.7rem;
+
+  font-size: 1.7rem;
+}
+
+
+.cars-tech-intro p {
+  max-width: 800px;
+
+  margin: 0;
+
+  color: #8f8f8f;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   LESSON SECTION
+   ========================================================= */
+
+.cars-tech-lessons {
+  margin-top: 4rem;
+}
+
+
+.cars-tech-section-heading {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-bottom: 1.8rem;
+}
+
+
+.cars-tech-section-heading h2 {
+  margin: 0;
+
+  font-size: 2rem;
+}
+
+
+.lesson-count {
+  color: #666;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   LESSON GRID
+   ========================================================= */
+
+.cars-tech-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 1.2rem;
+}
+
+
+.cars-tech-lesson-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 300px;
+
+  padding: 1.7rem;
+
+  background: #111111;
+
+  border: 1px solid #292929;
+
+  border-radius: 18px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+
+.cars-tech-lesson-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: #e10600;
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: transform 0.3s ease;
+}
+
+
+.cars-tech-lesson-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(225, 6, 0, 0.5);
+
+  background: #151010;
+}
+
+
+.cars-tech-lesson-card:hover::before {
+  transform: scaleX(1);
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.cars-tech-card-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 2.2rem;
+}
+
+
+.cars-tech-number {
+  color: #e10600;
+
+  font-size: 1.4rem;
+
+  font-weight: 800;
+}
+
+
+.cars-tech-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.35rem;
+
+  color: #777;
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+
+.cars-tech-card-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1.4rem;
+
+  color: #e10600;
+
+  background: rgba(225, 6, 0, 0.08);
+
+  border: 1px solid rgba(225, 6, 0, 0.2);
+
+  border-radius: 12px;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.cars-tech-card-category {
+  color: #e10600;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+}
+
+
+.cars-tech-card-content h3 {
+  margin: 0.5rem 0 0.7rem;
+
+  font-size: 1.5rem;
+}
+
+
+.cars-tech-card-content p {
+  margin: 0;
+
+  color: #858585;
+
+  line-height: 1.6;
+
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.cars-tech-card-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: auto;
+
+  padding-top: 1.5rem;
+
+  color: #777;
+
+  font-size: 0.8rem;
+}
+
+
+.cars-tech-card-footer svg {
+  color: #e10600;
+
+  transition: transform 0.25s ease;
+}
+
+
+.cars-tech-lesson-card:hover
+.cars-tech-card-footer svg {
+  transform: translateX(5px);
+}
+
+
+/* =========================================================
+   EMPTY / COMING SOON
+   ========================================================= */
+
+.cars-tech-empty {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 1.2rem;
+
+  padding: 2rem;
+
+  background: #111111;
+
+  border: 1px dashed #303030;
+
+  border-radius: 18px;
+}
+
+
+.cars-tech-empty-icon {
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #666;
+
+  background: #181818;
+
+  border-radius: 12px;
+}
+
+
+.cars-tech-empty span {
+  color: #e10600;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+.cars-tech-empty h3 {
+  margin: 0.4rem 0;
+
+  font-size: 1.1rem;
+}
+
+
+.cars-tech-empty p {
+  margin: 0;
+
+  color: #666;
+}
+
+
+/* =========================================================
+   NEXT SECTION
+   ========================================================= */
+
+.cars-tech-next {
+  margin-top: 5rem;
+
+  padding: 3rem 0;
+
+  border-top: 1px solid #242424;
+}
+
+
+.cars-tech-next span {
+  color: #e10600;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+.cars-tech-next h2 {
+  margin: 0.6rem 0;
+
+  font-size: 2rem;
+}
+
+
+.cars-tech-next p {
+  margin: 0;
+
+  color: #777;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .cars-tech-container {
+    width: min(100% - 32px, 600px);
+
+    padding-top: 2rem;
+  }
+
+
+  .cars-tech-hero {
+    grid-template-columns: 1fr;
+
+    gap: 1rem;
+  }
+
+
+  .cars-tech-hero-number {
+    font-size: 3rem;
+  }
+
+
+  .cars-tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .cars-tech-section-heading {
+    align-items: flex-start;
+
+    gap: 1rem;
+
+    flex-direction: column;
+  }
+
+
+  .cars-tech-intro {
+    flex-direction: column;
+  }
+
+}

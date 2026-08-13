@@ -1,111 +1,534 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import {
   Flag,
   ChevronDown,
   CalendarDays,
   Trophy,
+  LoaderCircle,
+  AlertCircle,
 } from "lucide-react";
 
 import "./RaceResults.css";
 
-import raceResults from "../../data/raceResults";
 import drivers from "../../data/drivers";
 
+import {
+  getSessions,
+  getSessionResults,
+  getSessionDrivers,
+} from "../../services/openF1";
+
 function RaceResults() {
+  // =====================================================
+  // STATE
+  // =====================================================
+
+  const [sessions, setSessions] = useState([]);
+
   const [selectedRace, setSelectedRace] = useState("all");
 
-  // Convert the raceResults object into an array
-  const races = Object.entries(raceResults).map(
-    ([round, race]) => ({
-      round: Number(round),
-      ...race,
-    })
-  );
+  const [results, setResults] = useState([]);
 
-  // Get selected race
-  const selectedRaceData =
-    selectedRace === "all"
-      ? null
-      : races.find(
-          (race) =>
-            String(race.round) === selectedRace
+  const [loadingSessions, setLoadingSessions] =
+    useState(true);
+
+  const [loadingResults, setLoadingResults] =
+    useState(false);
+
+  const [error, setError] = useState("");
+
+  const [resultsError, setResultsError] =
+    useState("");
+
+
+  // =====================================================
+  // LOAD 2026 SESSIONS
+  // =====================================================
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadSessions() {
+      try {
+        setLoadingSessions(true);
+        setError("");
+
+        const data = await getSessions(2026);
+
+        if (cancelled) {
+          return;
+        }
+
+        // -------------------------------------------------
+        // Only keep actual RACE sessions.
+        // OpenF1 also returns Practice, Qualifying,
+        // Sprint, etc.
+        // -------------------------------------------------
+
+        const raceSessions = data
+          .filter(
+            (session) =>
+              session.session_name === "Race" ||
+              session.session_type === "Race"
+          )
+          .sort((a, b) => {
+            const dateA = new Date(
+              a.date_start || 0
+            );
+
+            const dateB = new Date(
+              b.date_start || 0
+            );
+
+            return dateA - dateB;
+          });
+
+        setSessions(raceSessions);
+
+      } catch (err) {
+        if (!cancelled) {
+          console.error(
+            "Failed to load OpenF1 sessions:",
+            err
+          );
+
+          setError(
+            "Unable to load the 2026 Grand Prix calendar."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingSessions(false);
+        }
+      }
+    }
+
+    loadSessions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+
+  // =====================================================
+  // LOAD SELECTED RACE
+  // =====================================================
+
+  useEffect(() => {
+    // -------------------------------------------------
+    // IMPORTANT:
+    // Do NOT call setResults([]) here.
+    //
+    // When "all" is selected, the component simply
+    // doesn't need race results.
+    // -------------------------------------------------
+
+    if (selectedRace === "all") {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadResults() {
+      try {
+        setLoadingResults(true);
+        setResultsError("");
+
+        // -------------------------------------------------
+        // selectedRace contains the actual OpenF1
+        // session_key.
+        // -------------------------------------------------
+
+        const sessionKey = Number(
+          selectedRace
         );
 
-  /*
-   * Convert the result object:
-   *
-   * {
-   *   63: 1,
-   *   12: 2,
-   *   16: 3
-   * }
-   *
-   * into an array containing driver information.
-   */
-  const getDriverResults = (race) => {
-    if (!race) return [];
+        // -------------------------------------------------
+        // Get final race results
+        // -------------------------------------------------
 
-    return drivers
-      .map((driver) => {
+        const raceResults =
+          await getSessionResults(sessionKey);
 
-        const result =
-          race.results[driver.number];
 
-        return {
-          ...driver,
-          result:
-            result !== undefined
-              ? result
-              : "DNS",
-        };
-      })
-      .sort((a, b) => {
+        // -------------------------------------------------
+        // Get drivers who participated in the session.
+        // -------------------------------------------------
 
-        const aResult = a.result;
-        const bResult = b.result;
+        let sessionDrivers = [];
 
-        // Numeric finishing positions first
-        if (
-          typeof aResult === "number" &&
-          typeof bResult === "number"
-        ) {
-          return aResult - bResult;
+        try {
+          sessionDrivers =
+            await getSessionDrivers(
+              sessionKey
+            );
+        } catch (driverError) {
+          console.warn(
+            "Could not load session drivers:",
+            driverError
+          );
         }
 
-        // Numeric result before status
-        if (
-          typeof aResult === "number"
-        ) {
-          return -1;
+
+        if (cancelled) {
+          return;
         }
 
-        if (
-          typeof bResult === "number"
-        ) {
-          return 1;
-        }
 
-        // Put DNF/NC/DNS after classified drivers
-        const statusOrder = {
-          DNF: 1,
-          NC: 2,
-          DNS: 3,
-        };
+        // =================================================
+        // CREATE RESULT LOOKUP
+        // =================================================
 
-        return (
-          (statusOrder[aResult] || 99) -
-          (statusOrder[bResult] || 99)
+        const resultMap = new Map();
+
+        raceResults.forEach((result) => {
+          resultMap.set(
+            Number(result.driver_number),
+            result
+          );
+        });
+
+
+        // =================================================
+        // CREATE SESSION DRIVER LOOKUP
+        // =================================================
+
+        const sessionDriverMap = new Map();
+
+        sessionDrivers.forEach((driver) => {
+          sessionDriverMap.set(
+            Number(driver.driver_number),
+            driver
+          );
+        });
+
+
+        // =================================================
+        // MERGE WITH OUR 22 DRIVER DATA
+        //
+        // This makes sure all 22 drivers are displayed,
+        // even if OpenF1 doesn't return a result for one.
+        // =================================================
+
+        const mergedResults = drivers.map(
+          (driver) => {
+
+            const driverNumber = Number(
+              driver.number
+            );
+
+            const apiResult =
+              resultMap.get(driverNumber);
+
+            const apiDriver =
+              sessionDriverMap.get(
+                driverNumber
+              );
+
+
+            // ---------------------------------------------
+            // DRIVER DID NOT APPEAR IN RESULT DATA
+            // ---------------------------------------------
+
+            if (!apiResult) {
+              return {
+                ...driver,
+
+                result: "DNS",
+
+                position: null,
+
+                dnf: false,
+
+                dns: true,
+
+                dsq: false,
+
+                numberOfLaps: 0,
+
+                gapToLeader: null,
+
+                sessionDriver:
+                  apiDriver || null,
+              };
+            }
+
+
+            // ---------------------------------------------
+            // DETERMINE STATUS
+            // ---------------------------------------------
+
+            let status = "FINISHED";
+
+            if (apiResult.dsq) {
+              status = "DSQ";
+            } else if (apiResult.dnf) {
+              status = "DNF";
+            } else if (apiResult.dns) {
+              status = "DNS";
+            }
+
+
+            return {
+              ...driver,
+
+              position:
+                apiResult.position ?? null,
+
+              result:
+                apiResult.position ??
+                status,
+
+              status,
+
+              dnf:
+                Boolean(apiResult.dnf),
+
+              dns:
+                Boolean(apiResult.dns),
+
+              dsq:
+                Boolean(apiResult.dsq),
+
+              numberOfLaps:
+                apiResult.number_of_laps ?? 0,
+
+              gapToLeader:
+                apiResult.gap_to_leader ?? null,
+
+              duration:
+                apiResult.duration ?? null,
+
+              sessionDriver:
+                apiDriver || null,
+            };
+          }
         );
-      });
-  };
 
-  /*
-   * Count completed races.
-   */
-  const completedRaces = races.length;
+
+        // =================================================
+        // SORT RESULTS
+        // =================================================
+
+        mergedResults.sort((a, b) => {
+
+          const aPosition =
+            typeof a.position === "number"
+              ? a.position
+              : Infinity;
+
+          const bPosition =
+            typeof b.position === "number"
+              ? b.position
+              : Infinity;
+
+
+          if (
+            aPosition !== bPosition
+          ) {
+            return (
+              aPosition - bPosition
+            );
+          }
+
+
+          // ------------------------------------------------
+          // STATUS ORDER
+          // ------------------------------------------------
+
+          const statusOrder = {
+            DNF: 1,
+            DSQ: 2,
+            DNS: 3,
+          };
+
+
+          const aStatus =
+            statusOrder[a.status] || 99;
+
+          const bStatus =
+            statusOrder[b.status] || 99;
+
+
+          return (
+            aStatus - bStatus
+          );
+        });
+
+
+        setResults(mergedResults);
+
+      } catch (err) {
+        if (!cancelled) {
+          console.error(
+            "Failed to load race results:",
+            err
+          );
+
+          setResultsError(
+            "Unable to load results for this Grand Prix."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingResults(false);
+        }
+      }
+    }
+
+    loadResults();
+
+    return () => {
+      cancelled = true;
+    };
+
+  }, [selectedRace]);
+
+
+  // =====================================================
+  // SELECTED RACE
+  // =====================================================
+
+  const selectedRaceData = useMemo(() => {
+
+    if (selectedRace === "all") {
+      return null;
+    }
+
+    return sessions.find(
+      (session) =>
+        String(session.session_key) ===
+        String(selectedRace)
+    );
+
+  }, [
+    sessions,
+    selectedRace,
+  ]);
+
+
+  // =====================================================
+  // COMPLETED RACES
+  // =====================================================
+
+  const completedRaces = useMemo(() => {
+
+    const now = new Date();
+
+    return sessions.filter((session) => {
+
+      if (!session.date_end) {
+        return false;
+      }
+
+      return (
+        new Date(session.date_end) <= now
+      );
+
+    }).length;
+
+  }, [sessions]);
+
+
+  // =====================================================
+  // RACE STATUS
+  // =====================================================
+
+  function getRaceStatus(race) {
+
+    const now = new Date();
+
+    if (!race.date_start) {
+      return "SCHEDULED";
+    }
+
+    if (
+      race.date_end &&
+      new Date(race.date_end) <= now
+    ) {
+      return "COMPLETED";
+    }
+
+    if (
+      new Date(race.date_start) <= now
+    ) {
+      return "LIVE";
+    }
+
+    return "UPCOMING";
+  }
+
+
+  // =====================================================
+  // FORMAT DATE
+  // =====================================================
+
+  function formatDate(date) {
+
+    if (!date) {
+      return "Date unavailable";
+    }
+
+    const parsedDate =
+      new Date(date);
+
+    if (
+      Number.isNaN(
+        parsedDate.getTime()
+      )
+    ) {
+      return date;
+    }
+
+    return parsedDate.toLocaleDateString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
+  }
+
+
+  // =====================================================
+  // HERO / LOADING
+  // =====================================================
+
+  if (loadingSessions) {
+    return (
+      <main className="race-results-page">
+
+        <section className="race-results-loading">
+
+          <LoaderCircle
+            size={32}
+            className="loading-spinner"
+          />
+
+          <h2>
+            Loading 2026 Race Calendar
+          </h2>
+
+          <p>
+            Connecting to OpenF1...
+          </p>
+
+        </section>
+
+      </main>
+    );
+  }
+
+
+  // =====================================================
+  // PAGE
+  // =====================================================
 
   return (
-    <section className="race-results-page">
+    <main className="race-results-page">
 
       {/* =========================================
           HERO
@@ -126,9 +549,9 @@ function RaceResults() {
           </h1>
 
           <p>
-            Explore the finishing positions of all 22
-            drivers throughout every Grand Prix of the
-            2026 Formula 1 season.
+            Explore the finishing positions of all
+            22 drivers throughout the 2026 Formula 1
+            season using live OpenF1 race data.
           </p>
 
         </div>
@@ -155,6 +578,33 @@ function RaceResults() {
         </div>
 
       </section>
+
+
+      {/* =========================================
+          ERROR
+      ========================================= */}
+
+      {error && (
+
+        <section className="race-results-error">
+
+          <AlertCircle size={22} />
+
+          <div>
+
+            <strong>
+              Calendar unavailable
+            </strong>
+
+            <p>
+              {error}
+            </p>
+
+          </div>
+
+        </section>
+
+      )}
 
 
       {/* =========================================
@@ -193,7 +643,7 @@ function RaceResults() {
             </span>
 
             <strong>
-              {completedRaces}
+              {sessions.length}
             </strong>
 
           </div>
@@ -260,8 +710,8 @@ function RaceResults() {
           </h2>
 
           <p>
-            Choose a Grand Prix to see the finishing
-            position of every driver during that race.
+            Choose a Grand Prix to see the official
+            finishing position of every driver.
           </p>
 
         </div>
@@ -274,7 +724,9 @@ function RaceResults() {
           <select
             value={selectedRace}
             onChange={(event) =>
-              setSelectedRace(event.target.value)
+              setSelectedRace(
+                event.target.value
+              )
             }
           >
 
@@ -283,13 +735,18 @@ function RaceResults() {
             </option>
 
 
-            {races.map((race) => (
+            {sessions.map((race) => (
 
               <option
-                key={race.round}
-                value={race.round}
+                key={race.session_key}
+                value={race.session_key}
               >
-                Round {race.round} — {race.name}
+                {race.country_name
+                  ? `${race.country_name} — `
+                  : ""}
+                {race.meeting_name ||
+                  race.location ||
+                  "Grand Prix"}
               </option>
 
             ))}
@@ -328,7 +785,7 @@ function RaceResults() {
               </h2>
 
               <p>
-                Select a Grand Prix above to see all
+                Select a Grand Prix to see all
                 22 driver positions.
               </p>
 
@@ -337,61 +794,110 @@ function RaceResults() {
           </div>
 
 
-          <div className="all-races-grid">
+          {sessions.length === 0 ? (
 
-            {races.map((race) => (
+            <div className="results-placeholder">
 
-              <button
-                type="button"
-                className="race-summary-card"
-                key={race.round}
-                onClick={() =>
-                  setSelectedRace(
-                    String(race.round)
-                  )
-                }
-              >
+              <AlertCircle size={28} />
 
-                <div className="race-summary-top">
-
-                  <span>
-                    ROUND {race.round}
-                  </span>
-
-                  <span>
-                    {race.country}
-                  </span>
-
-                </div>
-
+              <div>
 
                 <h3>
-                  {race.name}
+                  No race sessions available
                 </h3>
 
-
                 <p>
-                  {race.circuit}
+                  OpenF1 has not returned any
+                  2026 race sessions.
                 </p>
 
+              </div>
 
-                <div className="race-summary-bottom">
+            </div>
 
-                  <span>
-                    COMPLETED
-                  </span>
+          ) : (
 
-                  <strong>
-                    View Results →
-                  </strong>
+            <div className="all-races-grid">
 
-                </div>
+              {sessions.map((race) => {
 
-              </button>
+                const status =
+                  getRaceStatus(race);
 
-            ))}
+                return (
 
-          </div>
+                  <button
+                    type="button"
+                    className="race-summary-card"
+                    key={race.session_key}
+                    onClick={() =>
+                      setSelectedRace(
+                        String(
+                          race.session_key
+                        )
+                      )
+                    }
+                  >
+
+                    <div className="race-summary-top">
+
+                      <span>
+                        {race.country_name ||
+                          "F1"}
+                      </span>
+
+                      <span>
+                        {formatDate(
+                          race.date_start
+                        )}
+                      </span>
+
+                    </div>
+
+
+                    <h3>
+                      {race.meeting_name ||
+                        race.location ||
+                        "Grand Prix"}
+                    </h3>
+
+
+                    <p>
+                      {race.circuit_short_name ||
+                        race.location ||
+                        "Circuit"}
+                    </p>
+
+
+                    <div className="race-summary-bottom">
+
+                      <span
+                        className={
+                          status
+                            .toLowerCase()
+                            .replace(
+                              " ",
+                              "-"
+                            )
+                        }
+                      >
+                        {status}
+                      </span>
+
+                      <strong>
+                        View Results →
+                      </strong>
+
+                    </div>
+
+                  </button>
+
+                );
+              })}
+
+            </div>
+
+          )}
 
         </section>
 
@@ -417,18 +923,23 @@ function RaceResults() {
 
                   <span className="section-kicker">
 
-                    ROUND {selectedRaceData.round}
+                    {selectedRaceData.country_name ||
+                      "FORMULA 1"}
 
                   </span>
 
 
                   <h2>
-                    {selectedRaceData.name}
+                    {selectedRaceData.meeting_name ||
+                      selectedRaceData.location ||
+                      "Grand Prix"}
                   </h2>
 
 
                   <p>
-                    {selectedRaceData.circuit}
+                    {selectedRaceData.circuit_short_name ||
+                      selectedRaceData.location ||
+                      "Circuit"}
                   </p>
 
                 </div>
@@ -438,7 +949,9 @@ function RaceResults() {
 
                   <CalendarDays size={16} />
 
-                  {selectedRaceData.date}
+                  {formatDate(
+                    selectedRaceData.date_start
+                  )}
 
                 </div>
 
@@ -446,182 +959,272 @@ function RaceResults() {
 
 
               {/* =====================================
-                  DRIVER RESULTS
+                  LOADING
               ===================================== */}
 
-              <div className="results-table-wrapper">
+              {loadingResults ? (
 
-                <table className="results-table">
+                <div className="race-results-loading">
 
-                  <thead>
+                  <LoaderCircle
+                    size={30}
+                    className="loading-spinner"
+                  />
 
-                    <tr>
+                  <h3>
+                    Loading race results
+                  </h3>
 
-                      <th>
-                        POS
-                      </th>
+                  <p>
+                    Getting the official results
+                    from OpenF1...
+                  </p>
 
-                      <th>
-                        DRIVER
-                      </th>
+                </div>
 
-                      <th>
-                        NUMBER
-                      </th>
+              ) : resultsError ? (
 
-                      <th>
-                        TEAM
-                      </th>
+                <div className="results-placeholder">
 
-                      <th>
-                        RESULT
-                      </th>
+                  <AlertCircle size={28} />
 
-                    </tr>
+                  <div>
 
-                  </thead>
+                    <h3>
+                      Results unavailable
+                    </h3>
 
+                    <p>
+                      {resultsError}
+                    </p>
 
-                  <tbody>
+                  </div>
 
-                    {getDriverResults(
-                      selectedRaceData
-                    ).map((driver) => {
+                </div>
 
-                      const result =
-                        driver.result;
+              ) : (
 
-                      const isNumber =
-                        typeof result === "number";
+                /* =====================================
+                   DRIVER RESULTS
+                ===================================== */
 
-                      const isDNF =
-                        result === "DNF";
+                <div className="results-table-wrapper">
 
-                      const isDNS =
-                        result === "DNS";
+                  <table className="results-table">
 
-                      const isNC =
-                        result === "NC";
+                    <thead>
 
+                      <tr>
 
-                      return (
+                        <th>
+                          POS
+                        </th>
 
-                        <tr
-                          key={driver.number}
-                          className={
-                            isNumber
-                              ? ""
-                              : "non-classified-row"
-                          }
-                        >
+                        <th>
+                          DRIVER
+                        </th>
 
-                          {/* POSITION */}
+                        <th>
+                          NUMBER
+                        </th>
 
-                          <td className="result-position">
+                        <th>
+                          TEAM
+                        </th>
 
-                            {isNumber
-                              ? result
-                              : "—"}
+                        <th>
+                          LAPS
+                        </th>
 
-                          </td>
+                        <th>
+                          RESULT
+                        </th>
 
+                      </tr>
 
-                          {/* DRIVER */}
-
-                          <td>
-
-                            <div className="result-driver">
-
-                              <img
-                                src={driver.image}
-                                alt={driver.fullName}
-                              />
+                    </thead>
 
 
-                              <div>
+                    <tbody>
 
-                                <strong>
-                                  {driver.fullName}
-                                </strong>
+                      {results.map(
+                        (driver) => {
 
-                                <span>
-                                  {driver.shortName}
-                                </span>
+                          const isFinished =
+                            driver.status ===
+                            "FINISHED";
 
-                              </div>
+                          const isDNF =
+                            driver.status ===
+                            "DNF";
 
-                            </div>
+                          const isDNS =
+                            driver.status ===
+                            "DNS";
 
-                          </td>
-
-
-                          {/* NUMBER */}
-
-                          <td className="driver-number-cell">
-
-                            #{driver.number}
-
-                          </td>
+                          const isDSQ =
+                            driver.status ===
+                            "DSQ";
 
 
-                          {/* TEAM */}
+                          return (
 
-                          <td className="result-team">
-
-                            {driver.team}
-
-                          </td>
-
-
-                          {/* RESULT */}
-
-                          <td>
-
-                            <span
-                              className={`
-                                result-status
-                                ${
-                                  isDNF
-                                    ? "dnf"
-                                    : ""
-                                }
-                                ${
-                                  isDNS
-                                    ? "dns"
-                                    : ""
-                                }
-                                ${
-                                  isNC
-                                    ? "nc"
-                                    : ""
-                                }
-                                ${
-                                  isNumber
-                                    ? "finished"
-                                    : ""
-                                }
-                              `}
+                            <tr
+                              key={
+                                driver.number
+                              }
+                              className={
+                                !isFinished
+                                  ? "non-classified-row"
+                                  : ""
+                              }
                             >
 
-                              {isNumber
-                                ? "FINISHED"
-                                : result}
+                              {/* POSITION */}
 
-                            </span>
+                              <td className="result-position">
 
-                          </td>
+                                {typeof driver.position ===
+                                "number"
+                                  ? driver.position
+                                  : "—"}
 
-                        </tr>
+                              </td>
 
-                      );
 
-                    })}
+                              {/* DRIVER */}
 
-                  </tbody>
+                              <td>
 
-                </table>
+                                <div className="result-driver">
 
-              </div>
+                                  {driver.image ? (
+
+                                    <img
+                                      src={
+                                        driver.image
+                                      }
+                                      alt={
+                                        driver.fullName
+                                      }
+                                    />
+
+                                  ) : (
+
+                                    <div className="result-driver-placeholder">
+                                      {driver.shortName}
+                                    </div>
+
+                                  )}
+
+
+                                  <div>
+
+                                    <strong>
+                                      {
+                                        driver.fullName
+                                      }
+                                    </strong>
+
+                                    <span>
+                                      {
+                                        driver.shortName
+                                      }
+                                    </span>
+
+                                  </div>
+
+                                </div>
+
+                              </td>
+
+
+                              {/* NUMBER */}
+
+                              <td className="driver-number-cell">
+
+                                #
+                                {
+                                  driver.number
+                                }
+
+                              </td>
+
+
+                              {/* TEAM */}
+
+                              <td className="result-team">
+
+                                {
+                                  driver.team
+                                }
+
+                              </td>
+
+
+                              {/* LAPS */}
+
+                              <td>
+
+                                {
+                                  driver.numberOfLaps ??
+                                  "—"
+                                }
+
+                              </td>
+
+
+                              {/* RESULT */}
+
+                              <td>
+
+                                <span
+                                  className={`
+                                    result-status
+                                    ${
+                                      isDNF
+                                        ? "dnf"
+                                        : ""
+                                    }
+                                    ${
+                                      isDNS
+                                        ? "dns"
+                                        : ""
+                                    }
+                                    ${
+                                      isDSQ
+                                        ? "dsq"
+                                        : ""
+                                    }
+                                    ${
+                                      isFinished
+                                        ? "finished"
+                                        : ""
+                                    }
+                                  `}
+                                >
+
+                                  {isFinished
+                                    ? "FINISHED"
+                                    : driver.status}
+
+                                </span>
+
+                              </td>
+
+                            </tr>
+
+                          );
+                        }
+                      )}
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+              )}
 
 
               {/* =====================================
@@ -651,7 +1254,7 @@ function RaceResults() {
 
       )}
 
-    </section>
+    </main>
   );
 }
 

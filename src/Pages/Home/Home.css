@@ -1,0 +1,509 @@
+/* =====================================================
+   APEXONE HOMEPAGE
+===================================================== */
+
+.home-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 5%,
+      rgba(225, 6, 0, 0.16),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 0% 45%,
+      rgba(225, 6, 0, 0.06),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 100% 65%,
+      rgba(225, 6, 0, 0.05),
+      transparent 30%
+    ),
+    #08090b;
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   AMBIENT RED LIGHT
+===================================================== */
+
+.home-page::before {
+  content: "";
+
+  position: absolute;
+
+  top: 100px;
+  left: 50%;
+
+  width: 600px;
+  height: 600px;
+
+  transform: translateX(-50%);
+
+  background: rgba(225, 6, 0, 0.045);
+
+  filter: blur(130px);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+/* =====================================================
+   KEEP EVERYTHING ABOVE THE GLOW
+===================================================== */
+
+.home-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-page main {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =====================================================
+   SUBTLE RED LIGHT BETWEEN SECTIONS
+===================================================== */
+
+.home-page main::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 70%;
+  height: 1px;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(225, 6, 0, 0.35),
+      transparent
+    );
+
+  box-shadow:
+    0 0 20px rgba(225, 6, 0, 0.15);
+
+  pointer-events: none;
+}
+
+/* =====================================================
+   HOME ABOUT
+===================================================== */
+
+.home-about {
+  position: relative;
+  padding: 110px 0;
+  overflow: hidden;
+}
+
+.home-about::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  left: -250px;
+  top: 50px;
+
+  background: rgba(225, 6, 0, 0.08);
+  filter: blur(100px);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.home-about-container {
+  width: min(1200px, calc(100% - 80px));
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 90px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.home-section-kicker {
+  display: inline-block;
+
+  color: #e10600;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+
+  margin-bottom: 18px;
+}
+
+.home-about-heading h2,
+.home-features-heading h2,
+.home-learning-content h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+.home-about-heading h2 span,
+.home-features-heading h2 span,
+.home-learning-content h2 span {
+  color: #e10600;
+}
+
+.home-about-content {
+  max-width: 700px;
+}
+
+.home-about-content p {
+  color: #a7a7a7;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  margin: 0 0 22px;
+}
+
+.home-about-content .home-about-lead {
+  color: #eeeeee;
+
+  font-size: 21px;
+  line-height: 1.6;
+
+  margin-bottom: 28px;
+}
+
+
+/* =====================================================
+   HOME FEATURES
+===================================================== */
+
+.home-features {
+  padding: 110px 0;
+
+  background:
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(225, 6, 0, 0.09),
+      transparent 35%
+    );
+}
+
+.home-features-container {
+  width: min(1200px, calc(100% - 80px));
+  margin: 0 auto;
+}
+
+.home-features-heading {
+  max-width: 750px;
+  margin-bottom: 55px;
+}
+
+.home-features-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+.home-feature-card {
+  position: relative;
+
+  min-height: 270px;
+
+  padding: 35px;
+
+  background: rgba(20, 20, 20, 0.85);
+
+  border: 1px solid #272727;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.home-feature-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 3px;
+
+  background: #e10600;
+
+  transition: width 0.35s ease;
+}
+
+.home-feature-card:hover {
+  transform: translateY(-8px);
+
+  border-color: #e10600;
+
+  box-shadow:
+    0 15px 45px rgba(225, 6, 0, 0.12);
+}
+
+.home-feature-card:hover::before {
+  width: 100%;
+}
+
+.home-feature-number {
+  color: #e10600;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.home-feature-card h3 {
+  color: #ffffff;
+
+  font-size: 24px;
+
+  margin: 35px 0 14px;
+}
+
+.home-feature-card p {
+  color: #999999;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =====================================================
+   LEARNING CTA
+===================================================== */
+
+.home-learning-cta {
+  position: relative;
+
+  padding: 130px 30px;
+
+  overflow: hidden;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(225, 6, 0, 0.18),
+      transparent 55%
+    );
+}
+
+.home-learning-cta::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      transparent 45%,
+      rgba(225, 6, 0, 0.035) 45%,
+      rgba(225, 6, 0, 0.035) 55%,
+      transparent 55%
+    );
+
+  pointer-events: none;
+}
+
+.home-learning-content {
+  position: relative;
+  z-index: 1;
+
+  max-width: 750px;
+
+  margin: 0 auto;
+}
+
+.home-learning-content p {
+  max-width: 620px;
+
+  margin: 28px auto 35px;
+
+  color: #a5a5a5;
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.home-learning-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px 30px;
+
+  background: #e10600;
+
+  color: #ffffff;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.home-learning-button:hover {
+  background: #ff241c;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 30px rgba(225, 6, 0, 0.3);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .home-about-container {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+  }
+
+  .home-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .home-about-container,
+  .home-features-container {
+    width: min(
+      100% - 40px,
+      1200px
+    );
+  }
+
+  .home-about,
+  .home-features {
+    padding: 80px 0;
+  }
+
+  .home-learning-cta {
+    padding: 90px 20px;
+  }
+
+  .home-about-heading h2,
+  .home-features-heading h2,
+  .home-learning-content h2 {
+    letter-spacing: -1px;
+  }
+
+}
+
+
+/* =====================================================
+   SMOOTH SECTION BLENDING
+===================================================== */
+
+.home-page main > section {
+  position: relative;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .home-page {
+    background:
+      radial-gradient(
+        circle at 50% 5%,
+        rgba(225, 6, 0, 0.12),
+        transparent 40%
+      ),
+      #08090b;
+  }
+
+  .home-page::before {
+    width: 420px;
+    height: 420px;
+
+    top: 100px;
+
+    filter: blur(100px);
+  }
+
+  .home-page main::before {
+    width: 80%;
+  }
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .home-page::before {
+    width: 320px;
+    height: 320px;
+
+    filter: blur(80px);
+  }
+
+  .home-page main::before {
+    width: 75%;
+  }
+}

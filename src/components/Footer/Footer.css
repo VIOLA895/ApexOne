@@ -1,15 +1,512 @@
-.footer{
+/* =====================================================
+   APEXONE FOOTER
+===================================================== */
 
-    background:#080808;
+.apex-footer {
+  width: 100%;
+  padding: 70px 48px 32px;
+  background: #050505;
+  box-sizing: border-box;
+}
 
-    border-top:1px solid #1E1E1E;
 
-    padding:40px;
+/* =====================================================
+   MAIN FOOTER CONTAINER
+===================================================== */
 
-    text-align:center;
+.apex-footer-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 
-    color:#8E8E8E;
+  background:
+    linear-gradient(
+      145deg,
+      #101010 0%,
+      #090a0d 55%,
+      #070809 100%
+    );
 
-    font-size:15px;
+  border: 1px solid #191b1f;
+  border-radius: 28px;
+
+  padding: 64px;
+  box-sizing: border-box;
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* subtle racing-line effect */
+
+.apex-footer-inner::before {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 45%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 0, 0, 0.55),
+      transparent
+    );
+
+  opacity: 0.6;
+}
+
+
+/* =====================================================
+   MAIN GRID
+===================================================== */
+
+.footer-main {
+  display: grid;
+
+  grid-template-columns:
+    1.45fr
+    1fr
+    1fr
+    0.9fr;
+
+  gap: 60px;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.footer-brand {
+  min-width: 0;
+}
+
+
+/* =====================================================
+   RACING LIGHTS
+===================================================== */
+
+/* =====================================================
+   F1 STARTING LIGHTS
+===================================================== */
+
+.footer-lights {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 48px;
+}
+
+
+/* Individual light */
+
+.footer-lights span {
+  width: 17px;
+  height: 17px;
+
+  display: block;
+
+  border-radius: 50%;
+
+  background: #260505;
+
+  border: 4px solid #2b2d31;
+
+  box-shadow:
+    0 0 0 1px #17181b;
+
+  opacity: 0.8;
+
+  transition:
+    background 0.18s ease,
+    opacity 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+/* =====================================================
+   LIGHT ON
+===================================================== */
+
+.footer-lights span.light-on {
+  background: #ef1515;
+
+  opacity: 1;
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 0 1px #17181b,
+    0 0 8px rgba(255, 0, 0, 0.85),
+    0 0 22px rgba(255, 0, 0, 0.55),
+    0 0 38px rgba(255, 0, 0, 0.25);
+}
+
+
+/* =====================================================
+   LIGHTS OUT
+===================================================== */
+
+.footer-lights span.lights-out {
+  background: #260505;
+
+  opacity: 0.55;
+
+  transform: scale(1);
+
+  box-shadow:
+    0 0 0 1px #17181b;
+
+  transition:
+    background 0.08s ease,
+    opacity 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+.footer-lights span:hover {
+  transform: scale(1.12);
+
+  box-shadow:
+    0 0 0 1px #17181b,
+    0 0 24px rgba(255, 0, 0, 0.5);
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.footer-logo {
+  display: inline-block;
+
+  color: #f5f5f5;
+
+  font-size: 38px;
+  font-weight: 900;
+
+  letter-spacing: -1.5px;
+
+  text-decoration: none;
+
+  position: relative;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-logo::after {
+  content: "";
+
+  position: absolute;
+
+  left: 1px;
+  bottom: -4px;
+
+  width: 27px;
+  height: 4px;
+
+  background: #e10600;
+
+  transform: skewX(-35deg);
+}
+
+.footer-logo span {
+  color: #f5f5f5;
+}
+
+.footer-logo:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+
+/* =====================================================
+   BRAND DESCRIPTION
+===================================================== */
+
+.footer-brand p {
+  margin: 26px 0 0;
+
+  max-width: 340px;
+
+  color: #85878d;
+
+  font-size: 17px;
+  line-height: 1.65;
+
+  font-weight: 400;
+}
+
+
+/* =====================================================
+   FOOTER COLUMNS
+===================================================== */
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 18px;
+}
+
+
+/* section heading */
+
+.footer-column-title {
+  margin-bottom: 12px;
+
+  color: #ffbf00;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+
+/* links */
+
+.footer-column a {
+  color: #e7e7e7;
+
+  font-size: 17px;
+  line-height: 1.35;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-column a:hover {
+  color: #ffffff;
+
+  transform: translateX(6px);
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.footer-divider {
+  width: 100%;
+
+  height: 1px;
+
+  margin: 58px 0 32px;
+
+  background: #25272b;
+}
+
+
+/* =====================================================
+   FOOTER BOTTOM
+===================================================== */
+
+.footer-bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+.footer-bottom p {
+  margin: 0;
+
+  color: #85878d;
+
+  font-size: 16px;
+}
+
+
+/* =====================================================
+   SOCIAL ICONS
+===================================================== */
+
+.footer-socials {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.footer-socials a {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #9a9ca1;
+
+  border: 1px solid #383a3f;
+
+  border-radius: 5px;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer-socials a:hover {
+  color: #ffffff;
+
+  border-color: #e10600;
+
+  background: rgba(225, 6, 0, 0.08);
+
+  transform: translateY(-4px);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .apex-footer {
+    padding: 50px 28px 25px;
+  }
+
+  .apex-footer-inner {
+    padding: 48px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1.5fr 1fr 1fr;
+
+    gap: 45px;
+  }
+
+  .footer-brand {
+    grid-row: span 2;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .apex-footer {
+    padding: 30px 15px 18px;
+  }
+
+  .apex-footer-inner {
+    padding: 35px 25px;
+
+    border-radius: 20px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px 30px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .footer-lights {
+    margin-bottom: 35px;
+  }
+
+  .footer-logo {
+    font-size: 32px;
+  }
+
+  .footer-brand p {
+    font-size: 15px;
+  }
+
+  .footer-column-title {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .footer-column a {
+    font-size: 15px;
+  }
+
+  .footer-divider {
+    margin: 45px 0 25px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 25px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 450px) {
+
+  .apex-footer-inner {
+    padding: 30px 20px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+
+  .footer-column {
+    gap: 14px;
+  }
+
+  .footer-column-title {
+    margin-bottom: 5px;
+  }
+
+  .footer-socials {
+    width: 100%;
+  }
+
+  .footer-socials a {
+    width: 40px;
+    height: 40px;
+  }
 
 }

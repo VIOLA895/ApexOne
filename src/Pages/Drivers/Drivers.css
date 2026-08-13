@@ -1,371 +1,278 @@
-/* =========================================
+/* =====================================================
    DRIVERS PAGE
-========================================= */
+===================================================== */
 
 .drivers-page {
   min-height: 100vh;
-  background:
-    radial-gradient(
-      circle at 85% 10%,
-      rgba(225, 6, 0, 0.08),
-      transparent 30%
-    ),
-    #080808;
+  background: #090909;
   color: #ffffff;
 }
 
 
-/* =========================================
+/* =====================================================
    HERO
-========================================= */
+===================================================== */
 
 .drivers-hero {
   position: relative;
-  min-height: 520px;
-
+  min-height: 430px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  padding: 110px 7% 80px;
-
   overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(255, 0, 0, 0.12),
+      transparent 35%
+    ),
+    #0b0b0b;
+  border-bottom: 1px solid #242424;
+}
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+.drivers-hero-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  opacity: 0.35;
+}
+
+
+.drivers-hero-grid::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
 
   background:
     linear-gradient(
-      115deg,
-      rgba(225, 6, 0, 0.08),
-      transparent 45%
+      90deg,
+      #090909 0%,
+      rgba(9, 9, 9, 0.85) 40%,
+      rgba(9, 9, 9, 0.15) 100%
     );
 }
 
-.drivers-hero::before {
-  content: "";
-
-  position: absolute;
-
-  width: 500px;
-  height: 500px;
-
-  right: -180px;
-  top: -220px;
-
-  border: 1px solid rgba(225, 6, 0, 0.2);
-
-  border-radius: 50%;
-}
-
-.drivers-hero::after {
-  content: "";
-
-  position: absolute;
-
-  width: 700px;
-  height: 1px;
-
-  right: -150px;
-  bottom: 100px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(225, 6, 0, 0.5),
-    transparent
-  );
-
-  transform: rotate(-18deg);
-}
 
 .drivers-hero-content {
   position: relative;
   z-index: 2;
 
-  max-width: 720px;
+  width: min(1180px, calc(100% - 80px));
+
+  margin: 0 auto;
 }
 
-.drivers-kicker {
-  display: inline-block;
 
-  margin-bottom: 24px;
+.drivers-kicker,
+.section-kicker {
+  display: block;
 
-  color: #e10600;
-
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
 
-  letter-spacing: 3px;
+  letter-spacing: 0.2em;
+
+  color: #8c8c8c;
+
+  margin-bottom: 18px;
 }
+
 
 .drivers-hero h1 {
   margin: 0;
 
-  font-size: clamp(3.2rem, 7vw, 6.5rem);
+  font-size: clamp(52px, 7vw, 92px);
 
-  line-height: 0.92;
+  line-height: 0.9;
 
   font-weight: 900;
 
-  letter-spacing: -4px;
+  letter-spacing: -0.05em;
+
+  text-transform: uppercase;
 }
+
 
 .drivers-hero h1 span {
-  color: transparent;
-
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+  color: #e10600;
 }
 
+
 .drivers-hero p {
-  max-width: 620px;
+  max-width: 500px;
 
-  margin-top: 30px;
+  margin-top: 28px;
 
-  color: rgba(255, 255, 255, 0.62);
+  color: #969696;
 
-  font-size: 17px;
+  font-size: 15px;
 
   line-height: 1.7;
 }
 
 
-/* =========================================
-   HERO STAT
-========================================= */
+.drivers-hero-meta {
+  position: absolute;
 
-.drivers-hero-stat {
-  position: relative;
+  right: 7%;
+  bottom: 55px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+
   z-index: 2;
-
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  padding: 20px 24px;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  background: rgba(255, 255, 255, 0.025);
-
-  backdrop-filter: blur(10px);
-}
-
-.drivers-hero-stat svg {
-  color: #e10600;
-}
-
-.drivers-hero-stat div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.drivers-hero-stat span {
-  color: rgba(255, 255, 255, 0.4);
-
-  font-size: 10px;
-
-  letter-spacing: 2px;
-
-  font-weight: 700;
-}
-
-.drivers-hero-stat strong {
-  font-size: 13px;
-
-  letter-spacing: 1px;
 }
 
 
-/* =========================================
-   SEASON OVERVIEW
-========================================= */
+.drivers-hero-meta span {
+  font-size: 90px;
 
-.drivers-overview {
-  display: grid;
+  line-height: 0.8;
 
-  grid-template-columns: repeat(4, 1fr);
+  font-weight: 900;
 
-  margin: -45px 7% 0;
-
-  position: relative;
-  z-index: 5;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  background: #101010;
-}
-
-.overview-card {
-  min-height: 110px;
-
-  padding: 25px 30px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.overview-card:last-child {
-  border-right: none;
-}
-
-.overview-card span {
-  margin-bottom: 8px;
-
-  color: rgba(255, 255, 255, 0.38);
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-}
-
-.overview-card strong {
-  font-size: 27px;
-
-  font-weight: 800;
-}
-
-.overview-card:last-child strong {
-  color: #e10600;
+  color: rgba(255, 255, 255, 0.08);
 }
 
 
-/* =========================================
+.drivers-hero-meta small {
+  font-size: 11px;
+
+  letter-spacing: 0.18em;
+
+  color: #777;
+
+  padding-bottom: 5px;
+}
+
+
+/* =====================================================
    DRIVER SECTION
-========================================= */
+===================================================== */
 
 .drivers-section {
-  padding: 110px 7% 120px;
+  width: min(1180px, calc(100% - 80px));
+
+  margin: 0 auto;
+
+  padding: 90px 0;
 }
 
-.section-heading {
+
+.drivers-section-heading {
   display: flex;
 
   justify-content: space-between;
+
   align-items: flex-end;
 
-  gap: 30px;
-
-  margin-bottom: 45px;
+  margin-bottom: 35px;
 }
 
-.section-kicker {
-  display: block;
 
-  margin-bottom: 12px;
-
-  color: #e10600;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 2.5px;
-}
-
-.section-heading h2 {
+.drivers-section-heading h2 {
   margin: 0;
 
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: 42px;
+
+  font-weight: 900;
+
+  letter-spacing: -0.04em;
+}
+
+
+.drivers-section-heading p {
+  margin: 12px 0 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+.drivers-count {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+}
+
+
+.drivers-count strong {
+  font-size: 42px;
 
   line-height: 1;
 
   font-weight: 900;
-
-  letter-spacing: -1.5px;
-}
-
-.section-heading p {
-  max-width: 600px;
-
-  margin: 16px 0 0;
-
-  color: rgba(255, 255, 255, 0.48);
-
-  line-height: 1.6;
 }
 
 
-/* =========================================
-   VIEW ALL DRIVERS
-========================================= */
+.drivers-count span {
+  margin-top: 6px;
 
-.view-all-drivers {
-  display: inline-flex;
+  font-size: 10px;
 
-  align-items: center;
+  letter-spacing: 0.18em;
 
-  gap: 8px;
-
-  padding: 13px 18px;
-
-  color: #ffffff;
-
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  background: rgba(255, 255, 255, 0.025);
-
-  text-decoration: none;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  transition: 0.3s ease;
-}
-
-.view-all-drivers:hover {
-  border-color: #e10600;
-
-  color: #ffffff;
-
-  background: rgba(225, 6, 0, 0.08);
+  color: #666;
 }
 
 
-/* =========================================
+/* =====================================================
    DRIVER GRID
-========================================= */
+===================================================== */
 
 .drivers-grid {
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 22px;
+  gap: 24px;
 }
 
 
-/* =========================================
+/* =====================================================
    DRIVER CARD
-========================================= */
+===================================================== */
 
 .driver-card {
   position: relative;
 
-  min-width: 0;
+  min-height: 330px;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      145deg,
-      #161616,
-      #0d0d0d
-    );
+  display: block;
 
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+
+  text-decoration: none;
+
+  border-radius: 10px;
+
+  background: var(--team-background);
 
   transition:
     transform 0.35s ease,
-    border-color 0.35s ease,
     box-shadow 0.35s ease;
 }
+
 
 .driver-card::before {
   content: "";
@@ -376,97 +283,232 @@
   left: 0;
 
   width: 100%;
-  height: 3px;
+  height: 4px;
 
-  background: #e10600;
+  background: var(--team-accent);
 
-  transform: scaleX(0);
-
-  transform-origin: left;
-
-  transition: transform 0.35s ease;
+  z-index: 5;
 }
+
 
 .driver-card:hover {
-  transform: translateY(-8px);
-
-  border-color: rgba(225, 6, 0, 0.5);
+  transform: translateY(-7px);
 
   box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(225, 6, 0, 0.06);
-}
-
-.driver-card:hover::before {
-  transform: scaleX(1);
+    0 25px 60px rgba(0, 0, 0, 0.45);
 }
 
 
-/* =========================================
-   CARD TOP
-========================================= */
+.driver-card-pattern {
+  position: absolute;
 
-.driver-card-top {
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      rgba(255, 255, 255, 0.18) 1px,
+      transparent 1px
+    );
+
+  background-size: 4px 4px;
+
+  opacity: 0.18;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      black 45%,
+      black 100%
+    );
+}
+
+
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.driver-card-content {
+  position: relative;
+
+  z-index: 4;
+
+  padding: 27px 28px;
+
+  width: 48%;
+}
+
+
+.driver-card-heading {
   display: flex;
 
   justify-content: space-between;
-  align-items: center;
 
-  padding: 18px 20px;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  align-items: flex-start;
 }
 
-.driver-position {
-  color: #e10600;
 
-  font-size: 12px;
+.driver-card-first-name {
+  display: block;
+
+  font-size: 25px;
+
+  line-height: 1;
+
+  font-weight: 500;
+}
+
+
+.driver-card-heading h2 {
+  margin: 2px 0 0;
+
+  font-size: 27px;
+
+  line-height: 1;
 
   font-weight: 900;
 
-  letter-spacing: 2px;
+  letter-spacing: -0.04em;
 }
 
-.driver-number {
-  color: rgba(255, 255, 255, 0.35);
+
+.driver-card-arrow {
+  opacity: 0;
+
+  transform: translate(-4px, 4px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.driver-card:hover .driver-card-arrow {
+  opacity: 1;
+
+  transform: translate(0, 0);
+}
+
+
+/* =====================================================
+   TEAM
+===================================================== */
+
+.driver-card-team {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 13px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+.team-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--team-accent);
+
+  box-shadow:
+    0 0 10px var(--team-accent);
+}
+
+
+/* =====================================================
+   DRIVER NUMBER
+===================================================== */
+
+.driver-card-number {
+  margin-top: 15px;
+
+  font-size: 48px;
+
+  line-height: 0.9;
+
+  font-style: italic;
+
+  font-weight: 900;
+
+  letter-spacing: -0.08em;
+
+  color: rgba(255, 255, 255, 0.95);
+}
+
+
+/* =====================================================
+   COUNTRY
+===================================================== */
+
+.driver-card-country {
+  position: absolute;
+
+  left: 28px;
+  bottom: -255px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
 
   font-size: 11px;
 
   font-weight: 700;
 
-  letter-spacing: 1px;
+  letter-spacing: 0.1em;
 }
 
 
-/* =========================================
-   DRIVER MAIN
-========================================= */
+.driver-card-country img {
+  width: 24px;
 
-.driver-card-main {
-  display: flex;
+  height: 16px;
 
-  align-items: flex-end;
+  object-fit: cover;
 
-  gap: 8px;
+  border-radius: 2px;
 
-  min-height: 330px;
-
-  padding: 20px 20px 0;
-
-  overflow: hidden;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 
-/* =========================================
+.country-code {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 24px;
+  height: 16px;
+
+  font-size: 7px;
+
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+
+/* =====================================================
    DRIVER IMAGE
-========================================= */
+===================================================== */
 
-.driver-image-wrapper {
-  position: relative;
+.driver-card-image-wrapper {
+  position: absolute;
 
-  width: 55%;
+  right: 0;
+  bottom: 0;
 
-  height: 300px;
+  width: 62%;
+  height: 100%;
 
   display: flex;
 
@@ -474,857 +516,273 @@
 
   justify-content: center;
 
-  overflow: hidden;
+  z-index: 2;
 }
 
-.driver-image-glow {
+
+.driver-card-image-glow {
   position: absolute;
 
-  width: 180px;
-  height: 180px;
+  width: 330px;
+  height: 330px;
 
-  left: 50%;
-  top: 50%;
-
-  transform: translate(-50%, -50%);
+  right: 20px;
+  bottom: -80px;
 
   border-radius: 50%;
 
-  background: rgba(225, 6, 0, 0.1);
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.16),
+      transparent 70%
+    );
 
-  filter: blur(35px);
+  filter: blur(10px);
 }
 
-.driver-image {
+
+.driver-card-image {
   position: relative;
 
   z-index: 2;
 
-  width: 100%;
-  height: 100%;
+  width: auto;
+
+  height: 95%;
+
+  max-width: 100%;
 
   object-fit: contain;
 
-  object-position: center bottom;
+  object-position: bottom center;
+
+  filter:
+    drop-shadow(
+      -20px 15px 25px rgba(0, 0, 0, 0.35)
+    );
 
   transition:
-    transform 0.5s ease;
+    transform 0.45s ease;
 }
 
-.driver-card:hover .driver-image {
-  transform: scale(1.06) translateY(-5px);
+
+.driver-card:hover .driver-card-image {
+  transform:
+    translateY(-5px)
+    scale(1.025);
 }
 
-.driver-number-large {
+
+.driver-image-placeholder {
+  position: relative;
+
+  z-index: 2;
+
+  font-size: 30px;
+
+  font-weight: 900;
+
+  opacity: 0.5;
+}
+
+
+/* =====================================================
+   BOTTOM CARD BAR
+===================================================== */
+
+.driver-card-bottom {
   position: absolute;
 
-  z-index: 1;
-
   left: 0;
-  bottom: -8px;
+  right: 0;
+  bottom: 0;
 
-  font-size: 7rem;
+  z-index: 6;
 
-  line-height: 1;
-
-  font-weight: 900;
-
-  color: rgba(255, 255, 255, 0.045);
-
-  pointer-events: none;
-}
-
-
-/* =========================================
-   DRIVER INFO
-========================================= */
-
-.driver-info {
-  position: relative;
-  z-index: 3;
-
-  flex: 1;
-
-  padding-bottom: 30px;
-}
-
-.driver-short-name {
-  display: inline-block;
-
-  margin-bottom: 8px;
-
-  color: #e10600;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-}
-
-.driver-info h3 {
-  margin: 0;
-
-  font-size: 25px;
-
-  line-height: 0.95;
-
-  font-weight: 500;
-}
-
-.driver-info h3 strong {
-  font-weight: 900;
-}
-
-.driver-team {
-  margin: 14px 0 8px;
-
-  color: rgba(255, 255, 255, 0.55);
-
-  font-size: 12px;
-
-  font-weight: 600;
-}
-
-.driver-nationality {
   display: flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  color: rgba(255, 255, 255, 0.38);
-
-  font-size: 10px;
-
-  font-weight: 600;
-}
-
-.driver-nationality svg {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-
-/* =========================================
-   DRIVER STATS
-========================================= */
-
-.driver-stats {
-  display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.driver-stat {
-  min-width: 0;
-
-  padding: 16px 10px;
-
-  text-align: center;
-
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.driver-stat:last-child {
-  border-right: none;
-}
-
-.driver-stat span {
-  display: block;
-
-  margin-bottom: 6px;
-
-  color: rgba(255, 255, 255, 0.32);
-
-  font-size: 8px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-}
-
-.driver-stat strong {
-  font-size: 21px;
-
-  font-weight: 800;
-}
-
-
-/* =========================================
-   DRIVER DETAILS
-========================================= */
-
-.driver-details {
-  display: flex;
-
-  align-items: center;
 
   justify-content: space-between;
 
-  padding: 18px 20px;
-
-  color: #ffffff;
-
-  text-decoration: none;
-
-  font-size: 12px;
-
-  font-weight: 800;
-
-  transition:
-    color 0.3s ease,
-    background 0.3s ease;
-}
-
-.driver-details svg {
-  transition: transform 0.3s ease;
-}
-
-.driver-details:hover {
-  color: #ffffff;
-
-  background: rgba(225, 6, 0, 0.08);
-}
-
-.driver-details:hover svg {
-  transform: translate(3px, -3px);
-}
-
-
-/* =========================================
-   ALL DRIVERS ACTION
-========================================= */
-
-.all-drivers-action {
-  display: flex;
-
   align-items: center;
-  justify-content: center;
-
-  gap: 25px;
-
-  margin-top: 55px;
-
-  padding: 35px;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.all-drivers-action p {
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.5);
-
-  font-size: 13px;
-}
-
-.all-drivers-button {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 10px;
 
   padding: 14px 20px;
 
-  background: #e10600;
+  border-top:
+    1px solid rgba(255,255,255,0.15);
 
-  color: #ffffff;
+  background:
+    rgba(0,0,0,0.18);
 
-  text-decoration: none;
+  backdrop-filter: blur(5px);
 
-  font-size: 12px;
+  font-size: 10px;
 
   font-weight: 800;
 
+  letter-spacing: 0.12em;
+}
+
+
+.driver-card-bottom svg {
   transition:
-    transform 0.3s ease,
-    background 0.3s ease;
-}
-
-.all-drivers-button:hover {
-  background: #ff180f;
-
-  transform: translateY(-2px);
-}
-
-/* =========================================
-   FULL DRIVER STANDINGS
-========================================= */
-
-.full-standings {
-  margin-top: 100px;
+    transform 0.25s ease;
 }
 
 
-/* =========================================
-   STANDINGS HEADING
-========================================= */
-
-.standings-heading {
-  display: flex;
-
-  align-items: flex-end;
-  justify-content: space-between;
-
-  gap: 30px;
-
-  margin-bottom: 30px;
+.driver-card:hover .driver-card-bottom svg {
+  transform:
+    translate(3px, -3px);
 }
 
-.standings-heading h2 {
+
+/* =====================================================
+   BOTTOM SECTION
+===================================================== */
+
+.drivers-bottom {
+  width: min(1180px, calc(100% - 80px));
+
+  margin: 0 auto;
+
+  padding: 70px 0 110px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 80px;
+
+  border-top: 1px solid #222;
+}
+
+
+.drivers-bottom h2 {
   margin: 0;
 
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: 42px;
 
   line-height: 1;
 
   font-weight: 900;
 
-  letter-spacing: -1.5px;
+  letter-spacing: -0.04em;
 }
 
-.standings-heading p {
-  max-width: 600px;
 
-  margin: 15px 0 0;
+.drivers-bottom p {
+  margin: 0;
 
-  color: rgba(255, 255, 255, 0.45);
+  max-width: 430px;
+
+  color: #777;
 
   font-size: 14px;
 
-  line-height: 1.6;
-}
-
-.standings-count {
-  flex-shrink: 0;
-
-  padding: 10px 14px;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  color: rgba(255, 255, 255, 0.45);
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
+  line-height: 1.8;
 }
 
 
-/* =========================================
-   TABLE WRAPPER
-========================================= */
-
-.standings-table-wrapper {
-  width: 100%;
-
-  overflow-x: auto;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  background: #0d0d0d;
-}
-
-
-/* =========================================
-   TABLE
-========================================= */
-
-.standings-table {
-  width: 100%;
-
-  min-width: 850px;
-
-  border-collapse: collapse;
-}
-
-
-/* =========================================
-   TABLE HEADER
-========================================= */
-
-.standings-table thead {
-  background: #151515;
-}
-
-.standings-table th {
-  padding: 16px 18px;
-
-  color: rgba(255, 255, 255, 0.32);
-
-  font-size: 9px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.8px;
-
-  text-align: left;
-
-  white-space: nowrap;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-
-/* =========================================
-   TABLE ROW
-========================================= */
-
-.standings-row {
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.standings-row:hover {
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.standings-row td {
-  padding: 17px 18px;
-
-  color: rgba(255, 255, 255, 0.65);
-
-  font-size: 12px;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
-
-  white-space: nowrap;
-}
-
-.standings-row:last-child td {
-  border-bottom: none;
-}
-
-
-/* =========================================
-   TOP 3
-========================================= */
-
-.standings-row.top-three {
-  background: rgba(225, 6, 0, 0.025);
-}
-
-.standings-row.top-three:hover {
-  background: rgba(225, 6, 0, 0.06);
-}
-
-
-/* =========================================
-   POSITION
-========================================= */
-
-.standings-position {
-  width: 60px;
-
-  color: rgba(255, 255, 255, 0.35) !important;
-
-  font-size: 11px !important;
-
-  font-weight: 900;
-}
-
-.top-three .standings-position {
-  color: #e10600 !important;
-}
-
-
-/* =========================================
-   DRIVER
-========================================= */
-
-.standings-driver {
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  min-width: 230px;
-}
-
-.standings-driver-image {
-  width: 46px;
-  height: 46px;
-
-  flex-shrink: 0;
-
-  overflow: hidden;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  background:
-    linear-gradient(
-      145deg,
-      #1c1c1c,
-      #090909
-    );
-}
-
-.standings-driver-image img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position: center top;
-}
-
-.standings-driver-info {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 5px;
-}
-
-.standings-driver-info strong {
-  color: #ffffff;
-
-  font-size: 13px;
-
-  font-weight: 800;
-}
-
-.standings-driver-info span {
-  color: rgba(255, 255, 255, 0.35);
-
-  font-size: 9px;
-
-  font-weight: 600;
-
-  letter-spacing: 0.5px;
-}
-
-
-/* =========================================
-   TEAM
-========================================= */
-
-.standings-team {
-  color: rgba(255, 255, 255, 0.45) !important;
-
-  font-size: 11px !important;
-}
-
-
-/* =========================================
-   POINTS
-========================================= */
-
-.standings-points {
-  color: #ffffff !important;
-
-  font-size: 17px !important;
-
-  font-weight: 900;
-}
-
-
-/* =========================================
-   VIEW BUTTON
-========================================= */
-
-.standings-view {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  padding: 8px 11px;
-
-  color: rgba(255, 255, 255, 0.65);
-
-  text-decoration: none;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  font-size: 10px;
-
-  font-weight: 700;
-
-  transition:
-    color 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
-}
-
-.standings-view:hover {
-  color: #ffffff;
-
-  border-color: #e10600;
-
-  background: rgba(225, 6, 0, 0.1);
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 700px) {
-
-  .full-standings {
-    margin-top: 75px;
-  }
-
-  .standings-heading {
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 20px;
-  }
-
-  .standings-heading h2 {
-    font-size: 2.2rem;
-  }
-
-  .standings-count {
-    align-self: flex-start;
-  }
-
-}
-
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 1100px) {
-
-  .drivers-hero {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
-  .drivers-overview {
-    margin-left: 5%;
-    margin-right: 5%;
-  }
-
-  .drivers-section {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
-  .drivers-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .driver-card:last-child {
-    grid-column: span 2;
-  }
-
-}
-
-
-/* =========================================
-   TABLET / SMALL LAPTOP
-========================================= */
-
-@media (max-width: 850px) {
-
-  .drivers-hero {
-    min-height: auto;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 40px;
-
-    padding-top: 90px;
-  }
-
-  .drivers-hero-stat {
-    align-self: flex-start;
-  }
-
-  .drivers-overview {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .overview-card:nth-child(2) {
-    border-right: none;
-  }
-
-  .overview-card:nth-child(1),
-  .overview-card:nth-child(2) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .section-heading {
-    align-items: flex-start;
-
-    flex-direction: column;
-  }
-
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 650px) {
-
-  .drivers-hero {
-    padding: 75px 20px 90px;
-  }
-
-  .drivers-hero h1 {
-    font-size: clamp(2.8rem, 15vw, 4.5rem);
-
-    letter-spacing: -2px;
-  }
-
-  .drivers-hero p {
-    font-size: 15px;
-  }
-
-  .drivers-hero-stat {
-    width: 100%;
-
-    box-sizing: border-box;
-  }
-
-
-  .drivers-overview {
-    margin: -35px 20px 0;
-
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .overview-card {
-    min-height: 90px;
-
-    padding: 18px;
-  }
-
-  .overview-card strong {
-    font-size: 22px;
-  }
-
-
-  .drivers-section {
-    padding: 75px 20px 90px;
-  }
-
-  .section-heading h2 {
-    font-size: 2.2rem;
-  }
-
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
 
   .drivers-grid {
     grid-template-columns: 1fr;
-
-    gap: 18px;
-  }
-
-  .driver-card:last-child {
-    grid-column: auto;
   }
 
 
-  .driver-card-main {
-    min-height: 310px;
-  }
-
-  .driver-image-wrapper {
-    width: 52%;
-
-    height: 280px;
-  }
-
-  .driver-info h3 {
-    font-size: 22px;
+  .drivers-section,
+  .drivers-bottom,
+  .drivers-hero-content {
+    width: min(100% - 40px, 700px);
   }
 
 
-  .driver-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .driver-stat:nth-child(2) {
-    border-right: none;
-  }
-
-  .driver-stat:nth-child(1),
-  .driver-stat:nth-child(2) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  .drivers-hero {
+    min-height: 380px;
   }
 
 
-  .all-drivers-action {
-    flex-direction: column;
-
-    text-align: center;
-
-    padding: 28px 20px;
+  .drivers-hero-meta {
+    right: 30px;
   }
 
-  .all-drivers-button {
-    width: 100%;
 
-    justify-content: center;
+  .drivers-bottom {
+    grid-template-columns: 1fr;
 
-    box-sizing: border-box;
+    gap: 30px;
   }
-
 }
 
 
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 420px) {
-
-  .drivers-hero {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .drivers-overview {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
+@media (max-width: 600px) {
 
   .drivers-section {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 60px 0;
   }
 
-  .driver-card-main {
-    min-height: 290px;
 
-    padding-left: 12px;
-    padding-right: 12px;
+  .drivers-section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 25px;
   }
 
-  .driver-image-wrapper {
-    width: 50%;
-    height: 250px;
+
+  .drivers-count {
+    align-items: flex-start;
   }
 
-  .driver-info h3 {
-    font-size: 20px;
+
+  .drivers-hero h1 {
+    font-size: 55px;
   }
 
-  .driver-number-large {
-    font-size: 5rem;
+
+  .drivers-hero-meta {
+    display: none;
   }
 
+
+  .driver-card {
+    min-height: 360px;
+  }
+
+
+  .driver-card-content {
+    width: 55%;
+
+    padding: 24px 20px;
+  }
+
+
+  .driver-card-first-name {
+    font-size: 21px;
+  }
+
+
+  .driver-card-heading h2 {
+    font-size: 24px;
+  }
+
+
+  .driver-card-number {
+    font-size: 42px;
+  }
+
+
+  .driver-card-image-wrapper {
+    width: 60%;
+  }
+
+
+  .drivers-bottom h2 {
+    font-size: 34px;
+  }
 }

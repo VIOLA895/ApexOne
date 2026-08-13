@@ -1,397 +1,471 @@
-/* =========================================
+/* =========================================================
    DRIVER PROFILE PAGE
-========================================= */
+========================================================= */
 
 .driver-profile-page {
   min-height: 100vh;
-
-  background:
-    radial-gradient(
-      circle at 75% 15%,
-      rgba(225, 6, 0, 0.12),
-      transparent 30%
-    ),
-    #080808;
-
-  color: #ffffff;
-
+  background: #050505;
+  color: #f5f5f5;
   overflow: hidden;
 }
 
 .driver-profile-container {
-  width: min(1200px, calc(100% - 40px));
-
+  width: min(1200px, 86vw);
   margin: 0 auto;
 }
 
 
-/* =========================================
+/* =========================================================
    BACK BUTTON
-========================================= */
+========================================================= */
+
+.driver-profile-container:first-child {
+  padding-top: 30px;
+}
 
 .driver-back-link {
   display: inline-flex;
-
   align-items: center;
-
   gap: 8px;
 
-  margin: 30px 0;
-
-  color: #999;
-
+  color: #777;
   text-decoration: none;
 
-  font-size: 0.9rem;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 
-  font-weight: 600;
-
-  transition: color 0.25s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .driver-back-link:hover {
-  color: #ffffff;
+  color: #e10600;
+  transform: translateX(-3px);
 }
 
 
-/* =========================================
+/* =========================================================
    HERO
-========================================= */
+========================================================= */
 
 .driver-profile-hero {
   position: relative;
+  margin-top: 30px;
 
-  border-top: 1px solid #1b1b1b;
+  min-height: 620px;
 
-  border-bottom: 1px solid #1b1b1b;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #242424;
 
   background:
+    radial-gradient(
+      circle at 75% 45%,
+      rgba(225, 0, 0, 0.13),
+      transparent 35%
+    ),
     linear-gradient(
       135deg,
-      rgba(225, 6, 0, 0.06),
-      transparent 45%
+      #0b0b0b,
+      #050505 65%
     );
+
+  overflow: hidden;
 }
+
+.driver-profile-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.16;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  pointer-events: none;
+}
+
+.driver-profile-hero::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 45%;
+  height: 3px;
+
+  background: #e10600;
+}
+
+
+/* =========================================================
+   HERO GRID
+========================================================= */
 
 .driver-profile-hero-grid {
-  min-height: 560px;
+  position: relative;
+  z-index: 2;
+
+  min-height: 620px;
 
   display: grid;
-
-  grid-template-columns:
-    0.95fr 1.05fr;
+  grid-template-columns: 0.9fr 1.1fr;
 
   align-items: center;
-
-  gap: 30px;
 }
 
 
-/* =========================================
+/* =========================================================
    DRIVER INFORMATION
-========================================= */
+========================================================= */
 
 .driver-profile-info {
   position: relative;
-
-  z-index: 2;
+  z-index: 4;
 
   padding: 70px 0;
 }
 
 .driver-profile-kicker {
-  display: inline-block;
+  display: block;
 
   margin-bottom: 25px;
 
   color: #e10600;
 
-  font-size: 0.75rem;
+  font-size: 11px;
+  font-weight: 900;
 
-  font-weight: 800;
-
-  letter-spacing: 3px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
+
+
+/* =========================================================
+   POSITION
+========================================================= */
 
 .driver-profile-position {
   display: flex;
-
   align-items: center;
+  gap: 15px;
 
-  gap: 14px;
-
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .driver-profile-position span {
-  color: #777;
+  color: #555;
 
-  font-size: 0.7rem;
+  font-size: 9px;
+  font-weight: 800;
 
-  font-weight: 700;
-
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
 }
 
 .driver-profile-position strong {
-  color: #ffffff;
+  color: #ddd;
 
-  font-size: 1.1rem;
+  font-size: 16px;
+  font-weight: 800;
 }
+
+
+/* =========================================================
+   DRIVER NAME
+========================================================= */
 
 .driver-profile-info h1 {
   margin: 0;
 
-  font-size: clamp(4rem, 7vw, 7rem);
+  font-size: clamp(58px, 7vw, 100px);
 
-  line-height: 0.88;
+  line-height: 0.9;
+
+  letter-spacing: -0.065em;
 
   font-weight: 900;
 
-  letter-spacing: -4px;
+  text-transform: uppercase;
 }
 
 .driver-profile-info h1 span {
   display: block;
 
+  margin-top: 8px;
+
   color: #e10600;
 }
 
+
+/* =========================================================
+   TEAM
+========================================================= */
+
 .driver-profile-team {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
-  margin-top: 30px;
+  margin-top: 35px;
 
-  font-size: 1.1rem;
+  color: #d5d5d5;
 
+  font-size: 14px;
   font-weight: 700;
 }
 
 .team-indicator {
-  width: 8px;
+  width: 9px;
+  height: 9px;
 
-  height: 28px;
+  border-radius: 50%;
 
   background: #e10600;
 
-  border-radius: 2px;
+  box-shadow:
+    0 0 14px rgba(225, 0, 0, 0.8);
 }
+
+
+/* =========================================================
+   NATIONALITY
+========================================================= */
 
 .driver-profile-nationality {
   display: flex;
-
   align-items: center;
+  gap: 9px;
 
-  gap: 8px;
+  margin-top: 15px;
 
-  margin-top: 14px;
+  color: #888;
 
-  color: #aaa;
+  font-size: 12px;
+  font-weight: 700;
+}
 
-  font-size: 0.9rem;
+.driver-profile-nationality svg {
+  color: #e10600;
 }
 
 .country-code {
-  padding-left: 8px;
+  padding-left: 9px;
+
+  border-left: 1px solid #333;
 
   color: #555;
 
-  font-size: 0.7rem;
+  font-size: 10px;
 
-  font-weight: 800;
-
-  letter-spacing: 1px;
+  letter-spacing: 0.12em;
 }
+
+
+/* =========================================================
+   CAR NUMBER
+========================================================= */
 
 .driver-profile-number {
   display: flex;
+  flex-direction: column;
 
-  align-items: baseline;
-
-  gap: 12px;
-
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
 .driver-profile-number span {
+  margin-bottom: 4px;
+
   color: #555;
 
-  font-size: 0.7rem;
-
+  font-size: 9px;
   font-weight: 800;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.15em;
 }
 
 .driver-profile-number strong {
-  color: #ffffff;
+  color: #eee;
 
-  font-size: 1.4rem;
+  font-size: 25px;
 }
 
 
-/* =========================================
+/* =========================================================
    DRIVER IMAGE
-========================================= */
+========================================================= */
 
 .driver-profile-image-wrapper {
   position: relative;
 
-  height: 560px;
+  height: 100%;
+
+  min-height: 620px;
 
   display: flex;
-
   align-items: flex-end;
-
   justify-content: center;
 
   overflow: hidden;
 }
 
+
+/* RED GLOW */
+
 .driver-image-glow {
   position: absolute;
 
-  width: 430px;
+  width: 480px;
+  height: 480px;
 
-  height: 430px;
-
-  background: rgba(225, 6, 0, 0.16);
-
-  filter: blur(90px);
+  right: 5%;
+  bottom: 5%;
 
   border-radius: 50%;
+
+  background: rgba(225, 0, 0, 0.13);
+
+  filter: blur(70px);
+
+  pointer-events: none;
 }
+
+
+/* HUGE NUMBER */
 
 .driver-number-background {
   position: absolute;
 
-  right: -10px;
-
-  bottom: 20px;
+  right: -20px;
+  bottom: -50px;
 
   color: rgba(255, 255, 255, 0.035);
 
-  font-size: clamp(12rem, 25vw, 22rem);
+  font-size: clamp(260px, 35vw, 520px);
 
-  line-height: 0.7;
+  line-height: 0.75;
 
   font-weight: 900;
+
+  letter-spacing: -0.08em;
 
   user-select: none;
 }
 
+
+/* ACTUAL DRIVER IMAGE */
+
 .driver-profile-image {
   position: relative;
-
-  z-index: 2;
+  z-index: 3;
 
   width: min(100%, 560px);
-
-  height: 100%;
+  max-height: 610px;
 
   object-fit: contain;
+  object-position: center bottom;
 
-  object-position: bottom center;
+  align-self: flex-end;
 
   filter:
-    drop-shadow(
-      0 25px 35px rgba(0, 0, 0, 0.55)
-    );
+    drop-shadow(0 20px 45px rgba(0, 0, 0, 0.7));
 
   transition:
-    transform 0.5s ease,
-    filter 0.5s ease;
+    transform 0.45s ease,
+    filter 0.45s ease;
 }
 
 .driver-profile-image:hover {
-  transform:
-    translateY(-8px)
-    scale(1.02);
+  transform: scale(1.025);
 
   filter:
-    drop-shadow(
-      0 30px 45px rgba(0, 0, 0, 0.7)
-    );
+    drop-shadow(0 25px 55px rgba(0, 0, 0, 0.85));
 }
 
 
-/* =========================================
-   CHAMPIONSHIP
-========================================= */
+/* =========================================================
+   CHAMPIONSHIP HIGHLIGHT
+========================================================= */
 
 .championship-highlight {
   display: grid;
 
-  grid-template-columns:
-    auto 1fr auto;
+  grid-template-columns: auto 1fr auto;
 
   align-items: center;
 
-  gap: 20px;
+  gap: 22px;
 
   margin-top: 45px;
+  padding: 28px 30px;
 
-  padding: 25px 30px;
+  border: 1px solid #292929;
 
-  background: #111111;
-
-  border: 1px solid #222;
-
-  border-left: 3px solid #e10600;
-
-  border-radius: 8px;
+  background:
+    linear-gradient(
+      135deg,
+      #131313,
+      #0b0b0b
+    );
 }
 
 .championship-icon {
-  width: 55px;
+  width: 58px;
+  height: 58px;
 
-  height: 55px;
+  display: grid;
+  place-items: center;
 
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
+  border: 1px solid #3a3a3a;
 
   color: #e10600;
 
-  background:
-    rgba(225, 6, 0, 0.1);
-
-  border-radius: 8px;
-}
-
-.championship-copy {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
+  background: #0c0c0c;
 }
 
 .championship-copy > span,
 .championship-position span {
+  display: block;
+
+  margin-bottom: 7px;
+
   color: #666;
 
-  font-size: 0.65rem;
-
+  font-size: 9px;
   font-weight: 800;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.15em;
 }
 
 .championship-copy strong {
-  font-size: 2rem;
+  display: block;
+
+  font-size: 34px;
+  line-height: 1;
 }
 
 .championship-copy small {
-  color: #888;
+  color: #666;
 
-  font-size: 0.75rem;
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
 }
 
 .championship-position {
@@ -399,137 +473,124 @@
 }
 
 .championship-position strong {
-  display: block;
-
-  margin-top: 4px;
-
   color: #e10600;
 
-  font-size: 1.8rem;
+  font-size: 30px;
 }
 
 
-/* =========================================
+/* =========================================================
    SECTION HEADINGS
-========================================= */
+========================================================= */
 
 .profile-section-heading {
-  margin-top: 80px;
-
-  margin-bottom: 30px;
+  margin-top: 75px;
+  margin-bottom: 28px;
 }
 
 .profile-section-heading > span {
+  display: block;
+
+  margin-bottom: 9px;
+
   color: #e10600;
 
-  font-size: 0.7rem;
+  font-size: 10px;
+  font-weight: 900;
 
-  font-weight: 800;
-
-  letter-spacing: 2.5px;
+  letter-spacing: 0.2em;
 }
 
 .profile-section-heading h2 {
-  margin: 10px 0 8px;
+  margin: 0;
 
-  font-size: clamp(2rem, 4vw, 3rem);
+  color: #f5f5f5;
+
+  font-size: 38px;
 
   line-height: 1;
 
-  letter-spacing: -1px;
+  letter-spacing: -0.045em;
 }
 
 .profile-section-heading p {
-  max-width: 600px;
+  max-width: 650px;
 
-  margin: 0;
+  margin: 12px 0 0;
 
-  color: #888;
+  color: #707070;
+
+  font-size: 13px;
 
   line-height: 1.7;
 }
 
 
-/* =========================================
-   STAT CARDS
-========================================= */
+/* =========================================================
+   STATISTICS
+========================================================= */
 
 .driver-stat-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
-  gap: 15px;
+  gap: 12px;
 }
 
 .driver-stat-card {
   position: relative;
 
+  min-height: 190px;
+
   padding: 25px;
 
-  background:
-    linear-gradient(
-      145deg,
-      #141414,
-      #0e0e0e
-    );
+  border: 1px solid #292929;
 
-  border: 1px solid #222;
-
-  border-radius: 8px;
+  background: #0e0e0e;
 
   overflow: hidden;
 
   transition:
     transform 0.25s ease,
-    border-color 0.25s ease;
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
-.driver-stat-card::after {
+.driver-stat-card::before {
   content: "";
 
   position: absolute;
 
-  width: 70px;
+  top: 0;
+  left: 0;
 
-  height: 70px;
+  width: 35px;
+  height: 2px;
 
-  right: -30px;
-
-  bottom: -30px;
-
-  background:
-    rgba(225, 6, 0, 0.08);
-
-  border-radius: 50%;
+  background: #e10600;
 }
 
 .driver-stat-card:hover {
   transform: translateY(-4px);
 
   border-color: #444;
+
+  background: #121212;
 }
 
 .stat-card-icon {
-  width: 38px;
+  width: 40px;
+  height: 40px;
 
-  height: 38px;
+  display: grid;
+  place-items: center;
 
-  display: flex;
+  margin-bottom: 20px;
 
-  align-items: center;
-
-  justify-content: center;
-
-  margin-bottom: 22px;
+  border: 1px solid #292929;
 
   color: #e10600;
-
-  background:
-    rgba(225, 6, 0, 0.09);
-
-  border-radius: 6px;
 }
 
 .driver-stat-card > span {
@@ -537,35 +598,36 @@
 
   color: #666;
 
-  font-size: 0.65rem;
-
+  font-size: 9px;
   font-weight: 800;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
 }
 
 .driver-stat-card strong {
   display: block;
 
-  margin-top: 5px;
+  margin-top: 7px;
 
-  font-size: 2.5rem;
+  font-size: 42px;
 
-  font-weight: 800;
+  line-height: 1;
+
+  letter-spacing: -0.04em;
 }
 
 .driver-stat-card p {
-  margin: 5px 0 0;
+  margin: 8px 0 0;
 
-  color: #666;
+  color: #555;
 
-  font-size: 0.8rem;
+  font-size: 10px;
 }
 
 
-/* =========================================
+/* =========================================================
    DRIVER DETAILS
-========================================= */
+========================================================= */
 
 .driver-details-section {
   margin-top: 20px;
@@ -574,410 +636,446 @@
 .driver-details-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 
-  border-top: 1px solid #222;
-
-  border-left: 1px solid #222;
+  border-top: 1px solid #292929;
+  border-left: 1px solid #292929;
 }
 
 .detail-row {
-  display: flex;
+  min-height: 82px;
 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 
-  align-items: center;
+  gap: 20px;
 
-  min-height: 70px;
+  padding: 18px 22px;
 
-  padding: 15px 20px;
+  border-right: 1px solid #292929;
+  border-bottom: 1px solid #292929;
 
-  border-right: 1px solid #222;
-
-  border-bottom: 1px solid #222;
-
-  background: #0d0d0d;
+  background: #0c0c0c;
 }
 
 .detail-row span {
   color: #666;
 
-  font-size: 0.72rem;
+  font-size: 10px;
+  font-weight: 800;
 
-  font-weight: 700;
+  letter-spacing: 0.1em;
 
-  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .detail-row strong {
-  color: #ffffff;
+  color: #eee;
 
-  font-size: 0.9rem;
+  font-size: 13px;
 
   text-align: right;
 }
 
 
-/* =========================================
+/* =========================================================
    RACE RESULTS
-========================================= */
+========================================================= */
 
 .race-results {
-  width: 100%;
+  margin-bottom: 70px;
 
-  background: #0d0d0d;
-
-  border: 1px solid #222;
-
-  border-radius: 8px;
-
-  overflow: hidden;
+  border-top: 1px solid #303030;
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
 }
 
-.race-results-header {
-  display: grid;
-
-  grid-template-columns:
-    1fr 150px 150px 130px;
-
-  align-items: center;
-
-  padding: 16px 22px;
-
-  background: #151515;
-
-  border-bottom: 1px solid #252525;
-
-  color: #666;
-
-  font-size: 0.65rem;
-
-  font-weight: 800;
-
-  letter-spacing: 1.8px;
-}
-
+.race-results-header,
 .race-result-row {
   display: grid;
 
-  grid-template-columns:
-    1fr 150px 150px 130px;
+  grid-template-columns: 2fr 1fr 1fr 0.8fr;
 
   align-items: center;
-
-  min-height: 72px;
-
-  padding: 0 22px;
-
-  border-bottom: 1px solid #1d1d1d;
-
-  transition:
-    background 0.2s ease;
 }
 
-.race-result-row:last-child {
-  border-bottom: none;
+.race-results-header {
+  min-height: 48px;
+
+  padding: 0 20px;
+
+  border-bottom: 1px solid #303030;
+
+  background: #101010;
+}
+
+.race-results-header span {
+  color: #555;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+.race-result-row {
+  min-height: 75px;
+
+  padding: 0 20px;
+
+  border-bottom: 1px solid #222;
+
+  background: #080808;
+
+  transition:
+    background 0.2s ease,
+    padding-left 0.2s ease;
 }
 
 .race-result-row:hover {
-  background: #141414;
+  background: #111;
+
+  padding-left: 25px;
 }
+
+
+/* RACE NAME */
 
 .race-name {
   display: flex;
-
   align-items: center;
-
   gap: 15px;
 }
 
 .race-round {
-  color: #555;
+  width: 30px;
+  height: 30px;
 
-  font-size: 0.7rem;
+  display: grid;
+  place-items: center;
 
+  border: 1px solid #292929;
+
+  color: #666;
+
+  font-size: 9px;
   font-weight: 800;
-
-  letter-spacing: 1px;
 }
 
 .race-name strong {
-  color: #ffffff;
+  color: #eee;
 
-  font-size: 0.9rem;
+  font-size: 13px;
 }
 
+
+/* POSITIONS */
+
 .race-position {
-  color: #bbb;
+  color: #999;
 
-  font-size: 0.9rem;
-
+  font-size: 13px;
   font-weight: 700;
 }
 
 .race-position span {
+  margin-right: 3px;
+
   color: #555;
 
-  margin-right: 2px;
-
-  font-size: 0.7rem;
+  font-size: 9px;
 }
 
-.race-position.podium-finish {
+.podium-finish {
   color: #e10600;
 }
 
+
+/* POINTS */
+
 .race-points {
   display: flex;
-
   align-items: baseline;
-
   gap: 5px;
 }
 
 .race-points strong {
-  color: #ffffff;
+  color: #f5f5f5;
 
-  font-size: 1.1rem;
+  font-size: 17px;
 }
 
 .race-points span {
   color: #555;
 
-  font-size: 0.6rem;
-
+  font-size: 8px;
   font-weight: 800;
-
-  letter-spacing: 1px;
 }
 
 
-/* =========================================
-   NO RESULTS
-========================================= */
+/* =========================================================
+   RESULTS PLACEHOLDER
+========================================================= */
 
 .results-placeholder {
   display: flex;
-
-  align-items: flex-start;
-
+  align-items: center;
   gap: 18px;
+
+  margin-bottom: 70px;
 
   padding: 28px;
 
-  background: #101010;
+  border: 1px solid #292929;
 
-  border: 1px dashed #2a2a2a;
-
-  border-radius: 8px;
+  background: #0d0d0d;
 }
 
 .results-placeholder-icon {
-  min-width: 48px;
+  width: 52px;
+  height: 52px;
 
-  height: 48px;
+  display: grid;
+  place-items: center;
 
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
+  border: 1px solid #292929;
 
   color: #e10600;
-
-  background:
-    rgba(225, 6, 0, 0.08);
-
-  border-radius: 50%;
 }
 
 .results-placeholder h3 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .results-placeholder p {
-  max-width: 650px;
-
   margin: 0;
 
-  color: #777;
+  color: #666;
 
-  font-size: 0.85rem;
-
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 
-/* =========================================
+/* =========================================================
    BOTTOM ACTION
-========================================= */
+========================================================= */
 
 .driver-profile-action {
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
+  justify-content: space-between;
 
   gap: 30px;
 
-  margin-top: 80px;
-
-  margin-bottom: 80px;
+  margin-top: 20px;
+  margin-bottom: 100px;
 
   padding: 35px;
 
+  border: 1px solid #292929;
+
   background:
     linear-gradient(
-      120deg,
-      rgba(225, 6, 0, 0.12),
-      #111 50%
+      135deg,
+      #121212,
+      #090909
     );
-
-  border: 1px solid #252525;
-
-  border-radius: 10px;
 }
 
-.driver-profile-action span {
+.driver-profile-action > div > span {
+  display: block;
+
+  margin-bottom: 8px;
+
   color: #e10600;
 
-  font-size: 0.65rem;
+  font-size: 9px;
+  font-weight: 900;
 
-  font-weight: 800;
-
-  letter-spacing: 2px;
+  letter-spacing: 0.18em;
 }
 
 .driver-profile-action h2 {
-  margin: 8px 0 0;
+  margin: 0;
 
-  font-size: 1.7rem;
+  font-size: 25px;
+
+  letter-spacing: -0.03em;
 }
 
 .view-all-drivers {
   display: inline-flex;
-
   align-items: center;
+  gap: 9px;
 
-  gap: 10px;
+  padding: 13px 18px;
 
-  padding: 14px 20px;
+  border: 1px solid #363636;
 
-  color: #ffffff;
-
-  background: #e10600;
-
-  border-radius: 6px;
+  color: #f5f5f5;
 
   text-decoration: none;
 
-  font-size: 0.85rem;
+  font-size: 10px;
+  font-weight: 800;
 
-  font-weight: 700;
+  letter-spacing: 0.1em;
 
-  white-space: nowrap;
+  text-transform: uppercase;
 
   transition:
-    transform 0.25s ease,
-    background 0.25s ease;
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .view-all-drivers:hover {
-  background: #ff1c16;
+  border-color: #e10600;
 
-  transform: translateY(-2px);
+  background: #e10600;
+
+  color: #fff;
 }
 
 
-/* =========================================
-   TABLET
-========================================= */
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+
+  .driver-profile-container {
+    width: 90vw;
+  }
+
+  .driver-profile-hero {
+    min-height: 560px;
+  }
 
   .driver-profile-hero-grid {
-    grid-template-columns: 1fr;
+    min-height: 560px;
 
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .driver-profile-info h1 {
+    font-size: clamp(52px, 8vw, 78px);
+  }
+
+  .driver-profile-image-wrapper {
+    min-height: 560px;
+  }
+
+  .driver-profile-image {
+    max-height: 530px;
+  }
+
+  .driver-number-background {
+    font-size: 300px;
+  }
+
+  .driver-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .driver-profile-container {
+    width: 90vw;
+  }
+
+  /* BACK */
+
+  .driver-profile-container:first-child {
+    padding-top: 20px;
+  }
+
+
+  /* HERO */
+
+  .driver-profile-hero {
     min-height: auto;
+
+    margin-top: 20px;
+  }
+
+  .driver-profile-hero-grid {
+    min-height: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
   }
 
   .driver-profile-info {
     padding: 55px 0 20px;
   }
 
-  .driver-profile-image-wrapper {
-    height: 430px;
-  }
-
-  .driver-profile-image {
-    max-width: 500px;
-  }
-
-  .driver-stat-grid {
-    grid-template-columns:
-      repeat(2, 1fr);
-  }
-
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 700px) {
-
-  .driver-profile-container {
-    width: min(100% - 28px, 1200px);
-  }
-
-  .driver-back-link {
-    margin: 20px 0;
-  }
-
-  .driver-profile-info {
-    padding-top: 35px;
-  }
-
-  .driver-profile-kicker {
-    font-size: 0.65rem;
-
-    letter-spacing: 2px;
-  }
-
   .driver-profile-info h1 {
-    font-size:
-      clamp(3.5rem, 17vw, 5rem);
-
-    letter-spacing: -3px;
+    font-size: clamp(50px, 15vw, 75px);
   }
 
   .driver-profile-team {
-    margin-top: 22px;
+    margin-top: 25px;
   }
 
+  .driver-profile-number {
+    margin-top: 25px;
+  }
+
+
+  /* IMAGE */
+
   .driver-profile-image-wrapper {
-    height: 340px;
+    min-height: 420px;
+
+    margin-top: -10px;
+  }
+
+  .driver-profile-image {
+    width: 100%;
+    max-height: 430px;
   }
 
   .driver-number-background {
-    font-size: 10rem;
+    right: -10px;
+    bottom: -20px;
+
+    font-size: 260px;
+  }
+
+  .driver-image-glow {
+    width: 320px;
+    height: 320px;
+
+    right: 50%;
+    transform: translateX(50%);
   }
 
 
   /* CHAMPIONSHIP */
 
   .championship-highlight {
-    grid-template-columns:
-      auto 1fr;
+    grid-template-columns: auto 1fr;
 
-    padding: 20px;
+    gap: 15px;
 
-    margin-top: 25px;
+    margin-top: 30px;
+
+    padding: 22px;
   }
 
   .championship-position {
@@ -985,7 +1083,7 @@
 
     padding-top: 15px;
 
-    border-top: 1px solid #222;
+    border-top: 1px solid #292929;
 
     text-align: left;
   }
@@ -994,29 +1092,30 @@
   /* HEADINGS */
 
   .profile-section-heading {
-    margin-top: 60px;
+    margin-top: 55px;
   }
 
   .profile-section-heading h2 {
-    font-size: 2rem;
+    font-size: 30px;
   }
 
 
   /* STATS */
 
   .driver-stat-grid {
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
-    gap: 10px;
+    gap: 8px;
   }
 
   .driver-stat-card {
+    min-height: 160px;
+
     padding: 18px;
   }
 
   .driver-stat-card strong {
-    font-size: 2rem;
+    font-size: 34px;
   }
 
 
@@ -1027,136 +1126,89 @@
   }
 
   .detail-row {
-    min-height: 60px;
+    min-height: 70px;
+
+    padding: 16px;
   }
 
 
-  /* RACE RESULTS */
+  /* RESULTS */
+
+  .race-results {
+    overflow-x: auto;
+  }
+
+  .race-results-header,
+  .race-result-row {
+    min-width: 620px;
+
+    grid-template-columns:
+      2fr
+      1fr
+      1fr
+      0.8fr;
+  }
 
   .race-results-header {
-    grid-template-columns:
-      1fr 80px 70px 70px;
-
-    padding: 13px 14px;
-
-    font-size: 0.55rem;
+    padding: 0 15px;
   }
 
   .race-result-row {
-    grid-template-columns:
-      1fr 80px 70px 70px;
-
-    min-height: 65px;
-
-    padding: 0 14px;
-  }
-
-  .race-name {
-    gap: 8px;
-  }
-
-  .race-round {
-    font-size: 0.6rem;
-  }
-
-  .race-name strong {
-    font-size: 0.78rem;
-  }
-
-  .race-position {
-    font-size: 0.8rem;
-  }
-
-  .race-points strong {
-    font-size: 0.95rem;
+    padding: 0 15px;
   }
 
 
-  /* RESULTS PLACEHOLDER */
-
-  .results-placeholder {
-    padding: 20px;
-  }
-
-
-  /* BOTTOM */
+  /* BOTTOM ACTION */
 
   .driver-profile-action {
     flex-direction: column;
 
     align-items: flex-start;
 
-    margin-top: 60px;
+    padding: 25px;
 
     margin-bottom: 60px;
-
-    padding: 25px;
-  }
-
-  .view-all-drivers {
-    width: 100%;
-
-    justify-content: center;
   }
 
 }
 
 
-/* =========================================
-   SMALL MOBILE
-========================================= */
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
 
-@media (max-width: 450px) {
-
-  .race-results-header {
-    grid-template-columns:
-      1fr 60px 55px 60px;
-
-    padding: 12px 10px;
-  }
-
-  .race-result-row {
-    grid-template-columns:
-      1fr 60px 55px 60px;
-
-    padding: 0 10px;
-  }
-
-  .race-round {
-    display: none;
-  }
-
-  .race-name strong {
-    font-size: 0.72rem;
-  }
-
-  .race-position {
-    font-size: 0.72rem;
-  }
-
-  .race-points strong {
-    font-size: 0.85rem;
-  }
-
-}
-
-
-/* =========================================
-   VERY SMALL MOBILE
-========================================= */
-
-@media (max-width: 380px) {
+@media (max-width: 430px) {
 
   .driver-stat-grid {
     grid-template-columns: 1fr;
   }
 
+  .driver-stat-card {
+    min-height: 145px;
+  }
+
   .driver-profile-info h1 {
-    font-size: 3.2rem;
+    font-size: 48px;
   }
 
   .driver-profile-image-wrapper {
-    height: 300px;
+    min-height: 350px;
+  }
+
+  .driver-profile-image {
+    max-height: 360px;
+  }
+
+  .driver-number-background {
+    font-size: 210px;
+  }
+
+  .championship-copy strong {
+    font-size: 28px;
+  }
+
+  .profile-section-heading h2 {
+    font-size: 27px;
   }
 
 }

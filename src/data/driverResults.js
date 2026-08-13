@@ -1,109 +1,97 @@
-const driverResults = {
-  ant: [
-    {
-      race: "Australian Grand Prix",
-      shortRace: "Australia",
-      qualifying: 1,
-      finish: 1,
-      points: 25,
-    },
-    {
-      race: "Chinese Grand Prix",
-      shortRace: "China",
-      qualifying: 1,
-      finish: 1,
-      points: 25,
-    },
-    {
-      race: "Japanese Grand Prix",
-      shortRace: "Japan",
-      qualifying: 2,
-      finish: 2,
-      points: 18,
-    },
-    {
-      race: "Bahrain Grand Prix",
-      shortRace: "Bahrain",
-      qualifying: 1,
-      finish: 1,
-      points: 25,
-    },
-    {
-      race: "Saudi Arabian Grand Prix",
-      shortRace: "Saudi Arabia",
-      qualifying: 2,
-      finish: 2,
-      points: 18,
-    },
-  ],
+import raceResults from "./raceResults";
+import drivers from "./drivers";
 
-  ham: [
-    {
-      race: "Australian Grand Prix",
-      shortRace: "Australia",
-      qualifying: 5,
-      finish: 5,
-      points: 10,
-    },
-    {
-      race: "Chinese Grand Prix",
-      shortRace: "China",
-      qualifying: 4,
-      finish: 3,
-      points: 15,
-    },
-    {
-      race: "Japanese Grand Prix",
-      shortRace: "Japan",
-      qualifying: 5,
-      finish: 4,
-      points: 12,
-    },
-  ],
+// =====================================================
+// F1 POINTS SYSTEM
+// =====================================================
 
-  rus: [
-    {
-      race: "Australian Grand Prix",
-      shortRace: "Australia",
-      qualifying: 3,
-      finish: 2,
-      points: 18,
-    },
-    {
-      race: "Chinese Grand Prix",
-      shortRace: "China",
-      qualifying: 3,
-      finish: 2,
-      points: 18,
-    },
-    {
-      race: "Japanese Grand Prix",
-      shortRace: "Japan",
-      qualifying: 4,
-      finish: 3,
-      points: 15,
-    },
-  ],
-
-  lec: [],
-  nor: [],
-  ver: [],
-  pia: [],
-  had: [],
-  law: [],
-  gas: [],
-  lin: [],
-  col: [],
-  bea: [],
-  bor: [],
-  sai: [],
-  alb: [],
-  oco: [],
-  hul: [],
-  alo: [],
-  str: [],
-  bot: [],
-  per: [],
+const pointsTable = {
+  1: 25,
+  2: 18,
+  3: 15,
+  4: 12,
+  5: 10,
+  6: 8,
+  7: 6,
+  8: 4,
+  9: 2,
+  10: 1,
 };
+
+// =====================================================
+// CONVERT RACE RESULTS INTO DRIVER RESULTS
+// =====================================================
+
+const driverResults = {};
+
+// Create an empty result list for every driver
+drivers.forEach((driver) => {
+  driverResults[driver.shortName.toLowerCase()] = [];
+});
+
+// =====================================================
+// BUILD DRIVER-BY-DRIVER RESULTS
+// =====================================================
+
+Object.entries(raceResults).forEach(([round, race]) => {
+  const raceRound = Number(round);
+
+  // Safety check
+  if (!race || !race.results) {
+    return;
+  }
+
+  drivers.forEach((driver) => {
+    const result = race.results[driver.number];
+
+    // If the driver does not appear in the race data,
+    // don't add a result.
+    if (result === undefined) {
+      return;
+    }
+
+    const isNumber = typeof result === "number";
+
+    const points = isNumber
+      ? pointsTable[result] || 0
+      : 0;
+
+    driverResults[driver.shortName.toLowerCase()].push({
+      round: raceRound,
+
+      race: race.name,
+
+      shortRace: race.name
+        .replace(" Grand Prix", "")
+        .replace("Arabian", "Saudi Arabia"),
+
+      country: race.country,
+
+      circuit: race.circuit,
+
+      date: race.date,
+
+      // Qualifying data is not currently contained
+      // in raceResults.js.
+      qualifying: null,
+
+      // Race finishing position
+      finish: result,
+
+      // Championship points earned in this race
+      points,
+    });
+  });
+});
+
+// =====================================================
+// SORT EACH DRIVER'S RESULTS BY ROUND
+// =====================================================
+
+Object.keys(driverResults).forEach((driver) => {
+  driverResults[driver].sort(
+    (a, b) => a.round - b.round
+  );
+});
 
 export default driverResults;

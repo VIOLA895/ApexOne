@@ -1,30 +1,296 @@
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+
 import "./Drivers.css";
 
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import RaceResults from "../../components/RaceResults/RaceResults";
-import { Trophy, Flag, ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 import drivers from "../../data/drivers";
 
+
+// =====================================================
+// TEAM COLORS
+// =====================================================
+
+const teamColors = {
+  Mercedes: {
+    background: "linear-gradient(135deg, #00a19c 0%, #006f6b 100%)",
+    accent: "#00f0e8",
+  },
+
+  Ferrari: {
+    background: "linear-gradient(135deg, #d00000 0%, #760000 100%)",
+    accent: "#ff1e1e",
+  },
+
+  McLaren: {
+    background: "linear-gradient(135deg, #ff8700 0%, #b94d00 100%)",
+    accent: "#ff9d3d",
+  },
+
+  "Red Bull Racing": {
+    background: "linear-gradient(135deg, #162f70 0%, #07132f 100%)",
+    accent: "#3674ff",
+  },
+
+  "Aston Martin": {
+    background: "linear-gradient(135deg, #006f62 0%, #003c35 100%)",
+    accent: "#20d6bd",
+  },
+
+  Alpine: {
+    background: "linear-gradient(135deg, #168cff 0%, #164c9a 100%)",
+    accent: "#53aaff",
+  },
+
+  Williams: {
+    background: "linear-gradient(135deg, #005aff 0%, #06265e 100%)",
+    accent: "#3c83ff",
+  },
+
+  "Racing Bulls": {
+    background: "linear-gradient(135deg, #273b8f 0%, #10183d 100%)",
+    accent: "#4968ff",
+  },
+
+  Haas: {
+    background: "linear-gradient(135deg, #777777 0%, #252525 100%)",
+    accent: "#eeeeee",
+  },
+
+  Audi: {
+    background: "linear-gradient(135deg, #6d6d6d 0%, #222222 100%)",
+    accent: "#ffffff",
+  },
+
+  Cadillac: {
+    background: "linear-gradient(135deg, #222222 0%, #050505 100%)",
+    accent: "#d7d7d7",
+  },
+};
+
+
+// =====================================================
+// COUNTRY FLAG
+// =====================================================
+
+function getFlagUrl(countryCode) {
+  if (!countryCode) return null;
+
+  return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
+
+
+// =====================================================
+// DRIVER CARD
+// =====================================================
+
+function DriverCard({ driver, index }) {
+
+  const colors =
+    teamColors[driver.team] || {
+      background:
+        "linear-gradient(135deg, #333333 0%, #111111 100%)",
+      accent: "#ffffff",
+    };
+
+
+  return (
+    <Link
+      to={`/drivers/${driver.shortName}`}
+      className="driver-card"
+      style={{
+        "--team-background": colors.background,
+        "--team-accent": colors.accent,
+      }}
+    >
+
+      {/* =================================================
+          CARD BACKGROUND
+      ================================================= */}
+
+      <div className="driver-card-pattern"></div>
+
+
+      {/* =================================================
+          POSITION
+      ================================================= */}
+
+      <div className="driver-card-position">
+
+        <span>
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+      </div>
+
+
+      {/* =================================================
+          DRIVER INFORMATION
+      ================================================= */}
+
+      <div className="driver-card-content">
+
+        <div className="driver-card-heading">
+
+          <div>
+
+            <span className="driver-card-first-name">
+              {driver.firstName}
+            </span>
+
+            <h2>
+              {driver.lastName}
+            </h2>
+
+          </div>
+
+
+          <ArrowUpRight
+            size={22}
+            className="driver-card-arrow"
+          />
+
+        </div>
+
+
+        {/* TEAM */}
+
+        <div className="driver-card-team">
+
+          <span className="team-dot"></span>
+
+          {driver.team}
+
+        </div>
+
+
+        {/* NUMBER */}
+
+        <div className="driver-card-number">
+
+          {driver.number}
+
+        </div>
+
+
+        {/* FLAG */}
+
+        <div className="driver-card-country">
+
+          {getFlagUrl(driver.countryCode) ? (
+
+            <img
+              src={getFlagUrl(driver.countryCode)}
+              alt={driver.nationality}
+            />
+
+          ) : (
+
+            <span className="country-code">
+              {driver.countryCode}
+            </span>
+
+          )}
+
+          <span>
+            {driver.countryCode}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* =================================================
+          DRIVER IMAGE
+      ================================================= */}
+
+      <div className="driver-card-image-wrapper">
+
+        <div className="driver-card-image-glow"></div>
+
+        {driver.image ? (
+
+          <img
+            src={driver.image}
+            alt={driver.fullName}
+            className="driver-card-image"
+          />
+
+        ) : (
+
+          <div className="driver-image-placeholder">
+            {driver.shortName}
+          </div>
+
+        )}
+
+      </div>
+
+
+      {/* =================================================
+          BOTTOM
+      ================================================= */}
+
+      <div className="driver-card-bottom">
+
+        <span>
+          VIEW DRIVER
+        </span>
+
+        <ArrowUpRight size={17} />
+
+      </div>
+
+    </Link>
+  );
+}
+
+
+// =====================================================
+// DRIVERS PAGE
+// =====================================================
+
 function Drivers() {
-  // Get the current top 3 drivers from the standings
-  const topDrivers = [...drivers]
-    .sort((a, b) => a.position - b.position)
-    .slice(0, 3);
+
+  /*
+    Sort drivers by championship position.
+
+    If position is missing, keep the driver at
+    the bottom.
+  */
+
+  const sortedDrivers = [...drivers].sort(
+    (a, b) => {
+
+      const positionA =
+        Number(a.position) || 999;
+
+      const positionB =
+        Number(b.position) || 999;
+
+      return positionA - positionB;
+    }
+  );
+
 
   return (
     <>
+
       <Navbar />
+
 
       <main className="drivers-page">
 
-        {/* =========================================
+        {/* =================================================
             HERO
-        ========================================= */}
+        ================================================= */}
 
         <section className="drivers-hero">
+
+          <div className="drivers-hero-grid"></div>
 
           <div className="drivers-hero-content">
 
@@ -33,476 +299,132 @@ function Drivers() {
             </span>
 
             <h1>
-              The Drivers
+              Meet the
               <br />
-              <span>Behind the Wheel</span>
+              <span>Drivers</span>
             </h1>
 
             <p>
-              Meet the drivers competing for victory, championship
-              points and Formula 1 history throughout the 2026 season.
+              Meet the 22 drivers competing across
+              the 2026 Formula 1 season.
             </p>
 
           </div>
 
-          <div className="drivers-hero-stat">
 
-            <Trophy size={28} />
+          <div className="drivers-hero-meta">
 
-            <div>
-              <span>CHAMPIONSHIP</span>
-              <strong>DRIVER STANDINGS</strong>
-            </div>
+            <span>
+              22
+            </span>
 
-          </div>
-
-        </section>
-
-
-        {/* =========================================
-            SEASON OVERVIEW
-        ========================================= */}
-
-        <section className="drivers-overview">
-
-          <div className="overview-card">
-
-            <span>SEASON</span>
-
-            <strong>2026</strong>
-
-          </div>
-
-
-          <div className="overview-card">
-
-            <span>DRIVERS</span>
-
-            <strong>{drivers.length}</strong>
-
-          </div>
-
-
-          <div className="overview-card">
-
-            <span>RACES</span>
-
-            <strong>24</strong>
-
-          </div>
-
-
-          <div className="overview-card">
-
-            <span>CHAMPIONSHIP</span>
-
-            <strong>LIVE</strong>
+            <small>
+              DRIVERS
+            </small>
 
           </div>
 
         </section>
 
 
-        {/* =========================================
-            CHAMPIONSHIP LEADERS
-        ========================================= */}
+        {/* =================================================
+            GRID HEADER
+        ================================================= */}
 
         <section className="drivers-section">
 
-          <div className="section-heading">
+          <div className="drivers-section-heading">
 
             <div>
 
               <span className="section-kicker">
-                DRIVER STANDINGS
+                THE GRID
               </span>
 
               <h2>
-                Championship Leaders
+                2026 Drivers
               </h2>
 
               <p>
-                The three drivers currently leading the 2026
-                Formula 1 World Championship.
+                Explore every driver competing in
+                the 2026 Formula 1 championship.
               </p>
 
             </div>
 
 
-            <Link
-              to="/drivers/all"
-              className="view-all-drivers"
-            >
-              View All Drivers
+            <div className="drivers-count">
 
-              <ArrowUpRight size={17} />
+              <strong>
+                {sortedDrivers.length}
+              </strong>
 
-            </Link>
+              <span>
+                DRIVERS
+              </span>
+
+            </div>
 
           </div>
 
 
-          {/* =========================================
+          {/* =================================================
               DRIVER GRID
-          ========================================= */}
+          ================================================= */}
 
           <div className="drivers-grid">
 
-            {topDrivers.map((driver, index) => (
+            {sortedDrivers.map(
+              (driver, index) => (
 
-              <article
-                className={`driver-card driver-card-${index + 1}`}
-                key={driver.shortName}
-              >
+                <DriverCard
+                  key={driver.number}
+                  driver={driver}
+                  index={index}
+                />
 
-                {/* CARD TOP */}
-
-                <div className="driver-card-top">
-
-                  <span className="driver-position">
-                    {String(driver.position).padStart(2, "0")}
-                  </span>
-
-                  <span className="driver-number">
-                    #{driver.number}
-                  </span>
-
-                </div>
-
-
-                {/* DRIVER IMAGE + INFO */}
-
-                <div className="driver-card-main">
-
-                  <div className="driver-image-wrapper">
-
-                    <div className="driver-image-glow"></div>
-
-                    <img
-                      src={driver.image}
-                      alt={driver.fullName}
-                      className="driver-image"
-                    />
-
-                    <span className="driver-number-large">
-                      {driver.number}
-                    </span>
-
-                  </div>
-
-
-                  <div className="driver-info">
-
-                    <span className="driver-short-name">
-                      {driver.shortName}
-                    </span>
-
-                    <h3>
-
-                      {driver.firstName}
-
-                      <br />
-
-                      <strong>
-                        {driver.lastName}
-                      </strong>
-
-                    </h3>
-
-                    <p className="driver-team">
-                      {driver.team}
-                    </p>
-
-
-                    <span className="driver-nationality">
-
-                      <Flag size={14} />
-
-                      {driver.nationality}
-
-                    </span>
-
-                  </div>
-
-                </div>
-
-
-                {/* DRIVER STATS */}
-
-                <div className="driver-stats">
-
-                  <div className="driver-stat">
-
-                    <span>POINTS</span>
-
-                    <strong>
-                      {driver.points ?? 0}
-                    </strong>
-
-                  </div>
-
-
-                  <div className="driver-stat">
-
-                    <span>WINS</span>
-
-                    <strong>
-                      {driver.wins ?? 0}
-                    </strong>
-
-                  </div>
-
-
-                  <div className="driver-stat">
-
-                    <span>PODIUMS</span>
-
-                    <strong>
-                      {driver.podiums ?? 0}
-                    </strong>
-
-                  </div>
-
-
-                  <div className="driver-stat">
-
-                    <span>POLES</span>
-
-                    <strong>
-                      {driver.poles ?? 0}
-                    </strong>
-
-                  </div>
-
-                </div>
-
-
-                {/* VIEW DRIVER */}
-
-                <Link
-                  to={`/drivers/${driver.shortName}`}
-                  className="driver-details"
-                >
-
-                  <span>
-                    View Driver
-                  </span>
-
-                  <ArrowUpRight size={18} />
-
-                </Link>
-
-              </article>
-
-            ))}
+              )
+            )}
 
           </div>
-
-
-          {/* =========================================
-              ALL DRIVERS BUTTON
-          ========================================= */}
-
-          <div className="all-drivers-action">
-
-            <p>
-              Want to explore the entire 2026 grid?
-            </p>
-
-            <Link
-              to="/drivers/all"
-              className="all-drivers-button"
-            >
-              Explore All 22 Drivers
-
-              <ArrowUpRight size={18} />
-
-            </Link>
-
-          </div>
-          {/* =========================================
-    FULL DRIVER STANDINGS
-========================================= */}
-
-<section className="full-standings">
-
-  <div className="standings-heading">
-
-    <div>
-      <span className="section-kicker">
-        2026 CHAMPIONSHIP
-      </span>
-
-      <h2>
-        Full Driver Standings
-      </h2>
-
-      <p>
-        Follow all 22 drivers as the championship battle
-        develops throughout the season.
-      </p>
-    </div>
-
-    <span className="standings-count">
-      {drivers.length} DRIVERS
-    </span>
-
-  </div>
-
-
-  <div className="standings-table-wrapper">
-
-    <table className="standings-table">
-
-      <thead>
-        <tr>
-          <th>POS</th>
-          <th>DRIVER</th>
-          <th>TEAM</th>
-          <th>POINTS</th>
-          <th>WINS</th>
-          <th>PODIUMS</th>
-          <th>POLES</th>
-          <th></th>
-        </tr>
-      </thead>
-
-
-      <tbody>
-
-        {drivers
-          .slice()
-          .sort((a, b) => a.position - b.position)
-          .map((driver) => (
-
-            <tr
-              key={driver.shortName}
-              className={
-                driver.position <= 3
-                  ? "standings-row top-three"
-                  : "standings-row"
-              }
-            >
-
-              {/* POSITION */}
-
-              <td className="standings-position">
-
-                {String(driver.position).padStart(2, "0")}
-
-              </td>
-
-
-              {/* DRIVER */}
-
-              <td>
-
-                <div className="standings-driver">
-
-                  <div className="standings-driver-image">
-
-                    <img
-                      src={driver.image}
-                      alt={driver.fullName}
-                    />
-
-                  </div>
-
-
-                  <div className="standings-driver-info">
-
-                    <strong>
-                      {driver.fullName}
-                    </strong>
-
-                    <span>
-                      #{driver.number} · {driver.nationality}
-                    </span>
-
-                  </div>
-
-                </div>
-
-              </td>
-
-
-              {/* TEAM */}
-
-              <td className="standings-team">
-
-                {driver.team}
-
-              </td>
-
-
-              {/* POINTS */}
-
-              <td className="standings-points">
-
-                {driver.points ?? 0}
-
-              </td>
-
-
-              {/* WINS */}
-
-              <td>
-
-                {driver.wins ?? 0}
-
-              </td>
-
-
-              {/* PODIUMS */}
-
-              <td>
-
-                {driver.podiums ?? 0}
-
-              </td>
-
-
-              {/* POLES */}
-
-              <td>
-
-                {driver.poles ?? 0}
-
-              </td>
-
-
-              {/* PROFILE */}
-
-              <td>
-
-                <Link
-                  to={`/drivers/${driver.shortName}`}
-                  className="standings-view"
-                >
-                  View
-                  <ArrowUpRight size={15} />
-                </Link>
-
-              </td>
-
-            </tr>
-
-          ))}
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</section>
 
         </section>
-       <RaceResults />
+
+
+        {/* =================================================
+            BOTTOM
+        ================================================= */}
+
+        <section className="drivers-bottom">
+
+          <div>
+
+            <span className="section-kicker">
+              APEXONE
+            </span>
+
+            <h2>
+              Twenty-two drivers.
+              <br />
+              One championship.
+            </h2>
+
+          </div>
+
+
+          <p>
+            Explore each driver's profile to discover
+            their team, statistics and individual
+            2026 season performance.
+          </p>
+
+        </section>
 
       </main>
 
+
       <Footer />
+
     </>
   );
 }

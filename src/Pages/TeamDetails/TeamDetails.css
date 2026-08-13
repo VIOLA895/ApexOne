@@ -1,0 +1,1021 @@
+/* =========================================================
+   TEAM DETAILS PAGE
+========================================================= */
+
+.team-details-page {
+  min-height: 100vh;
+  background: #050505;
+  color: #f5f5f5;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.team-details-hero {
+  position: relative;
+  min-height: 570px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 90px 7vw 70px;
+  border-bottom: 1px solid #242424;
+  overflow: hidden;
+}
+
+
+.team-details-hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+}
+
+
+.team-details-hero-grid::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 45%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(225, 0, 0, 0.14),
+      transparent
+    );
+}
+
+
+.team-details-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+}
+
+
+.team-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 55px;
+
+  color: #777;
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition: color 0.2s ease;
+}
+
+
+.team-back-link:hover {
+  color: #ffffff;
+}
+
+
+.team-details-kicker {
+  display: block;
+
+  color: #e10600;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.2em;
+}
+
+
+.team-details-hero h1 {
+  margin: 18px 0 25px;
+
+  font-size: clamp(55px, 7vw, 105px);
+  line-height: 0.9;
+
+  letter-spacing: -0.06em;
+  font-weight: 800;
+}
+
+
+.team-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  flex-wrap: wrap;
+}
+
+
+.team-hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #999;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+.team-hero-meta svg {
+  color: #e10600;
+}
+
+
+/* =========================================================
+   LARGE TEAM IMAGE
+========================================================= */
+
+.team-details-hero-image {
+  position: relative;
+  z-index: 2;
+
+  width: min(520px, 42vw);
+  height: 360px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #292929;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #242424 0%,
+      #101010 48%,
+      #080808 100%
+    );
+
+  overflow: hidden;
+}
+
+
+.team-details-hero-image::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(225, 0, 0, 0.1),
+      transparent 45%
+    );
+
+  pointer-events: none;
+}
+
+
+.team-details-hero-image img {
+  position: relative;
+  z-index: 2;
+
+  width: 85%;
+  height: 85%;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 25px 35px rgba(0, 0, 0, 0.65)
+    );
+
+  transition:
+    transform 0.35s ease;
+}
+
+
+.team-details-hero-image:hover img {
+  transform: scale(1.08);
+}
+
+
+.team-details-image-placeholder {
+  color: #e10600;
+
+  font-size: 32px;
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+}
+
+
+/* =========================================================
+   QUICK STATS
+========================================================= */
+
+.team-details-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  border-bottom: 1px solid #242424;
+}
+
+
+.team-detail-stat {
+  min-height: 125px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 17px;
+
+  padding: 25px 30px;
+
+  border-right: 1px solid #242424;
+}
+
+
+.team-detail-stat:last-child {
+  border-right: none;
+}
+
+
+.team-detail-stat svg {
+  flex-shrink: 0;
+  color: #e10600;
+}
+
+
+.team-detail-stat span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.team-detail-stat strong {
+  display: block;
+
+  color: #f5f5f5;
+
+  font-size: 29px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   TEAM PROFILE
+========================================================= */
+
+.team-profile-section {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+
+  gap: 80px;
+
+  padding: 100px 7vw;
+
+  border-bottom: 1px solid #242424;
+}
+
+
+.team-profile-main {
+  max-width: 800px;
+}
+
+
+.section-kicker {
+  display: block;
+
+  color: #e10600;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+
+.team-profile-main h2 {
+  margin: 18px 0 25px;
+
+  font-size: clamp(42px, 5vw, 70px);
+
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+
+
+.team-profile-main h2 span {
+  color: #e10600;
+}
+
+
+.team-profile-main p {
+  max-width: 730px;
+
+  margin: 0 0 18px;
+
+  color: #888;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   PROFILE SIDE
+========================================================= */
+
+.team-profile-side {
+  border-top: 1px solid #303030;
+}
+
+
+.profile-side-item {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 25px 0;
+
+  border-bottom: 1px solid #292929;
+}
+
+
+.profile-side-item svg {
+  color: #e10600;
+  flex-shrink: 0;
+}
+
+
+.profile-side-item span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.profile-side-item strong {
+  color: #ddd;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   TEAM INFORMATION
+========================================================= */
+
+.team-information-section {
+  padding: 90px 7vw;
+  border-bottom: 1px solid #242424;
+}
+
+
+.team-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 35px;
+}
+
+
+.team-section-heading h2 {
+  margin: 10px 0 0;
+
+  font-size: 42px;
+  line-height: 1;
+
+  letter-spacing: -0.045em;
+}
+
+
+.team-section-heading p {
+  max-width: 550px;
+
+  margin: 12px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+.team-information-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 14px;
+}
+
+
+.information-card {
+  min-height: 175px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 25px;
+
+  border: 1px solid #292929;
+
+  background:
+    linear-gradient(
+      145deg,
+      #161616,
+      #0d0d0d
+    );
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.information-card:hover {
+  transform: translateY(-4px);
+  border-color: #444;
+}
+
+
+.information-card svg {
+  color: #e10600;
+}
+
+
+.information-card span {
+  margin-top: 20px;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.information-card strong {
+  margin-top: 8px;
+
+  color: #f4f4f4;
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   DRIVER LINEUP
+========================================================= */
+
+.team-drivers-section {
+  padding: 90px 7vw;
+
+  border-bottom: 1px solid #242424;
+}
+
+
+.team-section-count {
+  color: #666;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+.team-driver-details-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+
+.team-driver-detail-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 150px;
+
+  padding: 25px;
+
+  border: 1px solid #2b2b2b;
+
+  background:
+    linear-gradient(
+      135deg,
+      #151515,
+      #0b0b0b
+    );
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.team-driver-detail-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 55px;
+  height: 2px;
+
+  background: #e10600;
+}
+
+
+.team-driver-detail-card:hover {
+  transform: translateY(-4px);
+  border-color: #444;
+}
+
+
+.team-driver-detail-number {
+  position: absolute;
+
+  right: 20px;
+  top: 15px;
+
+  color: #222;
+
+  font-size: 60px;
+  font-weight: 900;
+
+  line-height: 1;
+}
+
+
+.team-driver-detail-icon {
+  width: 65px;
+  height: 65px;
+
+  display: grid;
+  place-items: center;
+
+  margin-right: 20px;
+
+  border: 1px solid #333;
+
+  background: #111;
+
+  color: #e10600;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+.team-driver-detail-info {
+  position: relative;
+  z-index: 2;
+}
+
+
+.team-driver-detail-info span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.team-driver-detail-info h3 {
+  margin: 0;
+
+  color: #f4f4f4;
+
+  font-size: 24px;
+
+  letter-spacing: -0.025em;
+}
+
+
+.driver-detail-arrow {
+  position: absolute;
+
+  right: 22px;
+  bottom: 20px;
+
+  color: #555;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.team-driver-detail-card:hover .driver-detail-arrow {
+  color: #e10600;
+  transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   SEASON CAMPAIGN
+========================================================= */
+
+.team-season-section {
+  padding: 90px 7vw;
+
+  border-bottom: 1px solid #242424;
+}
+
+
+.team-season-heading {
+  margin-bottom: 35px;
+}
+
+
+.team-season-heading h2 {
+  margin: 10px 0 10px;
+
+  font-size: 42px;
+
+  letter-spacing: -0.045em;
+}
+
+
+.team-season-heading p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+.team-season-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 14px;
+}
+
+
+.season-card {
+  min-height: 170px;
+
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  border: 1px solid #292929;
+
+  background: #101010;
+}
+
+
+.season-card span {
+  margin-bottom: auto;
+
+  color: #666;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+.season-card strong {
+  display: block;
+
+  color: #f5f5f5;
+
+  font-size: 42px;
+
+  line-height: 1;
+
+  letter-spacing: -0.04em;
+}
+
+
+.season-card small {
+  margin-top: 7px;
+
+  color: #666;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   BOTTOM CTA
+========================================================= */
+
+.team-details-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 40px;
+
+  padding: 100px 7vw;
+}
+
+
+.team-details-bottom h2 {
+  margin: 15px 0 0;
+
+  font-size: clamp(45px, 6vw, 80px);
+
+  line-height: 0.9;
+
+  letter-spacing: -0.06em;
+}
+
+
+.team-all-button,
+.team-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 15px 22px;
+
+  border: 1px solid #444;
+
+  background: #111;
+
+  color: #f5f5f5;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.team-all-button:hover,
+.team-back-button:hover {
+  background: #e10600;
+  border-color: #e10600;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NOT FOUND
+========================================================= */
+
+.team-not-found {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 60px 7vw;
+}
+
+
+.team-not-found h1 {
+  margin: 15px 0;
+
+  font-size: clamp(45px, 7vw, 80px);
+
+  letter-spacing: -0.055em;
+}
+
+
+.team-not-found p {
+  margin: 0 0 30px;
+
+  color: #777;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .team-details-hero {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+
+  .team-details-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+  .team-detail-stat:nth-child(2) {
+    border-right: none;
+  }
+
+
+  .team-detail-stat:nth-child(3),
+  .team-detail-stat:nth-child(4) {
+    border-top: 1px solid #242424;
+  }
+
+
+  .team-profile-section,
+  .team-information-section,
+  .team-drivers-section,
+  .team-season-section,
+  .team-details-bottom {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+
+  .team-profile-section {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+
+  .team-information-grid,
+  .team-season-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .team-details-hero {
+    min-height: auto;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    gap: 45px;
+  }
+
+
+  .team-back-link {
+    margin-bottom: 40px;
+  }
+
+
+  .team-details-hero h1 {
+    font-size: 55px;
+  }
+
+
+  .team-details-hero-image {
+    width: 100%;
+    height: 280px;
+  }
+
+
+  .team-details-hero-image img {
+    width: 90%;
+    height: 90%;
+  }
+
+
+  .team-details-stats {
+    grid-template-columns: 1fr;
+  }
+
+
+  .team-detail-stat {
+    border-right: none;
+    border-bottom: 1px solid #242424;
+  }
+
+
+  .team-detail-stat:last-child {
+    border-bottom: none;
+  }
+
+
+  .team-detail-stat:nth-child(3),
+  .team-detail-stat:nth-child(4) {
+    border-top: none;
+  }
+
+
+  .team-profile-section,
+  .team-information-section,
+  .team-drivers-section,
+  .team-season-section,
+  .team-details-bottom {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+
+  .team-profile-main h2,
+  .team-section-heading h2,
+  .team-season-heading h2 {
+    font-size: 38px;
+  }
+
+
+  .team-information-grid,
+  .team-season-grid,
+  .team-driver-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .team-details-bottom {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .team-all-button {
+    width: 100%;
+  }
+
+}

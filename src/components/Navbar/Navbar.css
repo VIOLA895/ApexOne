@@ -1,147 +1,443 @@
-.navbar{
-    width:100%;
-    height:90px;
+/* =====================================================
+   APEXONE NAVBAR
+===================================================== */
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.navbar {
+  width: 100%;
+  height: 90px;
 
-    padding:0 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    background:#0D0D0D;
+  padding: 0 80px;
 
-    border-bottom:1px solid #1F1F1F;
+  background: #0D0D0D;
 
-    position:sticky;
-    top:0;
-    z-index:1000;
+  border-bottom: 1px solid #1F1F1F;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
 }
 
-/* ================= LOGO ================= */
 
-.logo{
-    display:flex;
-    flex-direction:column;
-    cursor:pointer;
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo {
+  display: flex;
+  flex-direction: column;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
 }
 
-.logo h1{
-    font-family:"Bitcount Prop Single", sans-serif;
-    font-size:2rem;
-    color:#E10600;
-    letter-spacing:2px;
+.logo h1 {
+  font-family: "Bitcount Prop Single", sans-serif;
+
+  font-size: 2rem;
+
+  color: #E10600;
+
+  letter-spacing: 2px;
+
+  margin: 0;
 }
 
-.logo span{
-    font-size:.75rem;
-    color:#9A9A9A;
-    letter-spacing:2px;
-    margin-top:-4px;
+.logo span {
+  font-size: 0.75rem;
+
+  color: #9A9A9A;
+
+  letter-spacing: 2px;
+
+  margin-top: -4px;
 }
 
-/* ================= NAVIGATION ================= */
 
-.nav-links{
-    display:flex;
-    align-items:center;
-    gap:55px;
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 55px;
+
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
 }
 
-.nav-links a{
-    position:relative;
-
-    color:#D8D8D8;
-
-    font-size:18px;
-
-    font-weight:600;
-
-    transition:.3s;
+.nav-links li {
+  margin: 0;
+  padding: 0;
 }
 
-.nav-links a:hover{
-    color:#FFFFFF;
+.nav-links a {
+  position: relative;
+
+  display: inline-block;
+
+  color: #D8D8D8;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: 0.3s;
 }
 
-.nav-links a.active{
-    color:#E10600;
+.nav-links a:hover {
+  color: #E10600;
 }
 
-.nav-links a::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    bottom:-8px;
-
-    width:0;
-
-    height:2px;
-
-    background:#E10600;
-
-    transition:.3s;
+.nav-links a.active {
+  color: #E10600;
 }
 
-.nav-links a:hover::after{
-    width:100%;
+
+/* =====================================================
+   NAVIGATION UNDERLINE
+===================================================== */
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -8px;
+
+  width: 0;
+
+  height: 2px;
+
+  background: #E10600;
+
+  transition: 0.3s;
 }
 
-.nav-links a.active::after{
-    width:100%;
+.nav-links a:hover::after {
+  width: 100%;
 }
 
-/* ================= BUTTON ================= */
-
-.login-btn{
-
-    background:#E10600;
-
-    color:white;
-
-    border:none;
-
-    padding:14px 28px;
-
-    border-radius:10px;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.3s;
+.nav-links a.active::after {
+  width: 100%;
 }
 
-.login-btn:hover{
 
-    background:#ff2d25;
+/* =====================================================
+   SIGN IN BUTTON
+===================================================== */
 
-    transform:translateY(-2px);
+.login-btn {
+  background: #E10600;
+
+  color: white;
+
+  border: none;
+
+  padding: 14px 28px;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+  flex-shrink: 0;
 }
 
-/* ================= RESPONSIVE ================= */
+.login-btn:hover {
+  background: #ff2d25;
 
-@media(max-width:1000px){
+  transform: translateY(-2px);
+}
 
-    .navbar{
-        padding:0 30px;
-    }
 
-    .nav-links{
-        gap:30px;
-    }
+/* =====================================================
+   MOBILE MENU BUTTON
+===================================================== */
+
+.menu-toggle {
+  display: none;
+
+  width: 46px;
+  height: 46px;
+
+  padding: 0;
+
+  border: 1px solid #2A2A2A;
+
+  border-radius: 8px;
+
+  background: #151515;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.menu-toggle span {
+  width: 21px;
+  height: 2px;
+
+  background: #FFFFFF;
+
+  display: block;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+
+/* =====================================================
+   HAMBURGER → X
+===================================================== */
+
+.menu-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .navbar {
+    padding: 0 50px;
+  }
+
+  .nav-links {
+    gap: 35px;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+  }
 
 }
 
-@media(max-width:850px){
 
-    .nav-links{
-        display:none;
-    }
+/* =====================================================
+   SMALLER TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .navbar {
+    padding: 0 30px;
+  }
+
+  .nav-links {
+    gap: 25px;
+  }
+
+  .nav-links a {
+    font-size: 15px;
+  }
+
+  .login-btn {
+    padding: 12px 20px;
+
+    font-size: 14px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .navbar {
+    height: 80px;
+
+    padding: 0 25px;
+  }
+
+
+  /* Hide normal desktop navigation */
+
+  .nav-links {
+    display: none;
+  }
+
+
+  /* Hide sign in on mobile */
+
+  .login-btn {
+    display: none;
+  }
+
+
+  /* Show hamburger */
+
+  .menu-toggle {
+    display: flex;
+  }
+
+
+  /* Open mobile menu */
+
+  .nav-links.mobile-open {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    top: 80px;
+
+    left: 20px;
+    right: 20px;
+
+    padding: 10px;
+
+    background: #0D0D0D;
+
+    border: 1px solid #252525;
+
+    border-top: 2px solid #E10600;
+
+    border-radius: 0 0 12px 12px;
+
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.45);
+
+    animation: mobileMenuOpen 0.2s ease;
+  }
+
+
+  .nav-links.mobile-open li {
+    width: 100%;
+  }
+
+
+  .nav-links.mobile-open a {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    font-size: 16px;
+
+    border-radius: 6px;
+  }
+
+
+  .nav-links.mobile-open a:hover {
+    background: #171717;
+  }
+
+
+  .nav-links.mobile-open a.active {
+    background: rgba(225, 6, 0, 0.08);
+
+    color: #E10600;
+  }
+
+
+  /* Remove desktop underline on mobile */
+
+  .nav-links.mobile-open a::after {
+    display: none;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    height: 75px;
+
+    padding: 0 18px;
+  }
+
+  .logo h1 {
+    font-size: 1.65rem;
+  }
+
+  .logo span {
+    font-size: 0.62rem;
+
+    letter-spacing: 1.5px;
+  }
+
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-links.mobile-open {
+    top: 75px;
+
+    left: 12px;
+    right: 12px;
+  }
+
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes mobileMenuOpen {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
 
 }

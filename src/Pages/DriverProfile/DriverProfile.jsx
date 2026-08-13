@@ -11,6 +11,7 @@ import {
   Medal,
   CircleDot,
   Gauge,
+  CalendarDays,
 } from "lucide-react";
 
 import Navbar from "../../components/Navbar/Navbar";
@@ -22,17 +23,67 @@ import driverResults from "../../data/driverResults";
 function DriverProfile() {
   const { shortName } = useParams();
 
+  // =========================================
+  // FIND DRIVER
+  // =========================================
+
   const driver = drivers.find(
     (item) =>
-      item.shortName.toLowerCase() === shortName?.toLowerCase()
+      item.shortName.toLowerCase() ===
+      shortName?.toLowerCase()
   );
 
   if (!driver) {
     return <Navigate to="/drivers" replace />;
   }
 
-  const results =
+  // =========================================
+  // GET DRIVER RESULTS
+  // =========================================
+
+  const allResults =
     driverResults[driver.shortName.toLowerCase()] || [];
+
+  /*
+    Only completed races should appear in the
+    race-performance table.
+
+    Saudi Arabian GP = CANCELLED
+    Bahrain GP = POSTPONED
+
+    The filter also works if driverResults.js
+    contains a status such as:
+      status: "cancelled"
+      status: "postponed"
+  */
+
+  const results = allResults.filter((result) => {
+    const raceName =
+      `${result.race || ""} ${result.shortRace || ""} ${
+        result.name || ""
+      }`.toLowerCase();
+
+    const status =
+      result.status?.toLowerCase() || "";
+
+    // Cancelled races
+    if (
+      status === "cancelled" ||
+      raceName.includes("saudi")
+    ) {
+      return false;
+    }
+
+    // Postponed races
+    if (
+      status === "postponed" ||
+      raceName.includes("bahrain")
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 
   return (
     <>
@@ -82,13 +133,16 @@ function DriverProfile() {
                   </span>
 
                   <strong>
-                    {String(driver.position).padStart(2, "0")}
+                    {String(
+                      driver.position ?? 0
+                    ).padStart(2, "0")}
                   </strong>
 
                 </div>
 
                 <h1>
                   {driver.firstName}
+
                   <span>
                     {driver.lastName}
                   </span>
@@ -175,7 +229,7 @@ function DriverProfile() {
               </span>
 
               <strong>
-                {driver.points}
+                {driver.points ?? 0}
                 <small> POINTS</small>
               </strong>
 
@@ -188,7 +242,7 @@ function DriverProfile() {
               </span>
 
               <strong>
-                P{driver.position}
+                P{driver.position ?? "-"}
               </strong>
 
             </div>
@@ -215,8 +269,9 @@ function DriverProfile() {
             </h2>
 
             <p>
-              A snapshot of {driver.firstName}'s
-              performance throughout the 2026 Formula 1 season.
+              A snapshot of{" "}
+              {driver.firstName}'s performance
+              throughout the 2026 Formula 1 season.
             </p>
 
           </div>
@@ -306,7 +361,7 @@ function DriverProfile() {
               </span>
 
               <strong>
-                {driver.points}
+                {driver.points ?? 0}
               </strong>
 
               <p>
@@ -402,7 +457,7 @@ function DriverProfile() {
                 </span>
 
                 <strong>
-                  P{driver.position}
+                  P{driver.position ?? "-"}
                 </strong>
 
               </div>
@@ -415,7 +470,7 @@ function DriverProfile() {
                 </span>
 
                 <strong>
-                  {driver.points}
+                  {driver.points ?? 0}
                 </strong>
 
               </div>
@@ -445,11 +500,16 @@ function DriverProfile() {
 
             <p>
               Follow {driver.firstName}'s performance
-              across the Formula 1 season.
+              across the completed Grand Prix races
+              of the 2026 Formula 1 season.
             </p>
 
           </div>
 
+
+          {/* =======================================
+              RACE RESULTS
+          ======================================= */}
 
           {results.length > 0 ? (
 
@@ -480,69 +540,120 @@ function DriverProfile() {
 
               {/* RESULTS */}
 
-              {results.map((result, index) => (
+              {results.map((result, index) => {
 
-                <div
-                  className="race-result-row"
-                  key={`${result.shortRace}-${index}`}
-                >
+                const finish =
+                  result.finish;
 
-                  <div className="race-name">
+                const isNumericFinish =
+                  typeof finish === "number";
 
-                    <span className="race-round">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+                const isDNF =
+                  finish === "DNF";
 
-                    <strong>
-                      {result.shortRace}
-                    </strong>
+                const isDNS =
+                  finish === "DNS";
 
-                  </div>
+                const isNC =
+                  finish === "NC";
 
-
-                  <div className="race-position">
-
-                    <span>
-                      P
-                    </span>
-
-                    {result.qualifying}
-
-                  </div>
-
+                return (
 
                   <div
-                    className={`race-position ${
-                      result.finish <= 3
-                        ? "podium-finish"
-                        : ""
-                    }`}
+                    className="race-result-row"
+                    key={`${result.shortRace || result.race}-${index}`}
                   >
 
-                    <span>
-                      P
-                    </span>
+                    {/* GRAND PRIX */}
 
-                    {result.finish}
+                    <div className="race-name">
+
+                      <span className="race-round">
+                        {String(index + 1).padStart(
+                          2,
+                          "0"
+                        )}
+                      </span>
+
+                      <strong>
+                        {result.shortRace ||
+                          result.race ||
+                          result.name}
+                      </strong>
+
+                    </div>
+
+
+                    {/* QUALIFYING */}
+
+                    <div className="race-position">
+
+                      <span>
+                        P
+                      </span>
+
+                      {result.qualifying ?? "—"}
+
+                    </div>
+
+
+                    {/* FINISH */}
+
+                    <div
+                      className={`race-position ${
+                        isNumericFinish &&
+                        finish <= 3
+                          ? "podium-finish"
+                          : ""
+                      } ${
+                        isDNF
+                          ? "race-dnf"
+                          : ""
+                      } ${
+                        isDNS
+                          ? "race-dns"
+                          : ""
+                      } ${
+                        isNC
+                          ? "race-nc"
+                          : ""
+                      }`}
+                    >
+
+                      {isNumericFinish ? (
+                        <>
+                          <span>
+                            P
+                          </span>
+
+                          {finish}
+                        </>
+                      ) : (
+                        finish || "—"
+                      )}
+
+                    </div>
+
+
+                    {/* POINTS */}
+
+                    <div className="race-points">
+
+                      <strong>
+                        {result.points ?? 0}
+                      </strong>
+
+                      <span>
+                        PTS
+                      </span>
+
+                    </div>
 
                   </div>
 
+                );
 
-                  <div className="race-points">
-
-                    <strong>
-                      {result.points}
-                    </strong>
-
-                    <span>
-                      PTS
-                    </span>
-
-                  </div>
-
-                </div>
-
-              ))}
+              })}
 
             </div>
 
@@ -551,9 +662,7 @@ function DriverProfile() {
             <div className="results-placeholder">
 
               <div className="results-placeholder-icon">
-
                 <CircleDot size={26} />
-
               </div>
 
               <div>
@@ -563,8 +672,9 @@ function DriverProfile() {
                 </h3>
 
                 <p>
-                  Race-by-race results will appear here
-                  once data is available for this driver.
+                  Race-by-race results will appear
+                  here once data is available for
+                  this driver.
                 </p>
 
               </div>
@@ -572,6 +682,26 @@ function DriverProfile() {
             </div>
 
           )}
+
+
+          {/* =======================================
+              RACE STATUS NOTE
+          ======================================= */}
+
+          <div className="race-calendar-note">
+
+            <CalendarDays size={18} />
+
+            <div>
+
+              <strong>
+                2026 Race Calendar
+              </strong>
+
+
+            </div>
+
+          </div>
 
         </section>
 
@@ -596,12 +726,16 @@ function DriverProfile() {
 
             </div>
 
+
             <Link
               to="/drivers/all"
               className="view-all-drivers"
             >
+
               View All Drivers
+
               <ArrowUpRight size={18} />
+
             </Link>
 
           </div>

@@ -29,10 +29,10 @@ function Hero() {
   </Link>
 
   <Link
-    to="/live"
+    to="/stats"
     className="secondary-btn live-season-btn"
   >
-    Explore Live Season
+    Explore Season
   </Link>
 
 </div>

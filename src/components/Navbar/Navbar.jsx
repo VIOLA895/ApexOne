@@ -1,45 +1,116 @@
-import "./Navbar.css";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import "./Navbar.css";
+
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <nav className="navbar">
 
-      <div className="logo">
+      {/* ================= LOGO ================= */}
+
+      <div
+        className="logo"
+        onClick={closeMenu}
+      >
         <h1>APEXONE</h1>
         <span>Formula 1 Made Simple</span>
       </div>
 
-      <ul className="nav-links">
+
+      {/* ================= DESKTOP NAVIGATION ================= */}
+
+      <ul className={`nav-links ${menuOpen ? "mobile-open" : ""}`}>
 
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink
+            to="/"
+            end
+            onClick={closeMenu}
+          >
+            Home
+          </NavLink>
         </li>
 
         <li>
-          <NavLink to="/learn">Learn</NavLink>
+          <NavLink
+            to="/Learn"
+            onClick={closeMenu}
+          >
+            Learn
+          </NavLink>
         </li>
 
         <li>
-          <NavLink to="/drivers">Drivers</NavLink>
+          <NavLink
+            to="/drivers"
+            onClick={closeMenu}
+          >
+            Drivers
+          </NavLink>
         </li>
 
         <li>
-          <NavLink to="/teams">Teams</NavLink>
+          <NavLink
+            to="/teams"
+            onClick={closeMenu}
+          >
+            Teams
+          </NavLink>
         </li>
 
         <li>
-          <NavLink to="/live">Live</NavLink>
+          <NavLink
+            to="/schedule"
+            onClick={closeMenu}
+          >
+            Schedule
+          </NavLink>
         </li>
 
         <li>
-          <NavLink to="/stats">Stats</NavLink>
+          <NavLink
+            to="/stats"
+            onClick={closeMenu}
+          >
+            Stats
+          </NavLink>
         </li>
 
       </ul>
 
+
+      {/* ================= SIGN IN ================= */}
+
       <button className="login-btn">
         Sign In
+      </button>
+
+
+      {/* ================= MOBILE MENU ================= */}
+
+      <button
+        type="button"
+        className={`menu-toggle ${menuOpen ? "open" : ""}`}
+        onClick={() =>
+          setMenuOpen((previous) => !previous)
+        }
+        aria-label={
+          menuOpen
+            ? "Close navigation menu"
+            : "Open navigation menu"
+        }
+        aria-expanded={menuOpen}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
 
     </nav>
