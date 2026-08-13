@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 // =========================================
 
 import Home from "./pages/Home/Home";
+import SignIn from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
 
 import Learn from "./pages/Learn/Learn";
 import LessonPage from "./pages/LessonPage/LessonPage";
@@ -36,6 +38,23 @@ function App() {
         path="/"
         element={<Home />}
       />
+
+      {/* =========================================
+          SIGN IN
+      ========================================= */}
+
+      <Route
+       path="/signin" 
+       element={<SignIn />}
+       />
+
+      {/* =========================================
+          SIGN UP
+      ========================================= */}
+
+       <Route
+        path="/signup" 
+        element={<SignUp />} />
 
 
       {/* =========================================

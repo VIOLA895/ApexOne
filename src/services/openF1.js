@@ -1,24 +1,248 @@
 const BASE_URL = "https://api.openf1.org/v1";
 
 // =====================================================
-// OPENF1 API SERVICE
+// OPENF1 API CONFIGURATION
+// =====================================================
+
+const CACHE_DURATION = 60 * 1000; // 1 minute
+
+// Stores completed requests
+const requestCache = new Map();
+
+// Stores requests currently in progress
+// This prevents two identical requests from being
+// sent to OpenF1 at the same time.
+const pendingRequests = new Map();
+
+// Prevents requests from being fired too quickly
+let lastRequestTime = 0;
+
+const MIN_REQUEST_INTERVAL = 350;
+
+
+// =====================================================
+// SMALL DELAY HELPER
+// =====================================================
+
+function wait(milliseconds) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
+
+
+// =====================================================
+// OPENF1 API REQUEST
 // =====================================================
 
 async function request(endpoint) {
-  try {
-    const response = await fetch(`${BASE_URL}${endpoint}`);
+  const now = Date.now();
 
-    if (!response.ok) {
-      throw new Error(
-        `OpenF1 request failed: ${response.status} ${response.statusText}`
-      );
-    }
+  // ---------------------------------------------------
+  // CHECK CACHE
+  // ---------------------------------------------------
 
-    return await response.json();
-  } catch (error) {
-    console.error("OpenF1 API Error:", error);
-    throw error;
+  const cached = requestCache.get(endpoint);
+
+  if (
+    cached &&
+    now - cached.timestamp < CACHE_DURATION
+  ) {
+    return cached.data;
   }
+
+
+  // ---------------------------------------------------
+  // CHECK FOR EXISTING REQUEST
+  // ---------------------------------------------------
+
+  if (pendingRequests.has(endpoint)) {
+    return pendingRequests.get(endpoint);
+  }
+
+
+  // ---------------------------------------------------
+  // CREATE REQUEST
+  // ---------------------------------------------------
+
+  const requestPromise = (async () => {
+    try {
+
+      // -----------------------------------------------
+      // RATE LIMIT PROTECTION
+      // -----------------------------------------------
+
+      const timeSinceLastRequest =
+        Date.now() - lastRequestTime;
+
+      if (
+        timeSinceLastRequest <
+        MIN_REQUEST_INTERVAL
+      ) {
+        await wait(
+          MIN_REQUEST_INTERVAL -
+            timeSinceLastRequest
+        );
+      }
+
+      lastRequestTime = Date.now();
+
+
+      // -----------------------------------------------
+      // FETCH
+      // -----------------------------------------------
+
+      const response = await fetch(
+        `${BASE_URL}${endpoint}`
+      );
+
+
+      // -----------------------------------------------
+      // RATE LIMIT
+      // -----------------------------------------------
+
+      if (response.status === 429) {
+
+        console.warn(
+          "OpenF1 rate limit reached."
+        );
+
+        /*
+          Give the API a little time before trying
+          again.
+
+          We only retry once to avoid creating a
+          request loop.
+        */
+
+        const retryAfter =
+          response.headers.get(
+            "Retry-After"
+          );
+
+        const retryDelay =
+          retryAfter
+            ? Number(retryAfter) * 1000
+            : 2000;
+
+        await wait(
+          Number.isFinite(retryDelay)
+            ? retryDelay
+            : 2000
+        );
+
+
+        // ---------------------------------------------
+        // RETRY REQUEST
+        // ---------------------------------------------
+
+        lastRequestTime = Date.now();
+
+        const retryResponse =
+          await fetch(
+            `${BASE_URL}${endpoint}`
+          );
+
+
+        if (
+          retryResponse.status === 429
+        ) {
+          throw new Error(
+            "OpenF1 rate limit reached. Please wait a moment and try again."
+          );
+        }
+
+
+        if (!retryResponse.ok) {
+          throw new Error(
+            `OpenF1 request failed: ${retryResponse.status} ${retryResponse.statusText}`
+          );
+        }
+
+
+        const retryData =
+          await retryResponse.json();
+
+
+        requestCache.set(endpoint, {
+          data: retryData,
+          timestamp: Date.now(),
+        });
+
+
+        return retryData;
+      }
+
+
+      // -----------------------------------------------
+      // OTHER API ERRORS
+      // -----------------------------------------------
+
+      if (!response.ok) {
+        throw new Error(
+          `OpenF1 request failed: ${response.status} ${response.statusText}`
+        );
+      }
+
+
+      // -----------------------------------------------
+      // PARSE RESPONSE
+      // -----------------------------------------------
+
+      const data =
+        await response.json();
+
+
+      // -----------------------------------------------
+      // SAVE TO CACHE
+      // -----------------------------------------------
+
+      requestCache.set(endpoint, {
+        data,
+        timestamp: Date.now(),
+      });
+
+
+      return data;
+
+    } catch (error) {
+
+      console.error(
+        "OpenF1 API Error:",
+        error
+      );
+
+      throw error;
+
+    } finally {
+
+      // Remove completed request
+      pendingRequests.delete(endpoint);
+    }
+  })();
+
+
+  // ---------------------------------------------------
+  // STORE ACTIVE REQUEST
+  // ---------------------------------------------------
+
+  pendingRequests.set(
+    endpoint,
+    requestPromise
+  );
+
+
+  return requestPromise;
+}
+
+
+// =====================================================
+// CLEAR API CACHE
+// =====================================================
+
+export function clearOpenF1Cache() {
+  requestCache.clear();
+  pendingRequests.clear();
 }
 
 
@@ -27,112 +251,75 @@ async function request(endpoint) {
 // =====================================================
 
 /*
-  Get all meetings for a season.
+  Get all Grand Prix meetings for a season.
 
-  A meeting can be:
-  - Grand Prix
-  - Pre-season testing
-  - Other official F1 events
+  Example:
+
+  getMeetings(2026)
 */
-export async function getMeetings(year = 2026) {
-  return request(`/meetings?year=${year}`);
+
+export async function getMeetings(
+  year = 2026
+) {
+  return request(
+    `/meetings?year=${year}`
+  );
 }
 
+
+// =====================================================
+// COMPLETED / NON-CANCELLED MEETINGS
+// =====================================================
 
 /*
-  Get only active, non-cancelled meetings.
+  Get meetings that have not been cancelled.
 
-  This removes cancelled events such as:
-  - 2026 Bahrain Grand Prix originally scheduled
-    for April 10-12
-  - 2026 Saudi Arabian Grand Prix originally
-    scheduled for April 17-19
+  NOTE:
+  A meeting being non-cancelled does not necessarily
+  mean that the race has already happened.
 
-  It keeps the new Bahrain Grand Prix in Malaysia
-  because that meeting has is_cancelled: false.
+  The Schedule page should use session dates to
+  determine whether a race is upcoming or completed.
 */
-export async function getActiveMeetings(year = 2026) {
-  const meetings = await getMeetings(year);
 
-  if (!Array.isArray(meetings)) {
-    return [];
-  }
+export async function getCompletedMeetings(
+  year = 2026
+) {
+  const meetings =
+    await getMeetings(year);
 
-  return meetings
-    .filter(
-      (meeting) =>
-        meeting.is_cancelled !== true
-    )
-    .sort((a, b) => {
-      const dateA = new Date(
-        a.date_start || a.date_end || 0
-      );
-
-      const dateB = new Date(
-        b.date_start || b.date_end || 0
-      );
-
-      return dateA - dateB;
-    });
+  return meetings.filter(
+    (meeting) =>
+      meeting.is_cancelled !== true
+  );
 }
 
 
-/*
-  Backwards-compatible alias.
-
-  If another page in ApexOne already uses
-  getCompletedMeetings(), it will continue working.
-*/
-export async function getCompletedMeetings(year = 2026) {
-  return getActiveMeetings(year);
-}
-
-
-/*
-  Get only actual Grand Prix meetings.
-
-  This removes:
-  - Pre-season testing
-  - Cancelled meetings
-  - Other non-race events
-*/
-export async function getRaceMeetings(year = 2026) {
-  const meetings = await getActiveMeetings(year);
-
-  return meetings.filter((meeting) => {
-    const name = (
-      meeting.meeting_name ||
-      ""
-    ).toLowerCase();
-
-    const officialName = (
-      meeting.meeting_official_name ||
-      ""
-    ).toLowerCase();
-
-    return (
-      name.includes("grand prix") ||
-      officialName.includes("grand prix")
-    );
-  });
-}
-
+// =====================================================
+// MEETING BY COUNTRY
+// =====================================================
 
 /*
   Get a specific Grand Prix by country.
 
   Example:
-  getMeetingByCountry(2026, "Australia")
+
+  getMeetingByCountry(
+    2026,
+    "Australia"
+  )
 */
+
 export async function getMeetingByCountry(
   year = 2026,
   countryName
 ) {
-  const meetings = await request(
-    `/meetings?year=${year}&country_name=${encodeURIComponent(
-      countryName
-    )}`
-  );
+  const meetings =
+    await request(
+      `/meetings?year=${year}&country_name=${encodeURIComponent(
+        countryName
+      )}`
+    );
 
   return meetings;
 }
@@ -146,97 +333,75 @@ export async function getMeetingByCountry(
   Get all sessions for a season.
 
   Includes:
+
   - Practice
   - Qualifying
   - Sprint
   - Race
-
-  Cancelled sessions are removed.
 */
-export async function getSessions(year = 2026) {
-  const sessions = await request(
+
+export async function getSessions(
+  year = 2026
+) {
+  return request(
     `/sessions?year=${year}`
   );
-
-  if (!Array.isArray(sessions)) {
-    return [];
-  }
-
-  return sessions
-    .filter(
-      (session) =>
-        session.is_cancelled !== true
-    )
-    .sort((a, b) => {
-      const dateA = new Date(
-        a.date_start || a.date_end || 0
-      );
-
-      const dateB = new Date(
-        b.date_start || b.date_end || 0
-      );
-
-      return dateA - dateB;
-    });
 }
 
+
+// =====================================================
+// RACE SESSIONS
+// =====================================================
 
 /*
-  Get only active Race sessions.
+  Get only Race sessions.
 
-  IMPORTANT:
-
-  This removes cancelled Bahrain and Saudi Arabia
-  sessions while keeping the new Bahrain Grand Prix
-  in Malaysia.
-
-  It also prevents pre-season testing from appearing
-  on the Schedule page.
+  This is what ApexOne uses for the
+  Grand Prix calendar and Stats page.
 */
-export async function getRaceSessions(year = 2026) {
-  const sessions = await getSessions(year);
+
+export async function getRaceSessions(
+  year = 2026
+) {
+  const sessions =
+    await getSessions(year);
 
   return sessions
-    .filter((session) => {
-      const sessionName = (
-        session.session_name ||
-        ""
-      ).toLowerCase();
-
-      const sessionType = (
-        session.session_type ||
-        ""
-      ).toLowerCase();
-
-      return (
-        sessionName === "race" ||
-        sessionType === "race"
-      );
-    })
+    .filter(
+      (session) =>
+        session.session_name ===
+          "Race" ||
+        session.session_type ===
+          "Race"
+    )
     .filter(
       (session) =>
         session.is_cancelled !== true
-    )
-    .sort((a, b) => {
-      const dateA = new Date(
-        a.date_start || a.date_end || 0
-      );
-
-      const dateB = new Date(
-        b.date_start || b.date_end || 0
-      );
-
-      return dateA - dateB;
-    });
+    );
 }
 
+
+// =====================================================
+// SPECIFIC SESSION
+// =====================================================
 
 /*
   Get a specific session by session key.
 */
-export async function getSession(sessionKey) {
+
+export async function getSession(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/sessions?session_key=${sessionKey}`
+    `/sessions?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
@@ -247,23 +412,64 @@ export async function getSession(sessionKey) {
 
 /*
   Get final results for a specific session.
+
+  For races this includes:
+
+  - driver_number
+  - position
+  - duration
+  - gap_to_leader
+  - dnf
+  - dns
+  - dsq
+  - number_of_laps
 */
-export async function getSessionResults(sessionKey) {
+
+export async function getSessionResults(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/session_result?session_key=${sessionKey}`
+    `/session_result?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER SESSION RESULT
+// =====================================================
+
 /*
   Get the result for one specific driver.
 */
+
 export async function getDriverSessionResult(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/session_result?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/session_result?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -273,78 +479,172 @@ export async function getDriverSessionResult(
 // =====================================================
 
 /*
-  Get all drivers who participated in a session.
+  Get all drivers who participated
+  in a session.
 */
-export async function getSessionDrivers(sessionKey) {
+
+export async function getSessionDrivers(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/drivers?session_key=${sessionKey}`
+    `/drivers?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// SPECIFIC SESSION DRIVER
+// =====================================================
+
 /*
-  Get information about one driver in a session.
+  Get information about one driver
+  in a session.
 */
+
 export async function getSessionDriver(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/drivers?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/drivers?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
 
 // =====================================================
-// CHAMPIONSHIP DRIVER STANDINGS
+// DRIVER CHAMPIONSHIP STANDINGS
 // =====================================================
 
 /*
-  Get driver championship standings after a race.
+  Get driver championship standings
+  after a race.
+
+  OpenF1 uses session_key here.
 */
-export async function getDriverStandings(sessionKey) {
+
+export async function getDriverStandings(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/championship_drivers?session_key=${sessionKey}`
+    `/championship_drivers?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER CHAMPIONSHIP STANDING
+// =====================================================
+
 /*
-  Get championship standing for one driver.
+  Get championship standing for
+  one driver.
 */
+
 export async function getDriverChampionshipStanding(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/championship_drivers?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/championship_drivers?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
 
 // =====================================================
-// CONSTRUCTOR / TEAM STANDINGS
+// TEAM / CONSTRUCTOR STANDINGS
 // =====================================================
 
 /*
-  Get constructor championship standings after a race.
+  Get constructor championship standings
+  after a race.
 */
-export async function getTeamStandings(sessionKey) {
+
+export async function getTeamStandings(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/championship_teams?session_key=${sessionKey}`
+    `/championship_teams?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
+
+// =====================================================
+// TEAM CHAMPIONSHIP STANDING
+// =====================================================
 
 /*
   Get championship standing for one team.
 */
+
 export async function getTeamChampionshipStanding(
   sessionKey,
   teamName
 ) {
+  if (
+    !sessionKey ||
+    !teamName
+  ) {
+    throw new Error(
+      "Session key and team name are required."
+    );
+  }
+
   return request(
-    `/championship_teams?session_key=${sessionKey}&team_name=${encodeURIComponent(
+    `/championship_teams?session_key=${encodeURIComponent(
+      sessionKey
+    )}&team_name=${encodeURIComponent(
       teamName
     )}`
   );
@@ -358,21 +658,48 @@ export async function getTeamChampionshipStanding(
 /*
   Get qualifying results.
 
-  OpenF1 uses the same session_result endpoint.
+  OpenF1 uses session_result for
+  qualifying results too.
 */
-export async function getQualifyingResults(sessionKey) {
+
+export async function getQualifyingResults(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/session_result?session_key=${sessionKey}`
+    `/session_result?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// STARTING GRID
+// =====================================================
+
 /*
   Get the starting grid for a race.
 */
-export async function getStartingGrid(sessionKey) {
+
+export async function getStartingGrid(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/starting_grid?session_key=${sessionKey}`
+    `/starting_grid?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
@@ -382,24 +709,55 @@ export async function getStartingGrid(sessionKey) {
 // =====================================================
 
 /*
-  Get position changes throughout a session.
+  Get position changes throughout
+  a session.
 */
-export async function getDriverPositions(sessionKey) {
+
+export async function getDriverPositions(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/position?session_key=${sessionKey}`
+    `/position?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER POSITION HISTORY
+// =====================================================
+
 /*
   Get position changes for one driver.
 */
+
 export async function getDriverPositionHistory(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/position?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/position?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -411,22 +769,52 @@ export async function getDriverPositionHistory(
 /*
   Get lap data for an entire session.
 */
-export async function getLaps(sessionKey) {
+
+export async function getLaps(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/laps?session_key=${sessionKey}`
+    `/laps?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER LAPS
+// =====================================================
+
 /*
   Get lap data for a specific driver.
 */
+
 export async function getDriverLaps(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/laps?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/laps?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -438,22 +826,52 @@ export async function getDriverLaps(
 /*
   Get pit stop information for a race.
 */
-export async function getPitStops(sessionKey) {
+
+export async function getPitStops(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/pit?session_key=${sessionKey}`
+    `/pit?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER PIT STOPS
+// =====================================================
+
 /*
   Get pit stops for a specific driver.
 */
+
 export async function getDriverPitStops(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/pit?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/pit?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -465,22 +883,52 @@ export async function getDriverPitStops(
 /*
   Get tyre stint information.
 */
-export async function getStints(sessionKey) {
+
+export async function getStints(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/stints?session_key=${sessionKey}`
+    `/stints?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER TYRE STINTS
+// =====================================================
+
 /*
   Get tyre stints for one driver.
 */
+
 export async function getDriverStints(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/stints?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/stints?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -490,24 +938,55 @@ export async function getDriverStints(
 // =====================================================
 
 /*
-  Get gaps between drivers during a race.
+  Get gaps between drivers during
+  a race.
 */
-export async function getIntervals(sessionKey) {
+
+export async function getIntervals(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/intervals?session_key=${sessionKey}`
+    `/intervals?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
+// =====================================================
+// DRIVER INTERVALS
+// =====================================================
+
 /*
   Get intervals for one driver.
 */
+
 export async function getDriverIntervals(
   sessionKey,
   driverNumber
 ) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
   return request(
-    `/intervals?session_key=${sessionKey}&driver_number=${driverNumber}`
+    `/intervals?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
   );
 }
 
@@ -520,6 +999,7 @@ export async function getDriverIntervals(
   Get race control messages.
 
   Includes:
+
   - Safety car
   - Yellow flags
   - Red flags
@@ -527,70 +1007,139 @@ export async function getDriverIntervals(
   - Penalties
   - Session status
 */
-export async function getRaceControl(sessionKey) {
+
+export async function getRaceControl(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   return request(
-    `/race_control?session_key=${sessionKey}`
+    `/race_control?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
   );
 }
 
 
 // =====================================================
-// CONVENIENCE FUNCTIONS
+// WEATHER
 // =====================================================
 
 /*
-  Get everything ApexOne needs for one Grand Prix.
+  Get weather information for a session.
 */
-export async function getRaceData(sessionKey) {
-  const [
-    results,
-    drivers,
-  ] = await Promise.all([
-    getSessionResults(sessionKey),
-    getSessionDrivers(sessionKey),
-  ]);
 
-  return {
-    results,
-    drivers,
-  };
+export async function getWeather(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
+  return request(
+    `/weather?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
+  );
 }
 
 
-/*
-  Get all important data for a Grand Prix.
+// =====================================================
+// CAR DATA
+// =====================================================
 
-  Useful for future Race Details pages.
+/*
+  Get telemetry/car data for a session.
 */
-export async function getFullRaceData(sessionKey) {
+
+export async function getCarData(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
+  return request(
+    `/car_data?session_key=${encodeURIComponent(
+      sessionKey
+    )}`
+  );
+}
+
+
+// =====================================================
+// DRIVER CAR DATA
+// =====================================================
+
+/*
+  Get telemetry/car data for one driver.
+*/
+
+export async function getDriverCarData(
+  sessionKey,
+  driverNumber
+) {
+  if (
+    !sessionKey ||
+    driverNumber === undefined ||
+    driverNumber === null
+  ) {
+    throw new Error(
+      "Session key and driver number are required."
+    );
+  }
+
+  return request(
+    `/car_data?session_key=${encodeURIComponent(
+      sessionKey
+    )}&driver_number=${encodeURIComponent(
+      driverNumber
+    )}`
+  );
+}
+
+
+// =====================================================
+// CONVENIENCE FUNCTION
+// =====================================================
+
+/*
+  Get everything ApexOne needs to display
+  one Grand Prix.
+
+  NOTE:
+  These requests are still made through the
+  cached request() function, so duplicate calls
+  are automatically prevented.
+*/
+
+export async function getRaceData(
+  sessionKey
+) {
+  if (!sessionKey) {
+    throw new Error(
+      "A session key is required."
+    );
+  }
+
   const [
     results,
     drivers,
-    positions,
-    laps,
-    pitStops,
-    stints,
-    intervals,
-    raceControl,
   ] = await Promise.all([
     getSessionResults(sessionKey),
     getSessionDrivers(sessionKey),
-    getDriverPositions(sessionKey),
-    getLaps(sessionKey),
-    getPitStops(sessionKey),
-    getStints(sessionKey),
-    getIntervals(sessionKey),
-    getRaceControl(sessionKey),
   ]);
 
   return {
     results,
     drivers,
-    positions,
-    laps,
-    pitStops,
-    stints,
-    intervals,
-    raceControl,
   };
 }

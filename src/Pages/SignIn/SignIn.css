@@ -1,0 +1,671 @@
+/* =====================================================
+   SIGN IN PAGE
+===================================================== */
+
+.signin-page {
+  min-height: calc(100vh - 82px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #050505;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   LEFT BRAND SECTION
+===================================================== */
+
+.signin-brand {
+  position: relative;
+  min-height: 760px;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    radial-gradient(
+      circle at 35% 55%,
+      rgba(230, 0, 0, 0.13),
+      transparent 38%
+    ),
+    #070707;
+}
+
+
+/* =====================================================
+   GRID BACKGROUND
+===================================================== */
+
+.signin-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 41px 41px;
+
+  opacity: 0.65;
+}
+
+
+/* =====================================================
+   RED GLOW
+===================================================== */
+
+.signin-red-glow {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  left: 15%;
+  top: 35%;
+
+  background: rgba(230, 0, 0, 0.13);
+
+  filter: blur(120px);
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   BRAND CONTENT
+===================================================== */
+
+.signin-brand-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 600px;
+
+  padding: 75px 70px;
+}
+
+
+/* =====================================================
+   KICKER
+===================================================== */
+
+.signin-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 27px;
+
+  color: #a8a8a8;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.signin-kicker span {
+  width: 28px;
+  height: 2px;
+
+  background: #e10600;
+
+  display: block;
+}
+
+
+/* =====================================================
+   MAIN HEADING
+===================================================== */
+
+.signin-brand h1 {
+  margin: 0;
+
+  max-width: 500px;
+
+  font-size: clamp(58px, 6vw, 86px);
+
+  line-height: 0.9;
+
+  font-weight: 800;
+
+  letter-spacing: -4px;
+}
+
+.signin-brand h1 strong {
+  display: block;
+
+  color: #e10600;
+
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.signin-brand > .signin-brand-content > p {
+  max-width: 530px;
+
+  margin: 32px 0 42px;
+
+  color: #999999;
+
+  font-size: 17px;
+
+  line-height: 1.65;
+}
+
+
+/* =====================================================
+   SEASON CARD
+===================================================== */
+
+.signin-season-card {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 20px 14px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: rgba(255, 255, 255, 0.025);
+}
+
+
+.signin-season-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #e10600;
+
+  background: rgba(225, 6, 0, 0.12);
+}
+
+
+.signin-season-card div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+
+.signin-season-card span {
+  color: #777777;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+.signin-season-card strong {
+  font-size: 15px;
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+.signin-features {
+  margin-top: 48px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 26px;
+}
+
+
+.signin-feature {
+  display: flex;
+
+  gap: 20px;
+}
+
+
+.signin-feature > span {
+  min-width: 24px;
+
+  padding-top: 2px;
+
+  color: #e10600;
+
+  font-size: 11px;
+
+  font-weight: 800;
+}
+
+
+.signin-feature div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.signin-feature strong {
+  font-size: 14px;
+
+  color: #ffffff;
+}
+
+
+.signin-feature p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   RIGHT FORM SECTION
+===================================================== */
+
+.signin-form-section {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 70px 60px;
+
+  background: #090909;
+}
+
+
+/* =====================================================
+   FORM CONTAINER
+===================================================== */
+
+.signin-form-container {
+  width: 100%;
+  max-width: 470px;
+}
+
+
+/* =====================================================
+   FORM HEADER
+===================================================== */
+
+.signin-form-header {
+  margin-bottom: 38px;
+}
+
+
+.signin-form-kicker {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #e10600;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+.signin-form-header h2 {
+  margin: 0;
+
+  font-size: 48px;
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+
+  font-weight: 800;
+}
+
+
+.signin-form-header h2 strong {
+  color: #e10600;
+}
+
+
+.signin-form-header p {
+  margin: 15px 0 0;
+
+  color: #777777;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.signin-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+
+/* =====================================================
+   FIELD
+===================================================== */
+
+.signin-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+
+.signin-field label {
+  color: #bcbcbc;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+}
+
+
+/* =====================================================
+   LABEL ROW
+===================================================== */
+
+.signin-label-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.signin-label-row a {
+  color: #e10600;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+
+.signin-label-row a:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.signin-field input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  height: 56px;
+
+  padding: 0 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+
+  outline: none;
+
+  background: #0d0d0d;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.signin-field input::placeholder {
+  color: #505050;
+}
+
+
+.signin-field input:focus {
+  border-color: #e10600;
+
+  background: #111111;
+
+  box-shadow:
+    0 0 0 3px rgba(225, 6, 0, 0.08);
+}
+
+
+/* =====================================================
+   SIGN IN BUTTON
+===================================================== */
+
+.signin-submit {
+  width: 100%;
+
+  height: 57px;
+
+  margin-top: 5px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  background: #e10600;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.signin-submit:hover {
+  background: #ff0a0a;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(225, 6, 0, 0.2);
+}
+
+
+.signin-submit:active {
+  transform: translateY(0);
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.signin-divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin: 32px 0;
+}
+
+
+.signin-divider span {
+  flex: 1;
+
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+.signin-divider small {
+  color: #555555;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   SIGN UP
+===================================================== */
+
+.signin-signup {
+  text-align: center;
+}
+
+
+.signin-signup p {
+  margin: 0 0 12px;
+
+  color: #666666;
+
+  font-size: 13px;
+}
+
+
+.signin-signup a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+
+.signin-signup a:hover {
+  color: #e10600;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .signin-page {
+    grid-template-columns: 1fr;
+  }
+
+  .signin-brand {
+    min-height: auto;
+
+    border-right: none;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .signin-brand-content {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding: 65px 40px;
+  }
+
+  .signin-form-section {
+    padding: 70px 40px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .signin-brand-content {
+    padding: 55px 25px;
+  }
+
+  .signin-brand h1 {
+    font-size: 58px;
+
+    letter-spacing: -3px;
+  }
+
+  .signin-brand > .signin-brand-content > p {
+    font-size: 15px;
+  }
+
+  .signin-form-section {
+    padding: 55px 25px;
+  }
+
+  .signin-form-header h2 {
+    font-size: 40px;
+  }
+
+  .signin-season-card {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+}
