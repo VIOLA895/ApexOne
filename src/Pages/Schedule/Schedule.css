@@ -1,995 +1,1119 @@
-/* =====================================================
-   LIVE PAGE
-===================================================== */
+/* =========================================================
+   APEXONE — 2026 F1 SCHEDULE
+   DARK / RED EDITION
+   ========================================================= */
 
-.live-page {
+.schedule-page {
   min-height: 100vh;
-  background: #080808;
+  background:
+    radial-gradient(
+      circle at 80% 15%,
+      rgba(255, 20, 35, 0.08),
+      transparent 30%
+    ),
+    #080808;
   color: #ffffff;
 }
 
 
-/* =====================================================
+/* =========================================================
    CONTAINER
-===================================================== */
+   ========================================================= */
 
-.live-container {
+.schedule-container {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+   ========================================================= */
 
-.live-hero {
+.schedule-hero {
   position: relative;
-  min-height: 470px;
+  min-height: 480px;
   display: flex;
   align-items: center;
   overflow: hidden;
-  border-bottom: 1px solid #242424;
   background:
-    radial-gradient(
-      circle at 80% 40%,
-      rgba(255, 0, 0, 0.11),
-      transparent 35%
-    ),
-    #0b0b0b;
+    linear-gradient(
+      105deg,
+      #080808 0%,
+      #0d0d0d 58%,
+      #130406 100%
+    );
+  border-bottom: 1px solid #262626;
 }
 
 
-/* Decorative grid */
+/* GRID */
 
-.live-hero-grid {
+.schedule-grid {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  opacity: 0.28;
+
+  opacity: 0.22;
 
   background-image:
     linear-gradient(
-      rgba(255, 255, 255, 0.035) 1px,
+      rgba(255, 255, 255, 0.045) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.035) 1px,
+      rgba(255, 255, 255, 0.045) 1px,
       transparent 1px
     );
 
-  background-size: 55px 55px;
+  background-size: 48px 48px;
 
   mask-image: linear-gradient(
     to right,
-    transparent,
-    black 25%,
-    black 75%,
-    transparent
+    black,
+    transparent 85%
   );
 }
 
 
-.live-hero::after {
-  content: "";
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  right: -180px;
-  top: -120px;
+/* RED GLOW */
 
-  border: 1px solid rgba(255, 0, 0, 0.12);
+.schedule-red-glow {
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  right: -280px;
+  top: -220px;
+
   border-radius: 50%;
 
-  box-shadow:
-    0 0 0 70px rgba(255, 0, 0, 0.025),
-    0 0 0 140px rgba(255, 0, 0, 0.015);
+  background: rgba(255, 20, 35, 0.12);
+
+  filter: blur(70px);
 
   pointer-events: none;
 }
 
 
-/* =====================================================
-   HERO CONTENT
-===================================================== */
+/* HERO INNER */
 
-.live-hero .live-container {
+.schedule-hero-inner {
   position: relative;
   z-index: 2;
 
+  width: min(1180px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    320px;
+
+  gap: 80px;
+
+  align-items: center;
+}
+
+
+/* HERO CONTENT */
+
+.schedule-hero-content {
+  max-width: 720px;
+}
+
+
+.schedule-kicker {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 60px;
-}
 
-
-.live-hero-content {
-  max-width: 700px;
-}
-
-
-.live-kicker {
-  display: inline-flex;
-  align-items: center;
   gap: 10px;
 
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
-  color: #ff2020;
+  color: #ff1e2d;
 
-  font-size: 11px;
+  font-size: 10px;
+
   font-weight: 800;
+
   letter-spacing: 0.2em;
 }
 
 
-.live-kicker::before {
-  content: "";
-  width: 28px;
+.schedule-kicker span {
+  width: 30px;
   height: 2px;
-  background: #ff2020;
+
+  background: #ff1e2d;
 }
 
 
-.live-hero-content h1 {
+.schedule-hero h1 {
   margin: 0;
 
-  font-size: clamp(48px, 6vw, 78px);
-  line-height: 0.95;
+  font-size: clamp(
+    54px,
+    7vw,
+    88px
+  );
+
+  line-height: 0.92;
+
+  letter-spacing: -0.065em;
+
   font-weight: 800;
-  letter-spacing: -0.045em;
 }
 
 
-.live-hero-content h1 span {
-  display: block;
-  color: #ff1e1e;
+.schedule-hero h1 strong {
+  color: #ff1e2d;
+  font-weight: 800;
 }
 
 
-.live-hero-content p {
-  max-width: 590px;
-  margin: 28px 0 0;
+.schedule-hero-content p {
+  max-width: 570px;
 
-  color: #929292;
+  margin: 30px 0 0;
 
-  font-size: 15px;
-  line-height: 1.8;
+  color: #969696;
+
+  font-size: 16px;
+
+  line-height: 1.75;
 }
 
 
-/* =====================================================
-   HERO STATUS CARD
-===================================================== */
+/* =========================================================
+   SEASON CARD
+   ========================================================= */
 
-.live-status-card {
-  min-width: 230px;
+.season-card {
+  display: flex;
 
-  padding: 28px;
+  gap: 18px;
 
-  background: rgba(17, 17, 17, 0.92);
-  border: 1px solid #292929;
+  padding: 26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #171717,
+      #0d0d0d
+    );
+
+  border: 1px solid #2c2c2c;
+
+  border-left: 3px solid #ff1e2d;
 
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.35);
-
-  backdrop-filter: blur(10px);
+    0 25px 70px rgba(0, 0, 0, 0.45);
 }
 
 
-.live-status-indicator {
+.season-card-icon {
   display: flex;
+
   align-items: center;
-  gap: 9px;
+  justify-content: center;
 
-  margin-bottom: 20px;
+  width: 42px;
+  height: 42px;
 
-  color: #8e8e8e;
+  flex-shrink: 0;
 
-  font-size: 10px;
+  background: rgba(
+    255,
+    30,
+    45,
+    0.1
+  );
+
+  color: #ff1e2d;
+}
+
+
+.season-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #777;
+
+  font-size: 9px;
+
   font-weight: 800;
+
   letter-spacing: 0.15em;
 }
 
 
-.live-status-indicator > span {
-  width: 8px;
-  height: 8px;
+.season-card strong {
+  display: block;
 
-  border-radius: 50%;
-  background: #555;
+  margin-bottom: 6px;
+
+  font-size: 34px;
+
+  line-height: 1;
 }
 
 
-.live-status-indicator > span.is-live {
-  background: #00e676;
+.season-card small {
+  display: block;
 
-  box-shadow:
-    0 0 0 4px rgba(0, 230, 118, 0.1),
-    0 0 14px rgba(0, 230, 118, 0.8);
+  color: #777;
 
-  animation: livePulse 1.5s infinite;
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
 }
 
 
-@keyframes livePulse {
+/* =========================================================
+   CALENDAR SECTION
+   ========================================================= */
+
+.schedule-container {
+  padding-top: 85px;
+}
+
+
+.calendar-heading {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  gap: 30px;
+
+  margin-bottom: 35px;
+}
+
+
+.section-kicker {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #ff1e2d;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.17em;
+}
+
+
+.calendar-heading h2 {
+  margin: 0;
+
+  font-size: 38px;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.04em;
+}
+
+
+.calendar-heading p {
+  margin: 12px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* COUNT */
+
+.calendar-count {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 12px 16px;
+
+  border: 1px solid #292929;
+
+  background: #101010;
+}
+
+
+.calendar-count svg {
+  color: #ff1e2d;
+}
+
+
+.calendar-count strong {
+  font-size: 18px;
+}
+
+
+.calendar-count span {
+  color: #777;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   CALENDAR LIST
+   ========================================================= */
+
+.calendar-list {
+  border-top: 1px solid #292929;
+}
+
+
+/* =========================================================
+   CALENDAR ROW
+   ========================================================= */
+
+.calendar-row {
+  position: relative;
+
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    70px
+    100px
+    minmax(260px, 1fr)
+    180px
+    50px;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 23px 12px 23px 0;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  border: 0;
+
+  border-bottom: 1px solid #242424;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    padding 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.calendar-row:hover {
+  padding-left: 14px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 30, 45, 0.08),
+      transparent
+    );
+
+  border-bottom-color: #3b3b3b;
+}
+
+
+.calendar-row::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 2px;
+
+  background: #ff1e2d;
+
+  transform: scaleY(0);
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.calendar-row:hover::before,
+.calendar-row.is-next::before,
+.calendar-row.is-live::before {
+  transform: scaleY(1);
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.calendar-number {
+  color: #444;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.calendar-date {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+  border-left: 1px solid #292929;
+
+  padding-left: 20px;
+}
+
+
+.calendar-date strong {
+  font-size: 30px;
+
+  line-height: 0.95;
+
+  letter-spacing: -0.04em;
+}
+
+
+.calendar-date span {
+  margin-top: 6px;
+
+  color: #ff1e2d;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+
+/* =========================================================
+   RACE
+   ========================================================= */
+
+.calendar-race {
+  min-width: 0;
+}
+
+
+.calendar-race-top {
+  min-height: 17px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 5px;
+}
+
+
+.calendar-race h3 {
+  margin: 0;
+
+  font-size: 21px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.025em;
+}
+
+
+.calendar-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 7px;
+
+  color: #666;
+
+  font-size: 11px;
+}
+
+
+.calendar-location svg {
+  color: #ff1e2d;
+}
+
+
+/* =========================================================
+   STATUS LABELS
+   ========================================================= */
+
+.next-label,
+.live-label,
+.completed-label {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 4px 7px;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+}
+
+
+.next-label {
+  background: #ff1e2d;
+
+  color: #ffffff;
+}
+
+
+.live-label {
+  background: #ff1e2d;
+
+  color: #ffffff;
+
+  animation: liveFlash 1.5s infinite;
+}
+
+
+.completed-label {
+  color: #666;
+
+  border: 1px solid #303030;
+}
+
+
+@keyframes liveFlash {
   0%,
   100% {
     opacity: 1;
   }
 
   50% {
-    opacity: 0.45;
+    opacity: 0.55;
   }
 }
 
 
-.live-status-card strong {
-  display: block;
+/* =========================================================
+   SESSION
+   ========================================================= */
 
-  margin-bottom: 8px;
-
-  font-size: 23px;
-  font-weight: 800;
-}
-
-
-.live-status-card small {
-  color: #626262;
-
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-
-/* =====================================================
-   SECTION HEADING
-===================================================== */
-
-.live-section-heading {
-  margin-bottom: 32px;
-}
-
-
-.live-section-heading > span,
-.live-section-label {
-  display: block;
-
-  margin-bottom: 10px;
-
-  color: #ff2020;
-
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-}
-
-
-.live-section-heading h2 {
-  margin: 0 0 10px;
-
-  font-size: 31px;
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-}
-
-
-.live-section-heading p {
-  max-width: 650px;
-
-  margin: 0;
-
-  color: #777;
-
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-
-/* =====================================================
-   SESSION SELECTOR
-===================================================== */
-
-.live-selector-section {
-  padding-top: 75px;
-  padding-bottom: 55px;
-}
-
-
-.live-session-select {
-  position: relative;
-
-  width: 100%;
-  max-width: 620px;
-
+.calendar-session {
   display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 5px;
+
+  border-left: 1px solid #292929;
+
+  padding-left: 20px;
+}
+
+
+.calendar-session span {
+  color: #555;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+.calendar-session strong {
+  color: #aaa;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.calendar-action {
+  display: flex;
+
   align-items: center;
 
-  padding: 0 18px;
+  justify-content: center;
 
-  background: #111;
+  width: 38px;
+
+  height: 38px;
+
   border: 1px solid #292929;
 
+  color: #666;
+
   transition:
-    border-color 0.25s ease,
-    background 0.25s ease;
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 
-.live-session-select:hover {
-  border-color: #444;
+.calendar-row:hover .calendar-action {
+  color: #ffffff;
+
+  background: #ff1e2d;
+
+  border-color: #ff1e2d;
+
+  transform: translateX(3px);
 }
 
 
-.live-session-select:focus-within {
-  border-color: #ff2020;
-  box-shadow: 0 0 0 1px rgba(255, 32, 32, 0.15);
+/* =========================================================
+   COMPLETED
+   ========================================================= */
+
+.calendar-row.is-completed {
+  opacity: 0.78;
 }
 
 
-.live-session-select svg {
-  flex-shrink: 0;
-  color: #ff2020;
+.calendar-row.is-completed:hover {
+  opacity: 1;
 }
 
 
-.live-session-select select {
-  width: 100%;
+/* =========================================================
+   NEXT
+   ========================================================= */
 
-  height: 58px;
-
-  padding: 0 14px;
-
-  appearance: none;
-  outline: none;
-  border: none;
-
-  background: transparent;
-  color: #fff;
-
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-
-  cursor: pointer;
+.calendar-row.is-next {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 30, 45, 0.07),
+      transparent 70%
+    );
 }
 
 
-.live-session-select select option {
-  background: #111;
-  color: #fff;
+.calendar-row.is-next .calendar-number {
+  color: #ff1e2d;
 }
 
 
-/* =====================================================
-   LOADING / EMPTY
-===================================================== */
+/* =========================================================
+   LIVE
+   ========================================================= */
 
-.live-loading,
-.live-empty {
-  min-height: 120px;
+.calendar-row.is-live {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 30, 45, 0.11),
+      transparent 70%
+    );
+}
+
+
+/* =========================================================
+   LOADING / ERROR / EMPTY
+   ========================================================= */
+
+.schedule-state {
+  min-height: 180px;
 
   display: flex;
+
+  flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
-  gap: 12px;
+
+  gap: 10px;
 
   padding: 30px;
 
   background: #101010;
-  border: 1px solid #242424;
+
+  border: 1px solid #292929;
 
   color: #777;
 
-  font-size: 13px;
-}
-
-
-.live-empty {
-  flex-direction: column;
   text-align: center;
 }
 
 
-.live-empty svg {
-  color: #ff2020;
+.schedule-state strong {
+  color: #ffffff;
+
+  font-size: 15px;
 }
 
 
-.live-empty h3 {
-  margin: 0;
-
-  color: #fff;
-
-  font-size: 17px;
+.schedule-state span {
+  font-size: 12px;
 }
 
 
-.live-empty p {
-  margin: 0;
-
-  color: #666;
-
-  font-size: 13px;
+.schedule-error {
+  border-left: 3px solid #ff1e2d;
 }
 
 
-.spin {
-  animation: spin 1s linear infinite;
+.schedule-spinner {
+  color: #ff1e2d;
+
+  animation: scheduleSpin 1s linear infinite;
 }
 
 
-@keyframes spin {
+@keyframes scheduleSpin {
   to {
     transform: rotate(360deg);
   }
 }
 
 
-/* =====================================================
-   SESSION INFORMATION
-===================================================== */
-
-.live-session-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  gap: 40px;
-
-  padding: 30px 0;
-
-  border-top: 1px solid #242424;
-  border-bottom: 1px solid #242424;
-}
-
-
-.live-session-header h2 {
-  margin: 0 0 7px;
-
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-}
-
-
-.live-session-header p {
-  margin: 0;
-
-  color: #777;
-
-  font-size: 13px;
-}
-
-
-.live-session-meta {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-
-.live-session-meta div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  color: #888;
-
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-
-.live-session-meta svg {
-  color: #ff2020;
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.live-error {
-  margin-top: 30px;
-
-  padding: 22px 25px;
-
-  border: 1px solid rgba(255, 40, 40, 0.3);
-  background: rgba(255, 0, 0, 0.045);
-}
-
-
-.live-error strong {
-  display: block;
-
-  margin-bottom: 7px;
-
-  color: #ff3535;
-
-  font-size: 14px;
-}
-
-
-.live-error p {
-  margin: 0;
-
-  color: #888;
-
-  font-size: 13px;
-}
-
-
-/* =====================================================
-   LEADERBOARD
-===================================================== */
-
-.live-leaderboard-section {
-  padding-top: 75px;
-  padding-bottom: 70px;
-}
-
-
-.live-table-wrapper {
-  overflow-x: auto;
-
-  border: 1px solid #292929;
-  background: #0d0d0d;
-}
-
-
-.live-table {
-  width: 100%;
-
-  border-collapse: collapse;
-
-  min-width: 720px;
-}
-
-
-.live-table thead {
-  background: #111;
-}
-
-
-.live-table th {
-  padding: 17px 20px;
-
-  border-bottom: 1px solid #292929;
-
-  color: #555;
-
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-
-  text-align: left;
-}
-
-
-.live-table td {
-  padding: 20px;
-
-  border-bottom: 1px solid #1f1f1f;
-
-  color: #d5d5d5;
-
-  font-size: 13px;
-}
-
-
-.live-table tbody tr {
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-
-.live-table tbody tr:hover {
-  background: #131313;
-}
-
-
-.live-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-
-/* =====================================================
-   POSITION
-===================================================== */
-
-.live-position {
-  width: 70px;
-
-  color: #fff !important;
-
-  font-size: 17px !important;
-  font-weight: 800;
-}
-
-
-/* Highlight top three */
-
-.live-table tbody tr:nth-child(1) .live-position {
-  color: #ff2020 !important;
-}
-
-
-.live-table tbody tr:nth-child(2) .live-position,
-.live-table tbody tr:nth-child(3) .live-position {
-  color: #d6d6d6 !important;
-}
-
-
-/* =====================================================
-   DRIVER
-===================================================== */
-
-.live-driver {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-
-.live-driver strong {
-  color: #fff;
-
-  font-size: 14px;
-  font-weight: 800;
-}
-
-
-.live-driver span {
-  color: #555;
-
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-
-/* =====================================================
-   TEAM
-===================================================== */
-
-.live-team {
-  color: #999 !important;
-
-  font-size: 12px !important;
-  font-weight: 600;
-}
-
-
-/* =====================================================
-   RESULT STATUS
-===================================================== */
-
-.live-result-status {
-  display: inline-flex;
-  align-items: center;
-
-  min-width: 92px;
-
-  padding: 7px 11px;
-
-  justify-content: center;
-
-  border: 1px solid #292929;
-
-  background: #151515;
-
-  color: #777;
-
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-
-/* =====================================================
-   FEATURES
-===================================================== */
-
-.live-features {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 18px;
-
+/* =========================================================
+   SEASON INFO
+   ========================================================= */
+
+.season-info {
   padding-bottom: 100px;
 }
 
 
-.live-feature-card {
-  position: relative;
+.season-info-card {
+  display: flex;
 
-  min-height: 210px;
+  align-items: center;
 
-  padding: 28px;
+  gap: 20px;
 
-  background: #101010;
+  padding: 30px;
 
-  border: 1px solid #242424;
+  background:
+    linear-gradient(
+      120deg,
+      #111111,
+      #0c0c0c
+    );
 
-  overflow: hidden;
+  border: 1px solid #292929;
 
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+  border-left: 3px solid #ff1e2d;
 }
 
 
-.live-feature-card::before {
-  content: "";
+.season-info-icon {
+  display: flex;
 
-  position: absolute;
+  align-items: center;
 
-  top: 0;
-  left: 0;
+  justify-content: center;
 
-  width: 45px;
-  height: 2px;
+  width: 48px;
+  height: 48px;
 
-  background: #ff2020;
+  flex-shrink: 0;
 
-  transition: width 0.3s ease;
+  color: #ff1e2d;
+
+  background:
+    rgba(255, 30, 45, 0.08);
 }
 
 
-.live-feature-card:hover {
-  transform: translateY(-4px);
-
-  border-color: #3a3a3a;
-
-  background: #131313;
+.season-info-card > div:last-child {
+  min-width: 0;
 }
 
 
-.live-feature-card:hover::before {
-  width: 100%;
-}
-
-
-.live-feature-card > svg {
-  margin-bottom: 24px;
-
-  color: #ff2020;
-}
-
-
-.live-feature-card > span {
+.season-info-card span {
   display: block;
 
-  margin-bottom: 9px;
+  margin-bottom: 7px;
 
-  color: #555;
+  color: #666;
 
   font-size: 9px;
+
   font-weight: 800;
-  letter-spacing: 0.18em;
+
+  letter-spacing: 0.15em;
 }
 
 
-.live-feature-card h3 {
-  margin: 0 0 10px;
-
-  color: #fff;
-
-  font-size: 19px;
-  font-weight: 800;
-}
-
-
-.live-feature-card p {
-  max-width: 300px;
-
+.season-info-card h3 {
   margin: 0;
 
-  color: #686868;
+  font-size: 20px;
+
+  letter-spacing: -0.02em;
+}
+
+
+.season-info-card p {
+  max-width: 650px;
+
+  margin: 8px 0 0;
+
+  color: #777;
 
   font-size: 12px;
+
   line-height: 1.7;
 }
 
 
-/* =====================================================
-   RESPONSIVE — TABLET
-===================================================== */
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
-  .live-container {
-    width: min(100% - 36px, 760px);
-  }
-
-
-  .live-hero {
-    min-height: 430px;
-  }
-
-
-  .live-hero .live-container {
-    gap: 30px;
-  }
-
-
-  .live-hero-content h1 {
-    font-size: 54px;
-  }
-
-
-  .live-status-card {
-    min-width: 200px;
-  }
-
-
-  .live-features {
+  .schedule-hero-inner {
     grid-template-columns: 1fr;
-  }
 
-}
+    gap: 45px;
 
-
-/* =====================================================
-   RESPONSIVE — MOBILE
-===================================================== */
-
-@media (max-width: 680px) {
-
-  .live-container {
-    width: calc(100% - 30px);
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 
 
-  /* HERO */
-
-  .live-hero {
+  .schedule-hero {
     min-height: auto;
-
-    padding: 75px 0 65px;
   }
 
 
-  .live-hero .live-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 40px;
+  .season-card {
+    max-width: 360px;
   }
 
 
-  .live-hero-content h1 {
-    font-size: 47px;
-  }
-
-
-  .live-hero-content p {
-    margin-top: 22px;
-
-    font-size: 13px;
-  }
-
-
-  .live-status-card {
-    width: 100%;
-    min-width: 0;
-  }
-
-
-  /* SELECTOR */
-
-  .live-selector-section {
-    padding-top: 55px;
-    padding-bottom: 40px;
-  }
-
-
-  .live-section-heading h2 {
-    font-size: 26px;
-  }
-
-
-  .live-session-select {
-    max-width: none;
-  }
-
-
-  /* SESSION */
-
-  .live-session-header {
-    flex-direction: column;
-    align-items: flex-start;
-
-    gap: 22px;
-  }
-
-
-  .live-session-header h2 {
-    font-size: 26px;
-  }
-
-
-  .live-session-meta {
-    flex-wrap: wrap;
+  .calendar-row {
+    grid-template-columns:
+      55px
+      85px
+      minmax(220px, 1fr)
+      45px;
 
     gap: 15px;
   }
 
 
-  /* LEADERBOARD */
-
-  .live-leaderboard-section {
-    padding-top: 55px;
-    padding-bottom: 55px;
-  }
-
-
-  .live-table-wrapper {
-    margin-left: -1px;
-    margin-right: -1px;
-  }
-
-
-  .live-table th,
-  .live-table td {
-    padding: 15px;
-  }
-
-
-  /* FEATURES */
-
-  .live-features {
-    gap: 12px;
-
-    padding-bottom: 65px;
-  }
-
-
-  .live-feature-card {
-    min-height: auto;
+  .calendar-session {
+    display: none;
   }
 
 }
 
 
-/* =====================================================
-   VERY SMALL SCREENS
-===================================================== */
+@media (max-width: 700px) {
 
-@media (max-width: 420px) {
-
-  .live-hero-content h1 {
-    font-size: 40px;
+  .schedule-container {
+    width: min(
+      100% - 30px,
+      1180px
+    );
   }
 
 
-  .live-kicker {
-    font-size: 9px;
+  .schedule-hero-inner {
+    width: min(
+      100% - 30px,
+      1180px
+    );
   }
 
 
-  .live-status-card {
-    padding: 22px;
+  .schedule-hero h1 {
+    font-size: 54px;
   }
 
 
-  .live-section-heading h2 {
-    font-size: 23px;
+  .calendar-heading {
+    flex-direction: column;
+
+    align-items: flex-start;
   }
 
 
-  .live-session-select select {
-    font-size: 12px;
+  .calendar-heading h2 {
+    font-size: 30px;
+  }
+
+
+  .calendar-count {
+    margin-top: 5px;
+  }
+
+
+  .calendar-row {
+    grid-template-columns:
+      45px
+      70px
+      minmax(0, 1fr)
+      38px;
+
+    gap: 12px;
+
+    padding: 20px 5px 20px 0;
+  }
+
+
+  .calendar-number {
+    font-size: 10px;
+  }
+
+
+  .calendar-date {
+    padding-left: 12px;
+  }
+
+
+  .calendar-date strong {
+    font-size: 25px;
+  }
+
+
+  .calendar-race h3 {
+    font-size: 17px;
+  }
+
+
+  .calendar-location {
+    font-size: 10px;
+  }
+
+
+  .calendar-action {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  .season-info-card {
+    align-items: flex-start;
+
+    padding: 24px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .schedule-hero-inner {
+    padding-top: 65px;
+    padding-bottom: 65px;
+  }
+
+
+  .schedule-hero h1 {
+    font-size: 46px;
+  }
+
+
+  .schedule-hero-content p {
+    font-size: 14px;
+  }
+
+
+  .season-card {
+    padding: 20px;
+  }
+
+
+  .calendar-row {
+    grid-template-columns:
+      38px
+      60px
+      minmax(0, 1fr)
+      34px;
+
+    gap: 8px;
+  }
+
+
+  .calendar-date {
+    padding-left: 9px;
+  }
+
+
+  .calendar-date strong {
+    font-size: 22px;
+  }
+
+
+  .calendar-race h3 {
+    font-size: 15px;
+  }
+
+
+  .calendar-location {
+    max-width: 150px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+  }
+
+
+  .completed-label {
+    font-size: 6px;
+  }
+
+
+  .next-label,
+  .live-label {
+    font-size: 6px;
   }
 
 }

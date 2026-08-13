@@ -1,40 +1,30 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useMemo, useState } from "react";
 import {
-  Activity,
   CalendarDays,
+  ChevronRight,
   Flag,
-  Gauge,
-  Radio,
+  MapPin,
   RefreshCw,
-  Timer,
+  Trophy,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
-import {
-  getRaceSessions,
-  getSessionResults,
-  getSessionDrivers,
-} from "../../services/openF1";
+import { getRaceSessions } from "../../services/openF1";
 
 import "./Schedule.css";
 
 function Schedule() {
+  const navigate = useNavigate();
+
   // =====================================================
   // STATE
   // =====================================================
 
   const [sessions, setSessions] = useState([]);
-  const [selectedSession, setSelectedSession] = useState(null);
-
-  const [results, setResults] = useState([]);
-  const [sessionDrivers, setSessionDrivers] = useState([]);
-
-  const [loadingSessions, setLoadingSessions] = useState(true);
-  const [loadingResults, setLoadingResults] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   // =====================================================
@@ -44,16 +34,14 @@ function Schedule() {
   useEffect(() => {
     let cancelled = false;
 
-    async function loadSessions() {
+    async function loadSchedule() {
       try {
-        setLoadingSessions(true);
+        setLoading(true);
         setError("");
 
         const raceSessions = await getRaceSessions(2026);
 
-        if (cancelled) {
-          return;
-        }
+        if (cancelled) return;
 
         const sortedSessions = [...raceSessions].sort(
           (a, b) => {
@@ -70,75 +58,25 @@ function Schedule() {
         );
 
         setSessions(sortedSessions);
-
-        /*
-         * Select the most appropriate session.
-         *
-         * If a race is currently happening, select it.
-         * Otherwise select the latest completed race.
-         * If there are no completed races, select the first race.
-         */
-
-        const now = new Date();
-
-        const liveSession = sortedSessions.find(
-          (session) => {
-            const start = session.date_start
-              ? new Date(session.date_start)
-              : null;
-
-            const end = session.date_end
-              ? new Date(session.date_end)
-              : null;
-
-            return (
-              start &&
-              end &&
-              now >= start &&
-              now <= end
-            );
-          }
+      } catch (err) {
+        console.error(
+          "Failed to load 2026 schedule:",
+          err
         );
 
-        const completedSessions =
-          sortedSessions.filter((session) => {
-            const end = session.date_end
-              ? new Date(session.date_end)
-              : null;
-
-            return end && end < now;
-          });
-
-        if (liveSession) {
-          setSelectedSession(liveSession);
-        } else if (completedSessions.length > 0) {
-          setSelectedSession(
-            completedSessions[
-              completedSessions.length - 1
-            ]
-          );
-        } else if (sortedSessions.length > 0) {
-          setSelectedSession(sortedSessions[0]);
-        }
-      } catch (err) {
         if (!cancelled) {
-          console.error(
-            "Failed to load race sessions:",
-            err
-          );
-
           setError(
-            "Unable to load the Formula 1 sessions."
+            "Unable to load the 2026 Formula 1 schedule."
           );
         }
       } finally {
         if (!cancelled) {
-          setLoadingSessions(false);
+          setLoading(false);
         }
       }
     }
 
-    loadSessions();
+    loadSchedule();
 
     return () => {
       cancelled = true;
@@ -146,85 +84,11 @@ function Schedule() {
   }, []);
 
   // =====================================================
-  // LOAD SELECTED SESSION DATA
-  // =====================================================
-
-  useEffect(() => {
-    if (!selectedSession?.session_key) {
-      return;
-    }
-
-    let cancelled = false;
-
-    async function loadSessionData() {
-      try {
-        setLoadingResults(true);
-        setError("");
-
-        const [
-          sessionResults,
-          drivers,
-        ] = await Promise.all([
-          getSessionResults(
-            selectedSession.session_key
-          ),
-
-          getSessionDrivers(
-            selectedSession.session_key
-          ),
-        ]);
-
-        if (cancelled) {
-          return;
-        }
-
-        setResults(
-          Array.isArray(sessionResults)
-            ? sessionResults
-            : []
-        );
-
-        setSessionDrivers(
-          Array.isArray(drivers)
-            ? drivers
-            : []
-        );
-      } catch (err) {
-        if (!cancelled) {
-          console.error(
-            "Failed to load session data:",
-            err
-          );
-
-          setResults([]);
-          setSessionDrivers([]);
-
-          setError(
-            "Unable to load data for this session."
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setLoadingResults(false);
-        }
-      }
-    }
-
-    loadSessionData();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedSession]);
-
-  // =====================================================
-  // HELPERS
+  // FORMAT DATE
   // =====================================================
 
   function formatDate(dateString) {
-    if (!dateString) {
-      return "TBA";
-    }
+    if (!dateString) return "TBA";
 
     const date = new Date(dateString);
 
@@ -240,79 +104,60 @@ function Schedule() {
   }
 
   // =====================================================
-  // DRIVER NAME
+  // FORMAT DAY
   // =====================================================
 
-  function getDriverName(driverNumber) {
-    const driver = sessionDrivers.find(
-      (item) =>
-        Number(item.driver_number) ===
-        Number(driverNumber)
-    );
+  function formatDay(dateString) {
+    if (!dateString) return "--";
 
-    if (!driver) {
-      return `Driver #${driverNumber}`;
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+      return "--";
     }
 
-    return (
-      driver.full_name ||
-      `${driver.first_name || ""} ${
-        driver.last_name || ""
-      }`.trim() ||
-      driver.name_acronym ||
-      `Driver #${driverNumber}`
-    );
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+    });
   }
 
   // =====================================================
-  // DRIVER TEAM
+  // FORMAT MONTH
   // =====================================================
 
-  function getDriverTeam(driverNumber) {
-    const driver = sessionDrivers.find(
-      (item) =>
-        Number(item.driver_number) ===
-        Number(driverNumber)
-    );
+  function formatMonth(dateString) {
+    if (!dateString) return "---";
 
-    return (
-      driver?.team_name ||
-      driver?.team ||
-      "Team unavailable"
-    );
-  }
+    const date = new Date(dateString);
 
-  // =====================================================
-  // DRIVER ACRONYM
-  // =====================================================
+    if (Number.isNaN(date.getTime())) {
+      return "---";
+    }
 
-  function getDriverAcronym(driverNumber) {
-    const driver = sessionDrivers.find(
-      (item) =>
-        Number(item.driver_number) ===
-        Number(driverNumber)
-    );
-
-    return driver?.name_acronym || "—";
+    return date
+      .toLocaleDateString("en-GB", {
+        month: "short",
+      })
+      .toUpperCase();
   }
 
   // =====================================================
   // SESSION STATUS
   // =====================================================
 
-  function getSessionStatus() {
-    if (!selectedSession) {
-      return "NO SESSION";
+  function getSessionStatus(session) {
+    if (!session) {
+      return "UPCOMING";
     }
 
     const now = new Date();
 
-    const start = selectedSession.date_start
-      ? new Date(selectedSession.date_start)
+    const start = session.date_start
+      ? new Date(session.date_start)
       : null;
 
-    const end = selectedSession.date_end
-      ? new Date(selectedSession.date_end)
+    const end = session.date_end
+      ? new Date(session.date_end)
       : null;
 
     if (start && now < start) {
@@ -332,31 +177,108 @@ function Schedule() {
       return "COMPLETED";
     }
 
-    return "SCHEDULED";
+    return "UPCOMING";
   }
 
   // =====================================================
-  // SORT RESULTS
+  // GRAND PRIX GROUPS
   // =====================================================
 
-  const sortedResults = [...results].sort(
-    (a, b) => {
-      const positionA = Number(a.position);
-      const positionB = Number(b.position);
+  const grandPrix = useMemo(() => {
+    const groups = {};
 
-      if (Number.isNaN(positionA)) {
-        return 1;
+    sessions.forEach((session) => {
+      const key =
+        session.meeting_key ||
+        `${session.country_name || ""}-${session.location || ""}`;
+
+      if (!groups[key]) {
+        groups[key] = {
+          key,
+
+          country:
+            session.country_name ||
+            session.location ||
+            "Grand Prix",
+
+          location:
+            session.location || "",
+
+          sessions: [],
+        };
       }
 
-      if (Number.isNaN(positionB)) {
-        return -1;
+      groups[key].sessions.push(session);
+    });
+
+    return Object.values(groups).sort((a, b) => {
+      const dateA = new Date(
+        a.sessions[0]?.date_start ||
+          a.sessions[0]?.date_end ||
+          0
+      );
+
+      const dateB = new Date(
+        b.sessions[0]?.date_start ||
+          b.sessions[0]?.date_end ||
+          0
+      );
+
+      return dateA - dateB;
+    });
+  }, [sessions]);
+
+  // =====================================================
+  // NEXT GRAND PRIX
+  // =====================================================
+
+  const nextGrandPrixIndex = useMemo(() => {
+    const now = new Date();
+
+    return grandPrix.findIndex((group) => {
+      const raceSession =
+        group.sessions.find(
+          (session) =>
+            session.session_name
+              ?.toLowerCase() === "race"
+        ) || group.sessions[0];
+
+      if (!raceSession?.date_start) {
+        return false;
       }
 
-      return positionA - positionB;
+      return new Date(raceSession.date_start) >= now;
+    });
+  }, [grandPrix]);
+
+  // =====================================================
+  // OPEN STATS FOR EXACT GRAND PRIX
+  // =====================================================
+
+  function openGrandPrix(group) {
+    const raceSession =
+      group.sessions.find(
+        (session) =>
+          session.session_name
+            ?.toLowerCase() === "race"
+      ) ||
+      group.sessions[group.sessions.length - 1];
+
+    if (!raceSession?.session_key) {
+      console.error(
+        "No race session key found for:",
+        group
+      );
+
+      return;
     }
-  );
 
-  const sessionStatus = getSessionStatus();
+    navigate(
+      `/stats?session_key=${encodeURIComponent(
+        raceSession.session_key
+      )}`
+    );
+  }
 
   // =====================================================
   // RENDER
@@ -366,504 +288,379 @@ function Schedule() {
     <>
       <Navbar />
 
-      <main className="live-page">
+      <main className="schedule-page">
 
         {/* =================================================
             HERO
         ================================================= */}
 
-        <section className="live-hero">
+        <section className="schedule-hero">
 
-          <div className="live-hero-grid"></div>
+          <div className="schedule-grid"></div>
 
-          <div className="live-container">
+          <div className="schedule-red-glow"></div>
 
-            <div className="live-hero-content">
+          <div className="schedule-hero-inner">
 
-              <span className="live-kicker">
-                APEXONE LIVE
-              </span>
+            <div className="schedule-hero-content">
+
+              <div className="schedule-kicker">
+                <span></span>
+                APEXONE / 2026 SEASON
+              </div>
 
               <h1>
-                Follow the
-                <span> Action.</span>
+                The race
+                <strong> calendar.</strong>
               </h1>
 
               <p>
-                Track Formula 1 sessions, drivers and
-                race results using live session data.
+                Every Grand Prix. Every circuit.
+                One complete view of the 2026
+                Formula 1 season.
               </p>
 
             </div>
 
-            <div className="live-status-card">
+            <div className="season-card">
 
-              <div className="live-status-indicator">
-
-                <span
-                  className={
-                    sessionStatus === "LIVE"
-                      ? "is-live"
-                      : ""
-                  }
-                ></span>
-
-                {sessionStatus}
-
+              <div className="season-card-icon">
+                <CalendarDays size={21} />
               </div>
-
-              <strong>
-                {selectedSession?.session_name ||
-                  "—"}
-              </strong>
-
-              <small>
-                2026 FORMULA 1
-              </small>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =================================================
-            SESSION SELECTOR
-        ================================================= */}
-
-        <section className="live-container live-selector-section">
-
-          <div className="live-section-heading">
-
-            <span>
-              SESSION EXPLORER
-            </span>
-
-            <h2>
-              Select a Grand Prix
-            </h2>
-
-            <p>
-              Choose a race session to view the
-              latest available driver information.
-            </p>
-
-          </div>
-
-
-          {loadingSessions ? (
-
-            <div className="live-loading">
-
-              <RefreshCw
-                size={20}
-                className="spin"
-              />
-
-              Loading 2026 sessions...
-
-            </div>
-
-          ) : sessions.length === 0 ? (
-
-            <div className="live-empty">
-
-              No race sessions are currently available.
-
-            </div>
-
-          ) : (
-
-            <div className="live-session-select">
-
-              <Flag size={19} />
-
-              <select
-                value={
-                  selectedSession?.session_key || ""
-                }
-                onChange={(event) => {
-
-                  const session =
-                    sessions.find(
-                      (item) =>
-                        String(
-                          item.session_key
-                        ) === event.target.value
-                    );
-
-                  setSelectedSession(
-                    session || null
-                  );
-
-                }}
-              >
-
-                {sessions.map((session) => (
-
-                  <option
-                    key={session.session_key}
-                    value={session.session_key}
-                  >
-                    {session.country_name ||
-                      session.location ||
-                      "Grand Prix"}{" "}
-                    —{" "}
-                    {session.session_name ||
-                      "Race"}
-                  </option>
-
-                ))}
-
-              </select>
-
-            </div>
-
-          )}
-
-        </section>
-
-
-        {/* =================================================
-            SESSION INFORMATION
-        ================================================= */}
-
-        {selectedSession && (
-
-          <section className="live-container">
-
-            <div className="live-session-header">
 
               <div>
 
-                <span className="live-section-label">
-                  CURRENT SESSION
+                <span>
+                  CURRENT SEASON
                 </span>
 
-                <h2>
-                  {selectedSession.session_name ||
-                    "Race"}
-                </h2>
+                <strong>
+                  2026
+                </strong>
 
-                <p>
-                  {selectedSession.country_name ||
-                    selectedSession.location ||
-                    "Formula 1 Grand Prix"}
-                </p>
-
-              </div>
-
-
-              <div className="live-session-meta">
-
-                <div>
-
-                  <CalendarDays size={17} />
-
-                  <span>
-                    {formatDate(
-                      selectedSession.date_start
-                    )}
-                  </span>
-
-                </div>
-
-
-                <div>
-
-                  <Radio size={17} />
-
-                  <span>
-                    {sessionStatus}
-                  </span>
-
-                </div>
+                <small>
+                  FIA FORMULA 1 WORLD CHAMPIONSHIP
+                </small>
 
               </div>
 
             </div>
-
-          </section>
-
-        )}
-
-
-        {/* =================================================
-            ERROR
-        ================================================= */}
-
-        {error && (
-
-          <section className="live-container">
-
-            <div className="live-error">
-
-              <strong>
-                Something went wrong
-              </strong>
-
-              <p>
-                {error}
-              </p>
-
-            </div>
-
-          </section>
-
-        )}
-
-
-        {/* =================================================
-            LEADERBOARD
-        ================================================= */}
-
-        <section className="live-container live-leaderboard-section">
-
-          <div className="live-section-heading">
-
-            <span>
-              DRIVER TIMING
-            </span>
-
-            <h2>
-              Session Leaderboard
-            </h2>
-
-            <p>
-              Driver results from the selected
-              Formula 1 session.
-            </p>
 
           </div>
 
+        </section>
 
-          {loadingResults ? (
+        {/* =================================================
+            CALENDAR
+        ================================================= */}
 
-            <div className="live-loading">
+        <section className="schedule-container">
 
-              <RefreshCw
-                size={20}
-                className="spin"
-              />
+          <div className="calendar-heading">
 
-              Loading session data...
+            <div>
 
-            </div>
+              <span className="section-kicker">
+                2026 FIA FORMULA 1
+              </span>
 
-          ) : sortedResults.length === 0 ? (
-
-            <div className="live-empty">
-
-              <Activity size={28} />
-
-              <h3>
-                No timing data available
-              </h3>
+              <h2>
+                Grand Prix Calendar
+              </h2>
 
               <p>
-                Timing information for this session
-                is not currently available.
+                Select a race weekend to view its
+                detailed statistics.
               </p>
 
             </div>
 
-          ) : (
+            <div className="calendar-count">
 
-            <div className="live-table-wrapper">
+              <Flag size={17} />
 
-              <table className="live-table">
+              <strong>
+                {grandPrix.length}
+              </strong>
 
-                <thead>
+              <span>
+                RACES
+              </span>
 
-                  <tr>
+            </div>
 
-                    <th>
-                      POS
-                    </th>
+          </div>
 
-                    <th>
-                      DRIVER
-                    </th>
+          {/* =================================================
+              LOADING
+          ================================================= */}
 
-                    <th>
-                      TEAM
-                    </th>
+          {loading && (
 
-                    <th>
-                      STATUS
-                    </th>
+            <div className="schedule-state">
 
-                  </tr>
+              <RefreshCw
+                size={22}
+                className="schedule-spinner"
+              />
 
-                </thead>
-
-
-                <tbody>
-
-                  {sortedResults.map(
-                    (result, index) => {
-
-                      const position =
-                        result.position;
-
-                      const driverNumber =
-                        result.driver_number;
-
-                      return (
-
-                        <tr
-                          key={`${driverNumber}-${index}`}
-                        >
-
-                          {/* POSITION */}
-
-                          <td className="live-position">
-
-                            {position ||
-                              index + 1}
-
-                          </td>
-
-
-                          {/* DRIVER */}
-
-                          <td>
-
-                            <div className="live-driver">
-
-                              <strong>
-                                {getDriverName(
-                                  driverNumber
-                                )}
-                              </strong>
-
-                              <span>
-                                {getDriverAcronym(
-                                  driverNumber
-                                )}{" "}
-                                · #
-                                {driverNumber}
-                              </span>
-
-                            </div>
-
-                          </td>
-
-
-                          {/* TEAM */}
-
-                          <td className="live-team">
-
-                            {getDriverTeam(
-                              driverNumber
-                            )}
-
-                          </td>
-
-
-                          {/* STATUS */}
-
-                          <td>
-
-                            <span className="live-result-status">
-
-                              {result.dnf
-                                ? "DNF"
-                                : result.dns
-                                ? "DNS"
-                                : result.dsq
-                                ? "DSQ"
-                                : "CLASSIFIED"}
-
-                            </span>
-
-                          </td>
-
-                        </tr>
-
-                      );
-
-                    }
-                  )}
-
-                </tbody>
-
-              </table>
+              <span>
+                Loading 2026 calendar...
+              </span>
 
             </div>
 
           )}
 
-        </section>
+          {/* =================================================
+              ERROR
+          ================================================= */}
 
+          {!loading && error && (
+
+            <div className="schedule-state schedule-error">
+
+              <strong>
+                Calendar unavailable
+              </strong>
+
+              <span>
+                {error}
+              </span>
+
+            </div>
+
+          )}
+
+          {/* =================================================
+              EMPTY
+          ================================================= */}
+
+          {!loading &&
+            !error &&
+            grandPrix.length === 0 && (
+
+              <div className="schedule-state">
+
+                <CalendarDays size={30} />
+
+                <strong>
+                  No races available
+                </strong>
+
+                <span>
+                  The 2026 calendar could not be
+                  loaded.
+                </span>
+
+              </div>
+
+            )}
+
+          {/* =================================================
+              GRAND PRIX LIST
+          ================================================= */}
+
+          {!loading &&
+            !error &&
+            grandPrix.length > 0 && (
+
+              <div className="calendar-list">
+
+                {grandPrix.map(
+                  (group, index) => {
+
+                    const raceSession =
+                      group.sessions.find(
+                        (session) =>
+                          session.session_name
+                            ?.toLowerCase() ===
+                          "race"
+                      ) ||
+                      group.sessions[
+                        group.sessions.length - 1
+                      ];
+
+                    const status =
+                      getSessionStatus(
+                        raceSession
+                      );
+
+                    const isNext =
+                      index ===
+                      nextGrandPrixIndex;
+
+                    return (
+
+                      <button
+                        type="button"
+                        key={group.key}
+                        className={`calendar-row ${
+                          status === "COMPLETED"
+                            ? "is-completed"
+                            : ""
+                        } ${
+                          status === "LIVE"
+                            ? "is-live"
+                            : ""
+                        } ${
+                          isNext
+                            ? "is-next"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          openGrandPrix(group)
+                        }
+                      >
+
+                        {/* NUMBER */}
+
+                        <div className="calendar-number">
+
+                          {String(
+                            index + 1
+                          ).padStart(2, "0")}
+
+                        </div>
+
+                        {/* DATE */}
+
+                        <div className="calendar-date">
+
+                          <strong>
+                            {formatDay(
+                              raceSession?.date_start
+                            )}
+                          </strong>
+
+                          <span>
+                            {formatMonth(
+                              raceSession?.date_start
+                            )}
+                          </span>
+
+                        </div>
+
+                        {/* GRAND PRIX */}
+
+                        <div className="calendar-race">
+
+                          <div className="calendar-race-top">
+
+                            {isNext && (
+                              <span className="next-label">
+                                NEXT RACE
+                              </span>
+                            )}
+
+                            {status ===
+                              "LIVE" && (
+                              <span className="live-label">
+                                LIVE
+                              </span>
+                            )}
+
+                            {status ===
+                              "COMPLETED" && (
+                              <span className="completed-label">
+                                COMPLETED
+                              </span>
+                            )}
+
+                          </div>
+
+                          <h3>
+                            {group.country}
+                          </h3>
+
+                          <div className="calendar-location">
+
+                            <MapPin size={13} />
+
+                            {group.location ||
+                              "Circuit location"}
+
+                          </div>
+
+                        </div>
+
+                        {/* SESSION */}
+
+                        <div className="calendar-session">
+
+                          <span>
+                            RACE
+                          </span>
+
+                          <strong>
+                            {formatDate(
+                              raceSession?.date_start
+                            )}
+                          </strong>
+
+                        </div>
+
+                        {/* ARROW */}
+
+                        <div className="calendar-action">
+
+                          <ChevronRight
+                            size={21}
+                          />
+
+                        </div>
+
+                      </button>
+
+                    );
+                  }
+                )}
+
+              </div>
+
+            )}
+
+        </section>
 
         {/* =================================================
-            LIVE FEATURES
+            SEASON INFO
         ================================================= */}
 
-        <section className="live-container live-features">
+        {!loading &&
+          grandPrix.length > 0 && (
 
-          <div className="live-feature-card">
+            <section className="schedule-container season-info">
 
-            <Gauge size={23} />
+              <div className="season-info-card">
 
-            <span>
-              TIMING
-            </span>
+                <div className="season-info-icon">
+                  <Trophy size={22} />
+                </div>
 
-            <h3>
-              Driver Performance
-            </h3>
+                <div>
 
-            <p>
-              Track driver positions and session
-              performance as data becomes available.
-            </p>
+                  <span>
+                    2026 SEASON
+                  </span>
 
-          </div>
+                  <h3>
+                    Every race tells a story.
+                  </h3>
 
+                  <p>
+                    Choose any Grand Prix above to
+                    explore driver performance,
+                    results and race statistics
+                    on the Stats page.
+                  </p>
 
-          <div className="live-feature-card">
+                </div>
 
-            <Timer size={23} />
+              </div>
 
-            <span>
-              SESSIONS
-            </span>
+            </section>
 
-            <h3>
-              Every Grand Prix
-            </h3>
-
-            <p>
-              Move between the available 2026 race
-              sessions from one place.
-            </p>
-
-          </div>
-
-
-          <div className="live-feature-card">
-
-            <Activity size={23} />
-
-            <span>
-              OPENF1
-            </span>
-
-            <h3>
-              Live Data
-            </h3>
-
-            <p>
-              ApexOne uses OpenF1 session data rather
-              than manually entered race information.
-            </p>
-
-          </div>
-
-        </section>
+          )}
 
       </main>
 

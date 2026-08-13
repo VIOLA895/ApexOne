@@ -1,0 +1,1232 @@
+/* =====================================================
+   STATS PAGE
+===================================================== */
+
+.stats-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(225, 29, 46, 0.12),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #050505 0%,
+      #080808 45%,
+      #050505 100%
+    );
+  color: #f5f5f5;
+  overflow-x: hidden;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.stats-hero {
+  position: relative;
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(
+      105deg,
+      #050505 0%,
+      #0a0a0a 55%,
+      #120607 100%
+    );
+}
+
+.stats-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(225, 29, 46, 0.035) 50%,
+      rgba(225, 29, 46, 0.12) 100%
+    );
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   HERO GRID
+===================================================== */
+
+.stats-hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px
+    );
+  background-size: 55px 55px;
+
+  mask-image: linear-gradient(
+    to right,
+    black,
+    transparent 90%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   RED GLOW
+===================================================== */
+
+.stats-red-glow {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  right: -180px;
+  top: -150px;
+
+  background: radial-gradient(
+    circle,
+    rgba(225, 29, 46, 0.22),
+    rgba(225, 29, 46, 0.08) 38%,
+    transparent 72%
+  );
+
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   HERO INNER
+===================================================== */
+
+.stats-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+
+/* =====================================================
+   HERO CONTENT
+===================================================== */
+
+.stats-hero-content {
+  max-width: 720px;
+}
+
+.stats-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 22px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #e11d2e;
+}
+
+.stats-kicker span {
+  width: 28px;
+  height: 2px;
+  display: block;
+
+  background: #e11d2e;
+  box-shadow: 0 0 12px rgba(225, 29, 46, 0.7);
+}
+
+
+.stats-hero h1 {
+  margin: 0;
+
+  font-size: clamp(46px, 6vw, 82px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+.stats-hero h1 strong {
+  display: block;
+  color: #e11d2e;
+  font-weight: 800;
+}
+
+
+.stats-hero-content p {
+  max-width: 610px;
+
+  margin: 26px 0 0;
+
+  font-size: 15px;
+  line-height: 1.75;
+  color: #a4a4a4;
+}
+
+
+/* =====================================================
+   SESSION CARD
+===================================================== */
+
+.stats-session-card {
+  min-width: 250px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-left: 2px solid #e11d2e;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 255, 255, 0.03);
+
+  backdrop-filter: blur(12px);
+}
+
+
+.stats-session-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: #e11d2e;
+  background: rgba(225, 29, 46, 0.08);
+  border: 1px solid rgba(225, 29, 46, 0.2);
+}
+
+
+.stats-session-card span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #777;
+}
+
+
+.stats-session-card strong {
+  display: block;
+  font-size: 21px;
+  line-height: 1;
+  color: #ffffff;
+}
+
+
+.stats-session-card small {
+  display: block;
+  margin-top: 7px;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: #666;
+}
+
+
+/* =====================================================
+   GENERAL CONTAINER
+===================================================== */
+
+.stats-container {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   RACE INFORMATION
+===================================================== */
+
+.stats-race-header {
+  margin-top: 55px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+
+.stats-section-kicker {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #e11d2e;
+}
+
+
+.stats-race-header h2 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+}
+
+
+.stats-location {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #858585;
+  font-size: 13px;
+}
+
+
+.stats-location svg {
+  color: #e11d2e;
+}
+
+
+.stats-race-meta {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+
+.stats-race-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #999;
+}
+
+
+.stats-race-meta svg {
+  color: #e11d2e;
+}
+
+
+.stats-race-meta span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #666;
+}
+
+
+.stats-race-meta strong {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   SECTION HEADINGS
+===================================================== */
+
+.stats-section-heading {
+  margin-top: 65px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+
+.stats-section-heading > svg {
+  color: #e11d2e;
+}
+
+
+.stats-section-heading span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #e11d2e;
+}
+
+
+.stats-section-heading h2 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+
+.stats-section-heading p {
+  max-width: 620px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #777;
+}
+
+
+/* =====================================================
+   PODIUM
+===================================================== */
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+
+.podium-card {
+  position: relative;
+  min-height: 230px;
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+
+.podium-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: #e11d2e;
+}
+
+
+.podium-card::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -100px;
+  top: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(225, 29, 46, 0.15),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+
+.podium-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(225, 29, 46, 0.4);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(225, 29, 46, 0.08),
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+
+.podium-position {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #e11d2e;
+}
+
+
+.podium-1 {
+  border-color: rgba(225, 29, 46, 0.32);
+}
+
+
+.podium-1 .podium-position {
+  color: #f2c94c;
+}
+
+
+.podium-acronym {
+  position: absolute;
+  right: 22px;
+  top: 20px;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.055);
+}
+
+
+.podium-card h3 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 7px;
+  font-size: 24px;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+}
+
+
+.podium-card > span {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  color: #777;
+}
+
+
+/* =====================================================
+   LEADERBOARD
+===================================================== */
+
+.stats-leaderboard-section {
+  padding-bottom: 20px;
+}
+
+
+.stats-table {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.stats-table-header,
+.stats-table-row {
+  display: grid;
+  grid-template-columns:
+    80px
+    minmax(220px, 1.4fr)
+    minmax(170px, 1fr)
+    150px
+    130px;
+  align-items: center;
+}
+
+.stats-table-header {
+  min-height: 46px;
+  padding: 0 22px;
+  background: rgba(255, 255, 255, 0.025);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+.stats-table-header span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #626262;
+}
+
+
+.stats-table-row {
+  position: relative;
+  min-height: 78px;
+  padding: 0 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  background: rgba(255, 255, 255, 0.008);
+  transition:
+    background 0.2s ease,
+    padding 0.2s ease;
+}
+
+
+.stats-table-row:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(225, 29, 46, 0.06),
+      rgba(255, 255, 255, 0.015)
+    );
+}
+
+
+.stats-table-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+
+.stats-table-row:hover::before {
+  background: #e11d2e;
+}
+
+
+/* =====================================================
+   POSITION
+===================================================== */
+
+.stats-position {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+
+.stats-position svg {
+  color: #f2c94c;
+}
+
+
+/* =====================================================
+   DRIVER
+===================================================== */
+
+.stats-driver {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+.stats-driver-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  background:
+    linear-gradient(
+      145deg,
+      #1c1c1c,
+      #0c0c0c
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+
+.stats-driver strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+
+.stats-driver span {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #666;
+}
+
+
+/* =====================================================
+   TEAM
+===================================================== */
+
+.stats-team {
+  font-size: 12px;
+  color: #8b8b8b;
+}
+
+
+/* =====================================================
+   RESULT STATUS
+===================================================== */
+
+.stats-result-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  padding: 7px 10px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  border: 1px solid transparent;
+}
+
+
+.status-classified {
+  color: #68d391;
+  background: rgba(72, 187, 120, 0.08);
+  border-color: rgba(72, 187, 120, 0.2);
+}
+
+
+.status-dnf {
+  color: #ff6573;
+  background: rgba(225, 29, 46, 0.09);
+  border-color: rgba(225, 29, 46, 0.22);
+}
+
+
+.status-dns {
+  color: #f0ad4e;
+  background: rgba(240, 173, 78, 0.08);
+  border-color: rgba(240, 173, 78, 0.2);
+}
+
+
+.status-dsq {
+  color: #b9a7ff;
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+
+.is-non-classified {
+  background: rgba(225, 29, 46, 0.012);
+}
+
+
+.non-classified-position {
+  color: #555;
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.stats-summary-section {
+  padding-top: 45px;
+  padding-bottom: 75px;
+}
+
+
+.stats-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+
+.stats-summary-card {
+  position: relative;
+  padding: 24px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.012)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+
+.stats-summary-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e11d2e;
+}
+
+
+.stats-summary-card span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #666;
+}
+
+
+.stats-summary-card strong {
+  margin-top: 8px;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+
+.stats-summary-card small {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #666;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.stats-empty,
+.stats-state {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+
+.stats-empty svg,
+.stats-state svg {
+  margin-bottom: 14px;
+  color: #e11d2e;
+}
+
+
+.stats-empty strong,
+.stats-state strong {
+  font-size: 17px;
+  color: #ffffff;
+}
+
+
+.stats-empty span,
+.stats-state span {
+  max-width: 420px;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #666;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.stats-error {
+  border-color: rgba(225, 29, 46, 0.25);
+  background:
+    rgba(225, 29, 46, 0.025);
+}
+
+
+.stats-error strong {
+  color: #ff6573;
+}
+
+
+/* =====================================================
+   LOADING SPINNER
+===================================================== */
+
+.stats-spinner {
+  animation: stats-spin 1s linear infinite;
+}
+
+/* =====================================================
+   GRAND PRIX SELECTOR
+===================================================== */
+
+.stats-race-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 28px 0;
+}
+
+.stats-selector-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-selector-heading h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.stats-select-wrapper {
+  position: relative;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.stats-select-wrapper > svg:first-child {
+  position: absolute;
+  left: 16px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.stats-select-wrapper select {
+  width: 100%;
+  height: 52px;
+  padding: 0 45px 0 48px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.stats-select-wrapper select:hover {
+  border-color: rgba(255, 40, 40, 0.6);
+}
+
+.stats-select-wrapper select:focus {
+  border-color: #e10600;
+  box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.12);
+}
+
+.stats-select-wrapper option {
+  background: #111;
+  color: #fff;
+}
+
+.stats-select-arrow {
+  position: absolute;
+  right: 16px;
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   FINISHING TIME
+===================================================== */
+
+.stats-finishing-time {
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .stats-race-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stats-select-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .stats-table {
+    overflow-x: auto;
+  }
+
+  .stats-table-header,
+  .stats-table-row {
+    min-width: 850px;
+  }
+
+}
+
+
+@keyframes stats-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =====================================================
+   RESPONSIVE — TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .stats-hero {
+    min-height: 390px;
+  }
+
+  .stats-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+    padding: 70px 0;
+  }
+
+  .stats-session-card {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .stats-race-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stats-race-meta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .podium {
+    grid-template-columns: 1fr;
+  }
+
+  .podium-card {
+    min-height: 190px;
+  }
+
+  .stats-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-table-header,
+  .stats-table-row {
+    grid-template-columns:
+      60px
+      minmax(210px, 1.5fr)
+      minmax(150px, 1fr)
+      120px;
+  }
+}
+
+
+/* =====================================================
+   RESPONSIVE — MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .stats-hero {
+    min-height: auto;
+  }
+
+  .stats-hero-inner {
+    width: min(100% - 32px, 1200px);
+    padding: 65px 0 55px;
+  }
+
+  .stats-hero h1 {
+    font-size: 48px;
+  }
+
+  .stats-hero-content p {
+    font-size: 13px;
+  }
+
+  .stats-container {
+    width: min(100% - 32px, 1200px);
+  }
+
+  .stats-race-header {
+    margin-top: 35px;
+    padding: 22px;
+  }
+
+  .stats-race-header h2 {
+    font-size: 26px;
+  }
+
+  .stats-race-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+  }
+
+  .stats-section-heading {
+    margin-top: 45px;
+  }
+
+  .stats-section-heading h2 {
+    font-size: 28px;
+  }
+
+  /*
+    Mobile leaderboard becomes a card-style
+    layout instead of forcing a wide table.
+  */
+
+  .stats-table-header {
+    display: none;
+  }
+
+  .stats-table-row {
+    grid-template-columns:
+      45px
+      1fr
+      auto;
+
+    grid-template-areas:
+      "position driver status"
+      ". team status";
+
+    min-height: 90px;
+
+    padding: 16px;
+  }
+
+  .stats-position {
+    grid-area: position;
+  }
+
+  .stats-driver {
+    grid-area: driver;
+  }
+
+  .stats-team {
+    grid-area: team;
+
+    margin-top: 3px;
+    margin-left: 56px;
+  }
+
+  .stats-table-row > div:last-child {
+    grid-area: status;
+  }
+
+  .stats-driver-avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .stats-driver strong {
+    font-size: 12px;
+  }
+
+  .stats-result-status {
+    min-width: 70px;
+    padding: 6px 7px;
+    font-size: 7px;
+  }
+
+  .stats-summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-summary-card {
+    min-height: 110px;
+    padding: 18px;
+  }
+
+  .stats-summary-card strong {
+    font-size: 30px;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL SCREENS
+===================================================== */
+
+@media (max-width: 430px) {
+
+  .stats-hero h1 {
+    font-size: 42px;
+  }
+
+  .stats-session-card {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .stats-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-table-row {
+    grid-template-columns:
+      38px
+      1fr;
+
+    grid-template-areas:
+      "position driver"
+      ". team"
+      ". status";
+
+    gap: 5px 10px;
+    padding: 16px;
+  }
+
+  .stats-table-row > div:last-child {
+    grid-area: status;
+  }
+
+  .stats-team {
+    margin-left: 0;
+  }
+
+  .stats-result-status {
+    justify-self: start;
+  }
+}

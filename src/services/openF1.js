@@ -4,9 +4,6 @@ const BASE_URL = "https://api.openf1.org/v1";
 // OPENF1 API SERVICE
 // =====================================================
 
-/*
-  Small helper used by all API requests.
-*/
 async function request(endpoint) {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`);
@@ -30,10 +27,12 @@ async function request(endpoint) {
 // =====================================================
 
 /*
-  Get all Grand Prix meetings for a season.
+  Get all meetings for a season.
 
-  Example:
-  getMeetings(2026)
+  A meeting can be:
+  - Grand Prix
+  - Pre-season testing
+  - Other official F1 events
 */
 export async function getMeetings(year = 2026) {
   return request(`/meetings?year=${year}`);
@@ -41,17 +40,81 @@ export async function getMeetings(year = 2026) {
 
 
 /*
-  Get only completed/non-cancelled meetings.
+  Get only active, non-cancelled meetings.
 
-  This prevents cancelled races from appearing
-  as completed Grand Prix events.
+  This removes cancelled events such as:
+  - 2026 Bahrain Grand Prix originally scheduled
+    for April 10-12
+  - 2026 Saudi Arabian Grand Prix originally
+    scheduled for April 17-19
+
+  It keeps the new Bahrain Grand Prix in Malaysia
+  because that meeting has is_cancelled: false.
 */
-export async function getCompletedMeetings(year = 2026) {
+export async function getActiveMeetings(year = 2026) {
   const meetings = await getMeetings(year);
 
-  return meetings.filter(
-    (meeting) => meeting.is_cancelled !== true
-  );
+  if (!Array.isArray(meetings)) {
+    return [];
+  }
+
+  return meetings
+    .filter(
+      (meeting) =>
+        meeting.is_cancelled !== true
+    )
+    .sort((a, b) => {
+      const dateA = new Date(
+        a.date_start || a.date_end || 0
+      );
+
+      const dateB = new Date(
+        b.date_start || b.date_end || 0
+      );
+
+      return dateA - dateB;
+    });
+}
+
+
+/*
+  Backwards-compatible alias.
+
+  If another page in ApexOne already uses
+  getCompletedMeetings(), it will continue working.
+*/
+export async function getCompletedMeetings(year = 2026) {
+  return getActiveMeetings(year);
+}
+
+
+/*
+  Get only actual Grand Prix meetings.
+
+  This removes:
+  - Pre-season testing
+  - Cancelled meetings
+  - Other non-race events
+*/
+export async function getRaceMeetings(year = 2026) {
+  const meetings = await getActiveMeetings(year);
+
+  return meetings.filter((meeting) => {
+    const name = (
+      meeting.meeting_name ||
+      ""
+    ).toLowerCase();
+
+    const officialName = (
+      meeting.meeting_official_name ||
+      ""
+    ).toLowerCase();
+
+    return (
+      name.includes("grand prix") ||
+      officialName.includes("grand prix")
+    );
+  });
 }
 
 
@@ -80,33 +143,91 @@ export async function getMeetingByCountry(
 // =====================================================
 
 /*
-  Get all sessions for a particular season.
+  Get all sessions for a season.
 
   Includes:
   - Practice
   - Qualifying
   - Sprint
   - Race
+
+  Cancelled sessions are removed.
 */
 export async function getSessions(year = 2026) {
-  return request(`/sessions?year=${year}`);
+  const sessions = await request(
+    `/sessions?year=${year}`
+  );
+
+  if (!Array.isArray(sessions)) {
+    return [];
+  }
+
+  return sessions
+    .filter(
+      (session) =>
+        session.is_cancelled !== true
+    )
+    .sort((a, b) => {
+      const dateA = new Date(
+        a.date_start || a.date_end || 0
+      );
+
+      const dateB = new Date(
+        b.date_start || b.date_end || 0
+      );
+
+      return dateA - dateB;
+    });
 }
 
 
 /*
-  Get only Race sessions.
+  Get only active Race sessions.
 
-  This is what ApexOne should use when displaying
-  Grand Prix race results.
+  IMPORTANT:
+
+  This removes cancelled Bahrain and Saudi Arabia
+  sessions while keeping the new Bahrain Grand Prix
+  in Malaysia.
+
+  It also prevents pre-season testing from appearing
+  on the Schedule page.
 */
 export async function getRaceSessions(year = 2026) {
   const sessions = await getSessions(year);
 
-  return sessions.filter(
-    (session) =>
-      session.session_name === "Race" ||
-      session.session_type === "Race"
-  );
+  return sessions
+    .filter((session) => {
+      const sessionName = (
+        session.session_name ||
+        ""
+      ).toLowerCase();
+
+      const sessionType = (
+        session.session_type ||
+        ""
+      ).toLowerCase();
+
+      return (
+        sessionName === "race" ||
+        sessionType === "race"
+      );
+    })
+    .filter(
+      (session) =>
+        session.is_cancelled !== true
+    )
+    .sort((a, b) => {
+      const dateA = new Date(
+        a.date_start || a.date_end || 0
+      );
+
+      const dateB = new Date(
+        b.date_start || b.date_end || 0
+      );
+
+      return dateA - dateB;
+    });
 }
 
 
@@ -114,11 +235,9 @@ export async function getRaceSessions(year = 2026) {
   Get a specific session by session key.
 */
 export async function getSession(sessionKey) {
-  const sessions = await request(
+  return request(
     `/sessions?session_key=${sessionKey}`
   );
-
-  return sessions;
 }
 
 
@@ -128,17 +247,6 @@ export async function getSession(sessionKey) {
 
 /*
   Get final results for a specific session.
-
-  For a race this provides information such as:
-
-  - driver_number
-  - position
-  - dnf
-  - dns
-  - dsq
-  - number_of_laps
-  - duration
-  - gap_to_leader
 */
 export async function getSessionResults(sessionKey) {
   return request(
@@ -154,11 +262,9 @@ export async function getDriverSessionResult(
   sessionKey,
   driverNumber
 ) {
-  const results = await request(
+  return request(
     `/session_result?session_key=${sessionKey}&driver_number=${driverNumber}`
   );
-
-  return results;
 }
 
 
@@ -195,10 +301,6 @@ export async function getSessionDriver(
 
 /*
   Get driver championship standings after a race.
-
-  IMPORTANT:
-  OpenF1 uses session_key for championship standings,
-  not year.
 */
 export async function getDriverStandings(sessionKey) {
   return request(
@@ -208,7 +310,7 @@ export async function getDriverStandings(sessionKey) {
 
 
 /*
-  Get the championship standing for one driver.
+  Get championship standing for one driver.
 */
 export async function getDriverChampionshipStanding(
   sessionKey,
@@ -235,7 +337,7 @@ export async function getTeamStandings(sessionKey) {
 
 
 /*
-  Get the championship standing for one team.
+  Get championship standing for one team.
 */
 export async function getTeamChampionshipStanding(
   sessionKey,
@@ -257,8 +359,6 @@ export async function getTeamChampionshipStanding(
   Get qualifying results.
 
   OpenF1 uses the same session_result endpoint.
-  The sessionKey passed here must belong to a
-  Qualifying session.
 */
 export async function getQualifyingResults(sessionKey) {
   return request(
@@ -269,12 +369,6 @@ export async function getQualifyingResults(sessionKey) {
 
 /*
   Get the starting grid for a race.
-
-  This is useful if we want ApexOne to show:
-
-  QUALIFYING P1
-  STARTING GRID P1
-  FINISH P1
 */
 export async function getStartingGrid(sessionKey) {
   return request(
@@ -289,9 +383,6 @@ export async function getStartingGrid(sessionKey) {
 
 /*
   Get position changes throughout a session.
-
-  Useful later for showing how a driver moved
-  through the race.
 */
 export async function getDriverPositions(sessionKey) {
   return request(
@@ -428,8 +519,7 @@ export async function getDriverIntervals(
 /*
   Get race control messages.
 
-  Includes things such as:
-
+  Includes:
   - Safety car
   - Yellow flags
   - Red flags
@@ -445,14 +535,11 @@ export async function getRaceControl(sessionKey) {
 
 
 // =====================================================
-// CONVENIENCE FUNCTION
+// CONVENIENCE FUNCTIONS
 // =====================================================
 
 /*
-  Get everything ApexOne needs to display
-  one Grand Prix.
-
-  This will be particularly useful for RaceResults.
+  Get everything ApexOne needs for one Grand Prix.
 */
 export async function getRaceData(sessionKey) {
   const [
@@ -466,5 +553,44 @@ export async function getRaceData(sessionKey) {
   return {
     results,
     drivers,
+  };
+}
+
+
+/*
+  Get all important data for a Grand Prix.
+
+  Useful for future Race Details pages.
+*/
+export async function getFullRaceData(sessionKey) {
+  const [
+    results,
+    drivers,
+    positions,
+    laps,
+    pitStops,
+    stints,
+    intervals,
+    raceControl,
+  ] = await Promise.all([
+    getSessionResults(sessionKey),
+    getSessionDrivers(sessionKey),
+    getDriverPositions(sessionKey),
+    getLaps(sessionKey),
+    getPitStops(sessionKey),
+    getStints(sessionKey),
+    getIntervals(sessionKey),
+    getRaceControl(sessionKey),
+  ]);
+
+  return {
+    results,
+    drivers,
+    positions,
+    laps,
+    pitStops,
+    stints,
+    intervals,
+    raceControl,
   };
 }
