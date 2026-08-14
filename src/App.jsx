@@ -4,22 +4,22 @@ import { Routes, Route } from "react-router-dom";
 // PAGES
 // =========================================
 
-import Home from "./pages/Home/Home";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
+import Home from "./Pages/Home/Home";
+import SignIn from "./Pages/SignIn/SignIn";
+import SignUp from "./Pages/SignUp/SignUp";
 
-import Learn from "./pages/Learn/Learn";
-import LessonPage from "./pages/LessonPage/LessonPage";
-import CarsTechnology from "./pages/Learn/CarsTechnology";
+import Learn from "./Pages/Learn/Learn";
+import LessonPage from "./Pages/LessonPage/LessonPage";
+import CarsTechnology from "./Pages/Learn/CarsTechnology";
 
-import Drivers from "./pages/Drivers/Drivers";
-import DriverProfile from "./pages/DriverProfile/DriverProfile";
+import Drivers from "./Pages/Drivers/Drivers";
+import DriverProfile from "./Pages/DriverProfile/DriverProfile";
 
-import Teams from "./pages/Teams/Teams";
-import TeamDetails from "./pages/TeamDetails/TeamDetails";
+import Teams from "./Pages/Teams/Teams";
+import TeamDetails from "./Pages/TeamDetails/TeamDetails";
 
-import Schedule from "./pages/Schedule/Schedule";
-import Stats from "./pages/Stats/Stats";
+import Schedule from "./Pages/Schedule/Schedule";
+import Stats from "./Pages/Stats/Stats";
 
 
 // =========================================
