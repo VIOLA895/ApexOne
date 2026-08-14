@@ -18,7 +18,7 @@ import DriverProfile from "./pages/DriverProfile/DriverProfile";
 import Teams from "./pages/Teams/Teams";
 import TeamDetails from "./pages/TeamDetails/TeamDetails";
 
-import Schedule from "./Pages/Schedule/Schedule";
+import Schedule from "./pages/Schedule/Schedule";
 import Stats from "./pages/Stats/Stats";
 
 
