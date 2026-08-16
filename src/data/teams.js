@@ -1,37 +1,36 @@
+import mercedesImage from "../assets/teams/mercedes.png";
+import ferrariImage from "../assets/teams/ferrari.png";
+import mclarenImage from "../assets/teams/mclaren.png";
+import redBullImage from "../assets/teams/redbull.png";
+import racingBullsImage from "../assets/teams/racing-bulls.png";
+import alpineImage from "../assets/teams/alpine.png";
+import haasImage from "../assets/teams/haas.png";
+import audiImage from "../assets/teams/audi.png";
+import williamsImage from "../assets/teams/williams.png";
+import astonMartinImage from "../assets/teams/aston-martin.png";
+import cadillacImage from "../assets/teams/cadillac.png";
+
 const teams = [
   {
     id: "mercedes",
     name: "Mercedes",
     shortName: "Mercedes",
     country: "Germany",
-
-    image: "/src/assets/teams/mercedes.png",
-
+    image: mercedesImage,
     position: 1,
-
     points: 379,
     wins: 8,
     podiums: 14,
     poles: 10,
     fastestLaps: 0,
-
-    drivers: [
-      "George Russell",
-      "Kimi Antonelli",
-    ],
-
+    drivers: ["George Russell", "Kimi Antonelli"],
     principal: "Toto Wolff",
     technicalChief: "James Allison",
-
     base: "Brackley, United Kingdom",
-
     chassis: "W17",
     powerUnit: "Mercedes",
-
     firstEntry: 1970,
-
     championships: 8,
-
     carName: "Mercedes W17",
 
     description:
@@ -58,25 +57,25 @@ const teams = [
         year: "2010",
         title: "Works team returns",
         description:
-          "Mercedes returns to Formula 1 as a full works operation."
+          "Mercedes returns to Formula 1 as a full works operation.",
       },
       {
         year: "2014",
         title: "The dominant era begins",
         description:
-          "Mercedes begins its remarkable run of Constructors' Championships."
+          "Mercedes begins its remarkable run of Constructors' Championships.",
       },
       {
         year: "2021",
         title: "Eighth consecutive title",
         description:
-          "Mercedes secures its eighth consecutive Constructors' Championship."
+          "Mercedes secures its eighth consecutive Constructors' Championship.",
       },
       {
         year: "2026",
         title: "New generation",
         description:
-          "Mercedes enters the new Formula 1 regulations with George Russell and Kimi Antonelli."
+          "Mercedes enters the new Formula 1 regulations with George Russell and Kimi Antonelli.",
       },
     ],
   },
@@ -86,34 +85,21 @@ const teams = [
     name: "Ferrari",
     shortName: "Ferrari",
     country: "Italy",
-
-    image: "/src/assets/teams/ferrari.png",
-
+    image: ferrariImage,
     position: 2,
-
     points: 307,
     wins: 2,
     podiums: 9,
     poles: 0,
     fastestLaps: 2,
-
-    drivers: [
-      "Charles Leclerc",
-      "Lewis Hamilton",
-    ],
-
+    drivers: ["Charles Leclerc", "Lewis Hamilton"],
     principal: "Frédéric Vasseur",
     technicalChief: "Loic Serra / Enrico Gualtieri",
-
     base: "Maranello, Italy",
-
     chassis: "SF-26",
     powerUnit: "Ferrari",
-
     firstEntry: 1950,
-
     championships: 16,
-
     carName: "Ferrari SF-26",
 
     description:
@@ -140,25 +126,25 @@ const teams = [
         year: "1950",
         title: "Formula 1 debut",
         description:
-          "Ferrari enters the inaugural Formula 1 World Championship season."
+          "Ferrari enters the inaugural Formula 1 World Championship season.",
       },
       {
         year: "1961",
         title: "First Constructors' Championship",
         description:
-          "Ferrari wins its first Constructors' Championship."
+          "Ferrari wins its first Constructors' Championship.",
       },
       {
         year: "2000",
         title: "Beginning of a new dynasty",
         description:
-          "Ferrari begins one of the most successful periods in Formula 1 history."
+          "Ferrari begins one of the most successful periods in Formula 1 history.",
       },
       {
         year: "2026",
         title: "Hamilton and Leclerc",
         description:
-          "Charles Leclerc and Lewis Hamilton continue Ferrari's championship campaign."
+          "Charles Leclerc and Lewis Hamilton continue Ferrari's championship campaign.",
       },
     ],
   },
@@ -168,34 +154,21 @@ const teams = [
     name: "McLaren",
     shortName: "McLaren",
     country: "United Kingdom",
-
-    image: "/src/assets/teams/mclaren.png",
-
+    image: mclarenImage,
     position: 3,
-
     points: 220,
     wins: 1,
     podiums: 5,
     poles: 1,
     fastestLaps: 2,
-
-    drivers: [
-      "Lando Norris",
-      "Oscar Piastri",
-    ],
-
+    drivers: ["Lando Norris", "Oscar Piastri"],
     principal: "Andrea Stella",
     technicalChief: "Peter Prodromou / Neil Houldey",
-
     base: "Woking, United Kingdom",
-
     chassis: "MCL40",
     powerUnit: "Mercedes",
-
     firstEntry: 1966,
-
     championships: 10,
-
     carName: "McLaren MCL40",
 
     description:
@@ -222,25 +195,25 @@ const teams = [
         year: "1966",
         title: "Formula 1 debut",
         description:
-          "Bruce McLaren's team enters its first Formula 1 race."
+          "Bruce McLaren's team enters its first Formula 1 race.",
       },
       {
         year: "1988",
         title: "One of F1's greatest seasons",
         description:
-          "McLaren dominates the championship with Ayrton Senna and Alain Prost."
+          "McLaren dominates the championship with Ayrton Senna and Alain Prost.",
       },
       {
         year: "1998",
         title: "Constructors' champions",
         description:
-          "McLaren wins the Constructors' Championship with Mika Häkkinen."
+          "McLaren wins the Constructors' Championship with Mika Häkkinen.",
       },
       {
         year: "2025",
         title: "Champions again",
         description:
-          "McLaren wins the Constructors' Championship."
+          "McLaren wins the Constructors' Championship.",
       },
     ],
   },
@@ -250,34 +223,21 @@ const teams = [
     name: "Red Bull Racing",
     shortName: "Red Bull",
     country: "Austria",
-
-    image: "/src/assets/teams/redbull.png",
-
+    image: redBullImage,
     position: 4,
-
     points: 177,
     wins: 0,
     podiums: 4,
     poles: 0,
     fastestLaps: 1,
-
-    drivers: [
-      "Max Verstappen",
-      "Isack Hadjar",
-    ],
-
+    drivers: ["Max Verstappen", "Isack Hadjar"],
     principal: "Laurent Mekies",
     technicalChief: "Pierre Waché",
-
     base: "Milton Keynes, United Kingdom",
-
     chassis: "RB22",
     powerUnit: "Red Bull Ford",
-
     firstEntry: 1997,
-
     championships: 6,
-
     carName: "Red Bull RB22",
 
     description:
@@ -304,25 +264,25 @@ const teams = [
         year: "2005",
         title: "Red Bull joins F1",
         description:
-          "Red Bull enters Formula 1 after acquiring Jaguar Racing."
+          "Red Bull enters Formula 1 after acquiring Jaguar Racing.",
       },
       {
         year: "2010",
         title: "First championship",
         description:
-          "Red Bull wins its first Constructors' Championship."
+          "Red Bull wins its first Constructors' Championship.",
       },
       {
         year: "2021",
         title: "Verstappen's breakthrough",
         description:
-          "Max Verstappen wins his first Drivers' Championship."
+          "Max Verstappen wins his first Drivers' Championship.",
       },
       {
         year: "2026",
         title: "New leadership",
         description:
-          "Laurent Mekies leads the team into the new regulations era."
+          "Laurent Mekies leads the team into the new regulations era.",
       },
     ],
   },
@@ -332,34 +292,21 @@ const teams = [
     name: "Racing Bulls",
     shortName: "Racing Bulls",
     country: "Italy",
-
-    image: "/src/assets/teams/racing-bulls.png",
-
+    image: racingBullsImage,
     position: 5,
-
     points: 66,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Liam Lawson",
-      "Arvid Lindblad",
-    ],
-
+    drivers: ["Liam Lawson", "Arvid Lindblad"],
     principal: "Alan Permane",
     technicalChief: "Tim Goss",
-
     base: "Faenza, Italy",
-
     chassis: "VCARB 03",
     powerUnit: "Red Bull Ford",
-
     firstEntry: 1985,
-
     championships: 0,
-
     carName: "VCARB 03",
 
     description:
@@ -386,25 +333,25 @@ const teams = [
         year: "1985",
         title: "Minardi enters F1",
         description:
-          "The team that would eventually become Racing Bulls makes its F1 debut."
+          "The team that would eventually become Racing Bulls makes its F1 debut.",
       },
       {
         year: "2006",
         title: "Toro Rosso",
         description:
-          "Red Bull's junior team begins competing as Scuderia Toro Rosso."
+          "Red Bull's junior team begins competing as Scuderia Toro Rosso.",
       },
       {
         year: "2020",
         title: "AlphaTauri",
         description:
-          "The team is rebranded as AlphaTauri."
+          "The team is rebranded as AlphaTauri.",
       },
       {
         year: "2026",
         title: "Racing Bulls",
         description:
-          "The team enters the 2026 season as Racing Bulls."
+          "The team enters the 2026 season as Racing Bulls.",
       },
     ],
   },
@@ -414,34 +361,21 @@ const teams = [
     name: "Alpine",
     shortName: "Alpine",
     country: "France",
-
-    image: "/src/assets/teams/alpine.png",
-
+    image: alpineImage,
     position: 6,
-
     points: 61,
     wins: 0,
     podiums: 1,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Pierre Gasly",
-      "Franco Colapinto",
-    ],
-
+    drivers: ["Pierre Gasly", "Franco Colapinto"],
     principal: "Steve Nielsen",
     technicalChief: "David Sanchez",
-
     base: "Enstone, United Kingdom",
-
     chassis: "A526",
     powerUnit: "Mercedes",
-
     firstEntry: 1986,
-
     championships: 2,
-
     carName: "Alpine A526",
 
     description:
@@ -468,25 +402,25 @@ const teams = [
         year: "1986",
         title: "F1 roots",
         description:
-          "The team's lineage begins with the Renault-powered Enstone operation."
+          "The team's lineage begins with the Renault-powered Enstone operation.",
       },
       {
         year: "2005",
         title: "Championship success",
         description:
-          "Renault wins both Drivers' and Constructors' Championships."
+          "Renault wins both Drivers' and Constructors' Championships.",
       },
       {
         year: "2021",
         title: "Alpine arrives",
         description:
-          "Renault's works team is rebranded as Alpine."
+          "Renault's works team is rebranded as Alpine.",
       },
       {
         year: "2026",
         title: "Mercedes power",
         description:
-          "Alpine begins a new technical era using Mercedes power units."
+          "Alpine begins a new technical era using Mercedes power units.",
       },
     ],
   },
@@ -496,34 +430,21 @@ const teams = [
     name: "Haas",
     shortName: "Haas",
     country: "United States",
-
-    image: "/src/assets/teams/haas.png",
-
+    image: haasImage,
     position: 7,
-
     points: 21,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Esteban Ocon",
-      "Oliver Bearman",
-    ],
-
+    drivers: ["Esteban Ocon", "Oliver Bearman"],
     principal: "Ayao Komatsu",
     technicalChief: "Andrea De Zordo",
-
     base: "Kannapolis, United States",
-
     chassis: "VF-26",
     powerUnit: "Ferrari",
-
     firstEntry: 2016,
-
     championships: 0,
-
     carName: "Haas VF-26",
 
     description:
@@ -550,25 +471,25 @@ const teams = [
         year: "2014",
         title: "F1 project announced",
         description:
-          "Gene Haas receives approval to enter Formula 1."
+          "Gene Haas receives approval to enter Formula 1.",
       },
       {
         year: "2016",
         title: "Formula 1 debut",
         description:
-          "Haas competes in its first Grand Prix."
+          "Haas competes in its first Grand Prix.",
       },
       {
         year: "2024",
         title: "Komatsu takes charge",
         description:
-          "Ayao Komatsu becomes Team Principal."
+          "Ayao Komatsu becomes Team Principal.",
       },
       {
         year: "2026",
         title: "New era",
         description:
-          "Haas enters the new regulations with Ocon and Bearman."
+          "Haas enters the new regulations with Ocon and Bearman.",
       },
     ],
   },
@@ -578,34 +499,21 @@ const teams = [
     name: "Audi",
     shortName: "Audi",
     country: "Germany",
-
-    image: "/src/assets/teams/audi.png",
-
+    image: audiImage,
     position: 8,
-
     points: 12,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Nico Hulkenberg",
-      "Gabriel Bortoleto",
-    ],
-
+    drivers: ["Nico Hulkenberg", "Gabriel Bortoleto"],
     principal: "Mattia Binotto",
     technicalChief: "James Key",
-
     base: "Hinwil, Switzerland",
-
     chassis: "R26",
     powerUnit: "Audi",
-
     firstEntry: 2026,
-
     championships: 0,
-
     carName: "Audi R26",
 
     description:
@@ -632,19 +540,19 @@ const teams = [
         year: "2022",
         title: "Audi announces F1 entry",
         description:
-          "Audi confirms plans to enter Formula 1 under the 2026 regulations."
+          "Audi confirms plans to enter Formula 1 under the 2026 regulations.",
       },
       {
         year: "2024",
         title: "Sauber takeover",
         description:
-          "Audi expands its control of the Sauber operation."
+          "Audi expands its control of the Sauber operation.",
       },
       {
         year: "2026",
         title: "F1 debut",
         description:
-          "Audi officially enters Formula 1 as a works constructor."
+          "Audi officially enters Formula 1 as a works constructor.",
       },
     ],
   },
@@ -654,34 +562,21 @@ const teams = [
     name: "Williams",
     shortName: "Williams",
     country: "United Kingdom",
-
-    image: "/src/assets/teams/williams.png",
-
+    image: williamsImage,
     position: 9,
-
     points: 11,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Carlos Sainz",
-      "Alexander Albon",
-    ],
-
+    drivers: ["Carlos Sainz", "Alexander Albon"],
     principal: "James Vowles",
     technicalChief: "Pat Fry",
-
     base: "Grove, United Kingdom",
-
     chassis: "FW48",
     powerUnit: "Mercedes",
-
     firstEntry: 1978,
-
     championships: 9,
-
     carName: "Williams FW48",
 
     description:
@@ -708,25 +603,25 @@ const teams = [
         year: "1978",
         title: "F1 debut",
         description:
-          "Williams enters the Formula 1 World Championship."
+          "Williams enters the Formula 1 World Championship.",
       },
       {
         year: "1980",
         title: "First championship",
         description:
-          "Williams begins its championship-winning era."
+          "Williams begins its championship-winning era.",
       },
       {
         year: "1997",
         title: "Ninth title",
         description:
-          "Williams wins its ninth Constructors' Championship."
+          "Williams wins its ninth Constructors' Championship.",
       },
       {
         year: "2026",
         title: "Rebuilding continues",
         description:
-          "James Vowles continues the team's long-term transformation."
+          "James Vowles continues the team's long-term transformation.",
       },
     ],
   },
@@ -736,34 +631,21 @@ const teams = [
     name: "Aston Martin",
     shortName: "Aston Martin",
     country: "United Kingdom",
-
-    image: "/src/assets/teams/aston-martin.png",
-
+    image: astonMartinImage,
     position: 10,
-
     points: 1,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Fernando Alonso",
-      "Lance Stroll",
-    ],
-
+    drivers: ["Fernando Alonso", "Lance Stroll"],
     principal: "Adrian Newey",
     technicalChief: "Enrico Cardile",
-
     base: "Silverstone, United Kingdom",
-
     chassis: "AMR26",
     powerUnit: "Honda",
-
     firstEntry: 2018,
-
     championships: 0,
-
     carName: "Aston Martin AMR26",
 
     description:
@@ -790,25 +672,25 @@ const teams = [
         year: "2018",
         title: "Aston Martin era",
         description:
-          "The modern Aston Martin F1 operation begins."
+          "The modern Aston Martin F1 operation begins.",
       },
       {
         year: "2023",
         title: "Podium challenge",
         description:
-          "Aston Martin emerges as a strong midfield and podium contender."
+          "Aston Martin emerges as a strong midfield and podium contender.",
       },
       {
         year: "2025",
         title: "Newey arrives",
         description:
-          "Adrian Newey joins the organisation."
+          "Adrian Newey joins the organisation.",
       },
       {
         year: "2026",
         title: "New era",
         description:
-          "Aston Martin begins its Honda works partnership under Newey's leadership."
+          "Aston Martin begins its Honda works partnership under Newey's leadership.",
       },
     ],
   },
@@ -818,34 +700,21 @@ const teams = [
     name: "Cadillac",
     shortName: "Cadillac",
     country: "United States",
-
-    image: "/src/assets/teams/cadillac.png",
-
+    image: cadillacImage,
     position: 11,
-
     points: 0,
     wins: 0,
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-
-    drivers: [
-      "Valtteri Bottas",
-      "Sergio Perez",
-    ],
-
+    drivers: ["Valtteri Bottas", "Sergio Perez"],
     principal: "Graeme Lowdon",
     technicalChief: "Nick Chester",
-
     base: "Silverstone, United Kingdom",
-
     chassis: "MAC-26",
     powerUnit: "Ferrari",
-
     firstEntry: 2026,
-
     championships: 0,
-
     carName: "Cadillac MAC-26",
 
     description:
@@ -872,25 +741,25 @@ const teams = [
         year: "2024",
         title: "Entry approved",
         description:
-          "Formula 1 and General Motors agree in principle for Cadillac to join the grid."
+          "Formula 1 and General Motors agree in principle for Cadillac to join the grid.",
       },
       {
         year: "2025",
         title: "2026 entry confirmed",
         description:
-          "Cadillac receives official approval to enter Formula 1."
+          "Cadillac receives official approval to enter Formula 1.",
       },
       {
         year: "2026",
         title: "Formula 1 debut",
         description:
-          "Cadillac races for the first time with Valtteri Bottas and Sergio Perez."
+          "Cadillac races for the first time with Valtteri Bottas and Sergio Perez.",
       },
       {
         year: "2029",
         title: "GM power unit",
         description:
-          "General Motors plans to introduce its own Formula 1 power unit."
+          "General Motors plans to introduce its own Formula 1 power unit.",
       },
     ],
   },
